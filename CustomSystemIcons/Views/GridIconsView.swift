@@ -10,32 +10,23 @@ import SFSafeSymbols
 
 struct GridIconsView: View {
     @Environment(\.coordinator) var coordinator
-    var vm: IconsListModel
-    @State private var showDialog: Bool = false
+    let iconsList = IconsListModel().iconList
+    @Binding var vmIcon: SFSymbol
+    //@State private var selectedIcon: SFSymbol?
     var body: some View {
-        ScrollView {
-            LazyVGrid(columns: [GridItem(spacing: 22), GridItem(spacing: 22), GridItem(spacing: 22)], spacing: 34) {
-                ForEach(Array(vm.iconList), id: \.self) { icon in
-                    Image(systemSymbol: icon)
-                        .font(.system(size: 50))
-                        .onTapGesture {
-                            //coordinator.push(page: .AddIcon)
-                            showDialog.toggle()
-                        }
-                        .confirmationDialog("Aceptar", isPresented: $showDialog) {
-                            Button("Save") {
-                            print("Save action")
+        VStack {
+            Text("Selected icon: \(Image(systemSymbol: vmIcon))")
+            ScrollView {
+                LazyVGrid(columns: [GridItem(spacing: 22), GridItem(spacing: 22), GridItem(spacing: 22)], spacing: 34) {
+                    ForEach(Array(iconsList), id: \.self) { icon in
+                        Image(systemSymbol: icon)
+                            .font(.system(size: 50))
+                            .onTapGesture {
+                                vmIcon = icon
+                                coordinator.push(page: .EditIcon(vmIcon: $vmIcon))
                             }
-                            
-                            Button("Update", role: .destructive) {
-                            print("Update action")
-                            }
-                            HStack {
-                                
-                            }
-                        } message: {
-                            Text("Use Confirmation Dialogs to present several actions")
-                        }
+                    }
+                    
                 }
             }
         }
@@ -43,6 +34,25 @@ struct GridIconsView: View {
 }
 
 #Preview {
-    var list = IconsListModel()
-    GridIconsView(vm: list)
+    @Previewable @State var coordinator = Coordinator()
+    @Previewable let list = IconsListModel().iconList
+    @Previewable @State var vmIcon = IconModel()
+    NavigationStack(path: $coordinator.path) {
+        GridIconsView(vmIcon: $vmIcon.icon)
+    }
+    .environment(\.coordinator, coordinator)
 }
+
+/*
+ @Previewable @State var coordinator = Coordinator()
+ NavigationStack(path: $coordinator.path) {
+     coordinator.build(page: .home)
+         .navigationDestination(for: AppPage.self) { page in
+             coordinator.build(page: page)
+         }
+         .sheet(item: $coordinator.sheet ) { sheet in
+             coordinator.buildSheet(sheet: sheet)
+         }
+ }
+ .environment(\.coordinator, coordinator)
+ */

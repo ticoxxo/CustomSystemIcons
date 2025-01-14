@@ -5,6 +5,7 @@
 //  Created by Alberto Almeida on 16/12/24.
 //
 import SwiftUI
+import SFSafeSymbols
 
 @Observable
 class Coordinator {
@@ -18,6 +19,10 @@ class Coordinator {
         
     func pop() {
         path.removeLast()
+    }
+    
+    func popByNumber(_ number: Int) {
+        path.removeLast(number)
     }
     
     func toRoot() {
@@ -37,8 +42,10 @@ class Coordinator {
     @ViewBuilder
     func build(page: AppPage) -> some View {
         switch page {
-        case .home: Home()
+        case .Home: Home()
         case .AddIcon: AddIcon()
+        case .EditIcon(let vmIcon): EditIcon(vmIcon: vmIcon)
+        case .GridIconsView(let vmIcon): GridIconsView(vmIcon: vmIcon)
         }
     }
     

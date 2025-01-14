@@ -6,13 +6,38 @@
 //
 
 import SwiftUI
+import SFSafeSymbols
 
 struct AddIcon: View {
+    @Environment(\.coordinator) var coordinator
+    @State var tarea  = IconModel()
     var body: some View {
-        Text("Add Icon view")
+        VStack {
+            Text("Add Icon view")
+            TextField("Task title", text: $tarea.title)
+            TextField("Description", text: $tarea.description)
+            Image(systemSymbol: tarea.icon)
+                .font(.system(size: 50))
+                .overlay(alignment: .topTrailing) {
+                    Image(systemName: "plus")
+                        .foregroundColor(.blue)
+                        .onTapGesture {
+                            coordinator.push(page: .GridIconsView(vmIcon: $tarea.icon))
+                        }
+                }
+                
+        }
+        .padding()
     }
 }
 
 #Preview {
-    AddIcon()
+    @Previewable @State var coordinator = Coordinator()
+    NavigationStack(path: $coordinator.path) {
+        coordinator.build(page: .AddIcon)
+            .navigationDestination(for: AppPage.self) { page in
+                coordinator.build(page: page)
+            }
+    }
+    .environment(\.coordinator, coordinator)
 }

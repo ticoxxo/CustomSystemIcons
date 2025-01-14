@@ -1,19 +1,17 @@
-//
-//  IconModel.swift
-//  CustomSystemIcons
-//
-//  Created by Alberto Almeida on 16/12/24.
-//
 import SwiftUI
 import SFSafeSymbols
 
-@Observable
-class IconsListModel {
-    var iconList: Set<SFSymbol> = SFSymbol.allSymbols
-    
-    func returnRandomIcon() -> SFSymbol {
-        return SFSymbol.allSymbols.randomElement() ?? SFSymbol.xCircle
-    }
- 
-}
 
+@Observable
+class IconModel: Identifiable {
+    var id = UUID()
+    var title: String
+    var description: String
+    var icon: SFSymbol
+    
+    init() {
+        title = ""
+        description = ""
+        icon = SFSymbol.star
+    }
+}

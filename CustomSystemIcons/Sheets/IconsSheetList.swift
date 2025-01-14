@@ -10,10 +10,9 @@ import SFSafeSymbols
 
 struct IconsSheetList: View {
     @Environment(\.coordinator) var coordinator
-    @State private var vm = IconsListModel()
-    @State private var icono: SFSymbol?
     var body: some View {
-        GridIconsView(vm: vm)
+        //GridIconsView()
+        Text("Prueba de sheet")
     }
 }
 

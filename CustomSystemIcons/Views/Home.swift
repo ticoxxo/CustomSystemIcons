@@ -13,25 +13,22 @@ struct Home: View {
         VStack {
             Button {
                 coordinator.push(page: .AddIcon)
-                //coordinator.dismissSheet()
             } label: {
                 Image(systemName: "plus.app")
                 Text("Add Icon")
             }
             
-            Button {
-                coordinator.presentSheet(.showIconsList)
-            } label: {
-                Text("Show icons sheet")
-            }
         }
     }
 }
 
 #Preview {
-    @Previewable @State var path = Coordinator()
-    NavigationStack(path: $path.path) {
-        Home()
-            
+    @Previewable @State var coordinator = Coordinator()
+    NavigationStack(path: $coordinator.path) {
+        coordinator.build(page: .Home)
+            .navigationDestination(for: AppPage.self) { page in
+                coordinator.build(page: page)
+            }
     }
+    .environment(\.coordinator, coordinator)
 }
