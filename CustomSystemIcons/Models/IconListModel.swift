@@ -11,12 +11,21 @@ import SFSafeSymbols
 class IconsListModel {
     var iconList: Set<SFSymbol> = SFSymbol.allSymbols
     var arrayOfIcons : [IconModel] = []
-    
     init() {
     }
     
     func returnRandomIcon() -> SFSymbol {
         return SFSymbol.allSymbols.randomElement() ?? SFSymbol.xCircle
+    }
+    
+    func filterIcons(_ searchText: String) {
+        if searchText.isEmpty {
+            iconList = SFSymbol.allSymbols
+        } else {
+            iconList = iconList.filter { symbol in
+                symbol.rawValue.lowercased().contains(searchText.lowercased())
+            }
+        }
     }
 }
 

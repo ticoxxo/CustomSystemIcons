@@ -10,15 +10,16 @@ import SFSafeSymbols
 
 struct GridIconsView: View {
     @Environment(\.coordinator) var coordinator
-    let iconsList = IconsListModel().iconList
+    @State var iconsList = IconsListModel()
     @Binding var vmIcon: SFSymbol
-    //@State private var selectedIcon: SFSymbol?
+    @State var searchText: String = ""
     var body: some View {
         VStack {
             Text("Selected icon: \(Image(systemSymbol: vmIcon))")
+            TextField("Buscar...", text: $searchText)
             ScrollView {
                 LazyVGrid(columns: [GridItem(spacing: 22), GridItem(spacing: 22), GridItem(spacing: 22)], spacing: 34) {
-                    ForEach(Array(iconsList), id: \.self) { icon in
+                    ForEach(Array(iconsList.iconList), id: \.self) { icon in
                         Image(systemSymbol: icon)
                             .font(.system(size: 50))
                             .onTapGesture {
@@ -26,9 +27,11 @@ struct GridIconsView: View {
                                 coordinator.push(page: .EditIcon(vmIcon: $vmIcon))
                             }
                     }
-                    
                 }
             }
+        }
+        .onChange(of: searchText){
+            iconsList.filterIcons(searchText)
         }
     }
 }

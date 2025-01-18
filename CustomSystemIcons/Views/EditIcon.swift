@@ -15,6 +15,12 @@ struct EditIcon: View {
         VStack {
             Image(systemSymbol: vmIcon)
                 .font(.system(size: 100))
+                .symbolRenderingMode(.palette)
+                .foregroundStyle(
+                    .linearGradient(colors: [.red, .black,.green], startPoint: .top, endPoint: .bottomTrailing),
+                    .linearGradient(colors: [.green, .black,.green], startPoint: .top, endPoint: .bottomTrailing),
+                        .linearGradient(colors: [.blue, .black], startPoint: .top, endPoint: .bottomTrailing)
+                    )
             Text("Edit Icon")
             Button {
                 coordinator.popByNumber(2)
