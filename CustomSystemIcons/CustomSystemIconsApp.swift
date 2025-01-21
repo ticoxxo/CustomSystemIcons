@@ -13,7 +13,6 @@ struct CustomSystemIconsApp: App {
     var body: some Scene {
         WindowGroup {
             CoordinatorView()
-                
         }
     }
 }

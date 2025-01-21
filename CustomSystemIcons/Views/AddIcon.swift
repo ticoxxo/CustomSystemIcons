@@ -10,7 +10,7 @@ import SFSafeSymbols
 
 struct AddIcon: View {
     @Environment(\.coordinator) var coordinator
-    @State var tarea  = IconModel()
+    @State var tarea  = IconModel(frontColor: [.red, .blue])
     var body: some View {
         VStack {
             Text("Add Icon view")
@@ -22,7 +22,7 @@ struct AddIcon: View {
                     Image(systemName: "plus")
                         .foregroundColor(.blue)
                         .onTapGesture {
-                            coordinator.push(page: .GridIconsView(vmIcon: $tarea.icon))
+                            coordinator.push(page: .GridIconsView(vmIcon: $tarea))
                         }
                 }
                 

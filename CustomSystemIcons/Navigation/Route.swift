@@ -16,9 +16,9 @@ enum AppPage: Hashable, Equatable {
         case (.AddIcon, .AddIcon):
             return true
         case (.EditIcon(let lhVmIcon), .EditIcon(let rhVmIcon)):
-            return lhVmIcon.wrappedValue == rhVmIcon.wrappedValue
+            return lhVmIcon.id == rhVmIcon.id
         case (.GridIconsView(let lhVmIcon), .GridIconsView(let rhVmIcon)):
-            return lhVmIcon.wrappedValue == rhVmIcon.wrappedValue
+            return lhVmIcon.id == rhVmIcon.id
         default:
             return false
                 }
@@ -31,16 +31,16 @@ enum AppPage: Hashable, Equatable {
             case .AddIcon:
                 hasher.combine(1)
             case .EditIcon(let vmIcon ):
-                hasher.combine(vmIcon.wrappedValue)
+                hasher.combine(vmIcon.id)
             case .GridIconsView(let vmIcon):
-                hasher.combine(vmIcon.wrappedValue)
+                hasher.combine(vmIcon.id)
             }
         }
     
     
     case Home
     case AddIcon
-    case EditIcon(vmIcon: Binding<SFSymbol>)
-    case GridIconsView(vmIcon: Binding<SFSymbol>)
+    case EditIcon(vmIcon: Binding<IconModel>)
+    case GridIconsView(vmIcon: Binding<IconModel>)
 }
 
