@@ -18,12 +18,12 @@ struct IconRowView: View {
                     .frame(width: 50, height: 50)
                 Text(icon.description)
                     .font(.footnote)
-                    .lineLimit(nil)
+                    
                    
                 DatePicker("",
-                           selection: $icon.date,
+                           selection: $icon.startDate,
                            displayedComponents: [.date])
-                .frame(width: .infinity, height: 50)
+                
                
                 Toggle("", isOn: $icon.status)
                     .toggleStyle(CheckToggleStyle())

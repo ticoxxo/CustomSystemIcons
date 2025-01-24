@@ -99,7 +99,8 @@ struct EditIcon: View {
             }
             
             Button {
-                coordinator.popByNumber(2)
+                let num = coordinator.path.count > 2 ? 2 : 1
+                coordinator.popByNumber(num)
             } label: {
                Text("Go Back")
             }

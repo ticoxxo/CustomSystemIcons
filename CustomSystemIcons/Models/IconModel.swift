@@ -5,12 +5,15 @@ import SFSafeSymbols
 @Observable
 class IconModel: Identifiable, Hashable, Equatable {
     var id = UUID()
+    // Details
     var title: String
     var description: String
     var icon: SFSymbol
     var status: Bool = false
-    var date: Date = Date.now
-    var expires: Date?
+    // Date
+    var startDate: Date = Date.now
+    var expireDate: Date = Date.now.addingTimeInterval(86400)
+    // Color
     var frontColor: [Color] = [.red, .blue]
     var background: Color = Color(.sRGB, red: 0.98, green: 0.9, blue: 0.2)
     var gradient: Gradient {
@@ -84,5 +87,15 @@ extension IconModel {
     
     func removeColor() {
         frontColor.remove(at: frontColor.count - 1)
+    }
+    
+    func hour(_ startDate: Date) -> Int {
+        let components = Calendar.current.dateComponents([.hour, .minute], from: startDate)
+        return components.hour ?? 0
+    }
+    
+    func minutes() -> Int {
+        let components = Calendar.current.dateComponents([.hour, .minute], from: Date.now)
+        return components.minute ?? 0
     }
 }
