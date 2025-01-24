@@ -10,21 +10,31 @@ import SFSafeSymbols
 
 struct AddIcon: View {
     @Environment(\.coordinator) var coordinator
-    @State var tarea  = IconModel(frontColor: [.red, .blue])
+    @Binding var list: IconsListModel
+    @Binding var vmIcon: IconModel
     var body: some View {
         VStack {
             Text("Add Icon view")
-            TextField("Task title", text: $tarea.title)
-            TextField("Description", text: $tarea.description)
-            Image(systemSymbol: tarea.icon)
-                .font(.system(size: 50))
+            TextField("Task title", text: $vmIcon.title)
+            TextField("Description", text: $vmIcon.description)
+            IconView(vmIcon: vmIcon)
+                .frame(width: 100, height: 100)
                 .overlay(alignment: .topTrailing) {
                     Image(systemName: "plus")
+                        .font(.system(size: 30))
+                        .fontWeight(.bold)
                         .foregroundColor(.blue)
                         .onTapGesture {
-                            coordinator.push(page: .GridIconsView(vmIcon: $tarea))
+                            coordinator.push(page: .GridIconsView(vmIcon: $vmIcon))
                         }
                 }
+            
+            Button {
+                list.agregarTarea(vmIcon)
+                coordinator.toRoot()
+            } label: {
+                Text("Agregar model")
+            }
                 
         }
         .padding()
@@ -33,8 +43,10 @@ struct AddIcon: View {
 
 #Preview {
     @Previewable @State var coordinator = Coordinator()
+    @Previewable @State var list = IconsListModel()
+    @Previewable @State var vmIcon = IconModel()
     NavigationStack(path: $coordinator.path) {
-        coordinator.build(page: .AddIcon)
+        coordinator.build(page: .AddIcon(list: $list, vmIcon: $vmIcon))
             .navigationDestination(for: AppPage.self) { page in
                 coordinator.build(page: page)
             }

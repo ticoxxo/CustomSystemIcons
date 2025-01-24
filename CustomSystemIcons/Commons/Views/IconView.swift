@@ -30,6 +30,6 @@ struct IconView: View {
 
 #Preview {
     //@Previewable @State var bgColor = Color(.sRGB, red: 0.98, green: 0.9, blue: 0.2)
-    @Previewable @State var vmIcon = IconModel(frontColor: [.red, .blue])
+    @Previewable @State var vmIcon = IconModel()
     IconView(vmIcon: vmIcon)
 }

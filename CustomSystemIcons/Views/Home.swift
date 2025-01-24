@@ -9,15 +9,36 @@ import SwiftUI
 
 struct Home: View {
     @Environment(\.coordinator) var coordinator
+    @State var list = IconsListModel()
+    
+    init() {
+        list.arrayOfIcons.append(IconModel(title: "Claro", description: "Clarooo asdad eee"))
+        list.arrayOfIcons.append(IconModel(title: "Llamar a la peluqueria", description: "Bar Simpson"))
+        list.arrayOfIcons.append(IconModel(title: "Ire a la playa", description: "Bar Simpson para que conmigo te quedes un ratito"))
+        list.arrayOfIcons.append(IconModel(title: "Claro", description: "Clarooo asdad eee"))
+        list.arrayOfIcons.append(IconModel(title: "Llamar a la peluqueria", description: "Bar Simpson"))
+        list.arrayOfIcons.append(IconModel(title: "Ire a la playa", description: "Bar Simpson para que conmigo te quedes un ratito"))
+    }
     var body: some View {
         VStack {
+            if list.arrayOfIcons.isEmpty {
+                Text("No hay tareas")
+            } else {
+                    List($list.arrayOfIcons, id: \.self) { $tarea in
+                        IconRowView(icon: $tarea)
+                            .onTapGesture {
+                                coordinator.push(page: .AddIcon(list: $list,vmIcon: $tarea))
+                            }
+                    }
+                
+            }
             Button {
-                coordinator.push(page: .AddIcon)
+                @State var icon = IconModel()
+                coordinator.push(page: .AddIcon(list: $list, vmIcon: $icon))
             } label: {
                 Image(systemName: "plus.app")
                 Text("Add Icon")
             }
-            
         }
     }
 }

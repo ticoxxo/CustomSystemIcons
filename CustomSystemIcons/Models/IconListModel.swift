@@ -11,8 +11,13 @@ import SFSafeSymbols
 class IconsListModel {
     var iconList: Set<SFSymbol> = SFSymbol.allSymbols
     var arrayOfIcons : [IconModel] = []
+    
     init() {
     }
+    
+}
+
+extension IconsListModel {
     
     func returnRandomIcon() -> SFSymbol {
         return SFSymbol.allSymbols.randomElement() ?? SFSymbol.xCircle
@@ -27,5 +32,9 @@ class IconsListModel {
             }
         }
     }
+    
+    func agregarTarea(_ tarea: IconModel) {
+        arrayOfIcons.append(tarea)
+    }
+    
 }
-

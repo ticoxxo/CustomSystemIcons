@@ -3,12 +3,15 @@ import SFSafeSymbols
 
 
 @Observable
-class IconModel: Identifiable {
+class IconModel: Identifiable, Hashable, Equatable {
     var id = UUID()
     var title: String
     var description: String
     var icon: SFSymbol
-    var frontColor: [Color]
+    var status: Bool = false
+    var date: Date = Date.now
+    var expires: Date?
+    var frontColor: [Color] = [.red, .blue]
     var background: Color = Color(.sRGB, red: 0.98, green: 0.9, blue: 0.2)
     var gradient: Gradient {
         get {
@@ -25,11 +28,28 @@ class IconModel: Identifiable {
     var zoom: CGFloat = 0.8
     var borderWidth: CGFloat = 0.0
     
-    init(frontColor: [Color]) {
+    init() {
         title = ""
         description = ""
         icon = SFSymbol.star
-        self.frontColor = frontColor
+    }
+    
+    init(title: String, description: String) {
+        self.title = title
+        self.description = description
+        icon = SFSymbol.star
+    }
+ 
+}
+
+extension IconModel {
+    
+    static func == (lhs: IconModel, rhs: IconModel) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
     
     func buildGradient(gradientType: GradientType) -> AnyShapeStyle {
@@ -65,5 +85,4 @@ class IconModel: Identifiable {
     func removeColor() {
         frontColor.remove(at: frontColor.count - 1)
     }
- 
 }

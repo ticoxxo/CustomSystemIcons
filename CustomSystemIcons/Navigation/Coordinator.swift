@@ -43,9 +43,10 @@ class Coordinator {
     func build(page: AppPage) -> some View {
         switch page {
         case .Home: Home()
-        case .AddIcon: AddIcon()
+        case .AddIcon(let list, let vmIcon): AddIcon(list: list, vmIcon: vmIcon)
         case .EditIcon(let vmIcon): EditIcon(vmIcon: vmIcon)
         case .GridIconsView(let vmIcon): GridIconsView(vmIcon: vmIcon)
+        case .DateView(let date, let title): DateView(date: date, title: title)
         }
     }
     

@@ -40,7 +40,7 @@ struct GridIconsView: View {
 #Preview {
     @Previewable @State var coordinator = Coordinator()
     @Previewable let list = IconsListModel().iconList
-    @Previewable @State var vmIcon = IconModel(frontColor: [.red])
+    @Previewable @State var vmIcon = IconModel()
     NavigationStack(path: $coordinator.path) {
         GridIconsView(vmIcon: $vmIcon)
     }
