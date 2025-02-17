@@ -7,16 +7,17 @@
 
 import SwiftUI
 import SFSafeSymbols
+import SwiftData
 
 struct AddIcon: View {
     @Environment(\.coordinator) var coordinator
-    @Binding var list: IconsListModel
-    @Binding var vmIcon: IconModel
+    @Environment(\.modelContext) var modelContext
+    @Bindable var vmIcon: IconModel
     var body: some View {
         VStack() {
             GroupBox("Details ") {
                 TextField("Task title", text: $vmIcon.title)
-                TextField("Description", text: $vmIcon.description)
+                TextField("Description", text: $vmIcon.tareaName)
             }
             
             GroupBox("Choose an Icon") {
@@ -28,11 +29,11 @@ struct AddIcon: View {
                             .fontWeight(.bold)
                             .foregroundColor(.blue)
                             .onTapGesture {
-                                coordinator.push(page: .GridIconsView(vmIcon: $vmIcon))
+                                coordinator.push(page: .GridIconsView(vmIcon: vmIcon))
                             }
                     }
                     .onTapGesture {
-                        coordinator.push(page: .EditIcon(vmIcon: $vmIcon))
+                        //coordinator.push(page: .EditIcon(vmIcon: $vmIcon))
                     }
             }
             
@@ -50,7 +51,7 @@ struct AddIcon: View {
             
             
             Button {
-                list.agregarTarea(vmIcon)
+                modelContext.insert(vmIcon)
                 coordinator.toRoot()
             } label: {
                 Text("Agregar model")
@@ -61,15 +62,18 @@ struct AddIcon: View {
     }
 }
 
-#Preview {
+
+#Preview(traits: .modifier(SampleData())) {
     @Previewable @State var coordinator = Coordinator()
-    @Previewable @State var list = IconsListModel()
+    @Previewable @Query var task: [IconModel]
     @Previewable @State var vmIcon = IconModel()
     NavigationStack(path: $coordinator.path) {
-        coordinator.build(page: .AddIcon(list: $list, vmIcon: $vmIcon))
+        coordinator.build(page: .AddIcon(vmIcon: vmIcon))
             .navigationDestination(for: AppPage.self) { page in
                 coordinator.build(page: page)
             }
     }
     .environment(\.coordinator, coordinator)
 }
+
+

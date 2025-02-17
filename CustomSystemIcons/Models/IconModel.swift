@@ -1,22 +1,23 @@
 import SwiftUI
 import SFSafeSymbols
+import SwiftData
 
 
-@Observable
-class IconModel: Identifiable, Hashable, Equatable {
-    var id = UUID()
+@Model
+class IconModel: Identifiable {
+    var id: UUID
     // Details
     var title: String
-    var description: String
-    var icon: SFSymbol
-    var status: Bool = false
+    var tareaName: String
+    var iconSF: String
+    var status: Bool
     // Date
-    var startDate: Date = Date.now
-    var expireDate: Date = Date.now.addingTimeInterval(86400)
+    var startDate: Date
+    var expireDate: Date
     // Color
-    var frontColor: [Color] = [.red, .blue]
-    var background: Color = Color(.sRGB, red: 0.98, green: 0.9, blue: 0.2)
-    var gradient: Gradient {
+    var frontColor: [UInt]
+    var background: UInt
+   /* var gradient: Gradient {
         get {
             Gradient(colors: frontColor)
         }
@@ -24,65 +25,89 @@ class IconModel: Identifiable, Hashable, Equatable {
             let s = frontColor
             return frontColor = s
         }
-    }
-    var boderColor: Color = .black
-    var gradientType: GradientType = .linear
-    var orientation: Double = 0.0
-    var zoom: CGFloat = 0.8
-    var borderWidth: CGFloat = 0.0
     
-    init() {
-        title = ""
-        description = ""
-        icon = SFSymbol.star
+    Color(.sRGB, red: 0.98, green: 0.9, blue: 0.2)
     }
+    */
+    var boderColor: UInt
+    var gradientType: GradientType
+    var orientation: Double
+    var zoom: CGFloat
+    var borderWidth: CGFloat
     
-    init(title: String, description: String) {
+    init(
+        id: UUID = UUID(),
+        title: String = "Test",
+         tareaName: String = "",
+        iconSF : String = "star.fill",
+        frontColor: [UInt] = [0xFF0000],
+        background: UInt = 0xFF0000,
+         status: Bool = false,
+         startDate: Date = .now,
+         expireDate: Date = Date.now.addingTimeInterval(86400),
+        boderColor: UInt = 0xFF0000,
+         gradientType: GradientType = GradientType.linear,
+         orientation: Double = 0.0,
+         zoom: CGFloat = 0.8,
+         borderWidth: CGFloat = 0.0) {
+        self.id = UUID()
         self.title = title
-        self.description = description
-        icon = SFSymbol.star
+        self.tareaName = tareaName
+        self.iconSF = iconSF
+        self.frontColor = frontColor
+        self.background = background
+        self.status = status
+        self.startDate = startDate
+        self.expireDate = expireDate
+        self.boderColor = boderColor
+        self.gradientType = gradientType
+        self.orientation = orientation
+        self.zoom = zoom
+        self.borderWidth = borderWidth
     }
  
 }
 
 extension IconModel {
     
-    static func == (lhs: IconModel, rhs: IconModel) -> Bool {
+    /*
+    public static func == (lhs: IconModel, rhs: IconModel) -> Bool {
         return lhs.id == rhs.id
     }
     
-    func hash(into hasher: inout Hasher) {
+    public func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
-    
+    */
     func buildGradient(gradientType: GradientType) -> AnyShapeStyle {
             switch gradientType {
             case .linear:
-                return AnyShapeStyle(LinearGradient(gradient: gradient, startPoint: .topLeading, endPoint: .bottomTrailing))
+                return AnyShapeStyle(LinearGradient(gradient: Gradient(colors: [Color.black]), startPoint: .topLeading, endPoint: .bottomTrailing))
             case .radial:
-                return AnyShapeStyle(RadialGradient(gradient: gradient, center: .center, startRadius: 1, endRadius: 100))
+              // return AnyShapeStyle(RadialGradient(gradient: Gradient(colors: frontColor), center: .center, startRadius: 1, endRadius: 100))
+                return AnyShapeStyle(RadialGradient(gradient: Gradient(colors: [Color.black]), center: .center, startRadius: 1, endRadius: 100))
             case .angular:
-                return AnyShapeStyle(AngularGradient(gradient: gradient, center: .center))
+                return AnyShapeStyle(AngularGradient(gradient: Gradient(colors: [Color.black]), center: .center))
             case .elliptical:
-                return AnyShapeStyle(EllipticalGradient(gradient: gradient, center: .center))
+                return AnyShapeStyle(EllipticalGradient(gradient: Gradient(colors: [Color.black]), center: .center))
         }
     }
     
     func buildIt(gradientType: GradientType) ->  AnyShapeStyle {
         if gradientType == .linear {
-            AnyShapeStyle(LinearGradient(gradient: gradient, startPoint: .topLeading, endPoint: .bottomTrailing))
+            AnyShapeStyle(LinearGradient(gradient: Gradient(colors: [Color.black]), startPoint: .topLeading, endPoint: .bottomTrailing))
         } else if gradientType == .radial {
-            AnyShapeStyle(RadialGradient(gradient: gradient, center: .center, startRadius: 1, endRadius: 100))
+            AnyShapeStyle(RadialGradient(gradient: Gradient(colors: [Color.black]), center: .center, startRadius: 1, endRadius: 100))
         } else if gradientType == .angular {
-            AnyShapeStyle(AngularGradient(gradient: gradient, center: .center))
+            AnyShapeStyle(AngularGradient(gradient: Gradient(colors: [Color.black]), center: .center))
         } else {
-            AnyShapeStyle(EllipticalGradient(gradient: gradient, center: .center))
+            AnyShapeStyle(EllipticalGradient(gradient: Gradient(colors: [Color.black]), center: .center))
         }
     }
     
     // Add color to the foreground
     func addColor() {
-        frontColor.append(.red)
+        frontColor.append(0x000000)
     }
     
     func removeColor() {
@@ -98,4 +123,14 @@ extension IconModel {
         let components = Calendar.current.dateComponents([.hour, .minute], from: Date.now)
         return components.minute ?? 0
     }
+    
+    func update<T>(keyPath: ReferenceWritableKeyPath<IconModel, T>, to value: T) {
+        self[keyPath: keyPath] = value
+        
+    }
+    
+    
+    
 }
+
+

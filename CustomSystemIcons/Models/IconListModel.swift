@@ -6,14 +6,27 @@
 //
 import SwiftUI
 import SFSafeSymbols
+import SwiftData
 
 @Observable
 class IconsListModel {
-    var iconList: Set<SFSymbol> = SFSymbol.allSymbols
-    var arrayOfIcons : [IconModel] = []
-    
-    init() {
+    var _iconList: [String] = []
+    var iconList: [String] {
+        get {
+            let a = SFSymbol.allSymbols
+            var array = [] as Array<String>
+            a.forEach {
+                array.append($0.rawValue)
+            }
+            return array
+        }
+        
+        set {
+            _iconList = newValue
+        }
     }
+    
+    init(){}
     
 }
 
@@ -25,16 +38,17 @@ extension IconsListModel {
     
     func filterIcons(_ searchText: String) {
         if searchText.isEmpty {
-            iconList = SFSymbol.allSymbols
+            let s =  SFSymbol.allSymbols
+            var arr: [String] = []
+            s.forEach {
+                arr.append($0.rawValue)
+            }
+            iconList = arr
         } else {
             iconList = iconList.filter { symbol in
-                symbol.rawValue.lowercased().contains(searchText.lowercased())
+                symbol.lowercased().contains(searchText.lowercased())
             }
         }
-    }
-    
-    func agregarTarea(_ tarea: IconModel) {
-        arrayOfIcons.append(tarea)
     }
     
 }

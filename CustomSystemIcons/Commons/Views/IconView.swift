@@ -12,19 +12,20 @@ struct IconView: View {
     var vmIcon: IconModel
     var body: some View {
         
-            Image(systemSymbol: vmIcon.icon)
+        Image(systemName: vmIcon.iconSF)
                 .resizable()
                 .scaleEffect(vmIcon.zoom)
                 .scaledToFit()
                 .background(
-                    vmIcon.background
+                    Color(hex: vmIcon.background)
                 )
                 .foregroundStyle(
-                    vmIcon.buildIt(gradientType: vmIcon.gradientType)
+                    //vmIcon.buildIt(gradientType: .linear)
+                    Color.blue
                 )
                 .rotationEffect(.degrees(vmIcon.orientation))
                 .clipShape(Circle())
-                .overlay(Circle().stroke(vmIcon.boderColor, lineWidth: vmIcon.borderWidth))
+                .overlay(Circle().stroke(Color(hex: vmIcon.boderColor), lineWidth: vmIcon.borderWidth))
     }
 }
 

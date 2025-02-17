@@ -11,7 +11,7 @@ import SFSafeSymbols
 struct EditIcon: View {
     @Environment(\.coordinator) var coordinator
     //@Binding var vmIcon: SFSymbol
-    @Binding var vmIcon: IconModel
+    @Bindable var vmIcon: IconModel
     let columns = [
         GridItem(.fixed(100)),
         GridItem(.flexible(minimum: 200, maximum: .infinity)),
@@ -27,14 +27,14 @@ struct EditIcon: View {
                         // Colors
                         HStack {
                             Text("Background")
-                            ColorPicker("",selection: $vmIcon.background)
+                            //ColorPicker("",selection: $vmIcon.background)
                         }
                         .labelsHidden()
                         HStack {
                             Text("Foreground")
                             ForEach($vmIcon.frontColor, id: \.self) { $color in
                                 HStack {
-                                    ColorPicker("",selection: $color)
+                                    //ColorPicker("",selection: $color)
                                 }
                                 .labelsHidden()
                             }
@@ -53,7 +53,7 @@ struct EditIcon: View {
                         }
                         HStack {
                             Text("Border")
-                            ColorPicker("", selection: $vmIcon.boderColor)
+                            //ColorPicker("", selection: $vmIcon.boderColor)
                                 .labelsHidden()
                         }
                         // Orientations
@@ -80,19 +80,19 @@ struct EditIcon: View {
                                 in: 0...15
                             )
                         }
-                        
+                       
                         HStack {
                             Text("Gradient type: \(vmIcon.gradientType)")
                            
-                                Picker("Claro", selection: $vmIcon.gradientType) {
-                                    ForEach(GradientType.all) { type in
-                                        Text("\(type)").textCase(.uppercase)
-                                    }
+                            Picker("Claro", selection: $vmIcon.gradientType) {
+                                ForEach(GradientType.allCases, id: \.self) { type in
+                                    Text("\(type)").textCase(.uppercase)
                                 }
-                                .pickerStyle(.menu)
+                            }
+                            .pickerStyle(.menu)
                             
                         }
-                        
+                      
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                 }
@@ -112,7 +112,7 @@ struct EditIcon: View {
     @Previewable @State var coordinator = Coordinator()
     @Previewable @State var vmIcon = IconModel()
     NavigationStack(path: $coordinator.path) {
-        EditIcon(vmIcon: $vmIcon)
+        EditIcon(vmIcon: vmIcon)
     }
     .environment(\.coordinator, coordinator)
 }

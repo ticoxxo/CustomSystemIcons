@@ -42,13 +42,15 @@ enum GradientDirection {
     }
 }
 
-
-enum GradientType: ShapeStyle, CaseIterable, Identifiable{
-    static var all: [GradientType] = [.linear, .radial, .angular, .elliptical]
+enum GradientType:CaseIterable, Codable{
     case linear
     case radial
     case angular
     case elliptical
-    var id: Self { self }
 }
 
+extension GradientType {
+    init() {
+        self = .linear
+    }
+}

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct IconRowView: View {
-    @Binding var icon: IconModel
+    @Bindable var icon: IconModel
     var body: some View {
         VStack(alignment: .leading) {
             Text("\(icon.title)")
@@ -16,8 +16,10 @@ struct IconRowView: View {
             HStack {
                 IconView(vmIcon: icon)
                     .frame(width: 50, height: 50)
-                Text(icon.description)
-                    .font(.footnote)
+                VStack {
+                    Text(icon.tareaName)
+                        .font(.footnote)
+                }
                     
                    
                 DatePicker("",
@@ -34,6 +36,6 @@ struct IconRowView: View {
 }
 
 #Preview {
-    @Previewable @State var icon = IconModel(title: "Noisita titulo", description: "Gatita preciosa bonita")
-    IconRowView(icon: $icon)
+    @Previewable @State var icon = IconModel(title: "Noisita titulo", tareaName: "Gatita preciosa bonita")
+    IconRowView(icon: icon)
 }

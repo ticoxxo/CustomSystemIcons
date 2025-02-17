@@ -13,8 +13,8 @@ enum AppPage: Hashable, Equatable {
         switch (lhs, rhs) {
         case (.Home, .Home):
             return true
-        case (.AddIcon(let lhList, let lhIcon), .AddIcon(let rhList, let rhIcon)):
-            return lhList.arrayOfIcons.wrappedValue == rhList.arrayOfIcons.wrappedValue && lhIcon.id == rhIcon.id
+        case (.AddIcon(let lhIcon), .AddIcon(let rhIcon)):
+            return  lhIcon.id == rhIcon.id
         case (.EditIcon(let lhVmIcon), .EditIcon(let rhVmIcon)):
             return lhVmIcon.id == rhVmIcon.id
         case (.GridIconsView(let lhVmIcon), .GridIconsView(let rhVmIcon)):
@@ -30,8 +30,7 @@ enum AppPage: Hashable, Equatable {
             switch self {
             case .Home:
                 hasher.combine(0)
-            case .AddIcon(let list, let icon):
-                hasher.combine(list.arrayOfIcons.wrappedValue)
+            case .AddIcon(let icon):
                 hasher.combine(icon.id)
             case .EditIcon(let vmIcon ):
                 hasher.combine(vmIcon.id)
@@ -45,9 +44,9 @@ enum AppPage: Hashable, Equatable {
     
     
     case Home
-    case AddIcon(list: Binding<IconsListModel>, vmIcon: Binding<IconModel>)
-    case EditIcon(vmIcon: Binding<IconModel>)
-    case GridIconsView(vmIcon: Binding<IconModel>)
+    case AddIcon(vmIcon: IconModel)
+    case EditIcon(vmIcon: IconModel)
+    case GridIconsView(vmIcon: IconModel)
     case DateView(date: Binding<Date>, title: String)
 }
 
