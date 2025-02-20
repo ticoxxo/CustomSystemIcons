@@ -11,21 +11,27 @@ import SFSafeSymbols
 struct IconView: View {
     var vmIcon: IconModel
     var body: some View {
-        
-        Image(systemName: vmIcon.iconSF)
+        VStack {
+            Image(systemName: vmIcon.iconSF)
                 .resizable()
                 .scaleEffect(vmIcon.zoom)
                 .scaledToFit()
-                .background(
-                    Color(hex: vmIcon.background)
-                )
                 .foregroundStyle(
                     //vmIcon.buildIt(gradientType: .linear)
-                    Color.blue
+                    vmIcon.frontColor
                 )
                 .rotationEffect(.degrees(vmIcon.orientation))
-                .clipShape(Circle())
-                .overlay(Circle().stroke(Color(hex: vmIcon.boderColor), lineWidth: vmIcon.borderWidth))
+                
+                
+                
+        }
+        .background(
+            //Color(hex: vmIcon.background)
+            vmIcon.backgroundColor
+        )
+        .clipShape(vmIcon.styleShape)
+        .overlay(vmIcon.styleShape.stroke(vmIcon.borderColor, lineWidth: vmIcon.borderWidth))
+        .padding()
     }
 }
 

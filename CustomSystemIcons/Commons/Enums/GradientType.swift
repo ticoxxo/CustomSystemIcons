@@ -42,15 +42,17 @@ enum GradientDirection {
     }
 }
 
-enum GradientType:CaseIterable, Codable{
-    case linear
-    case radial
-    case angular
-    case elliptical
+enum GradientType:Int,CaseIterable, Codable{
+    case linear = 1
+    case radial = 2
+    case angular = 3
+    case elliptical = 4
 }
 
+/*
 extension GradientType {
     init() {
         self = .linear
     }
 }
+*/

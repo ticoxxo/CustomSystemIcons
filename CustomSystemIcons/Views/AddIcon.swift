@@ -33,7 +33,7 @@ struct AddIcon: View {
                             }
                     }
                     .onTapGesture {
-                        //coordinator.push(page: .EditIcon(vmIcon: $vmIcon))
+                        coordinator.push(page: .EditIcon(vmIcon: vmIcon))
                     }
             }
             

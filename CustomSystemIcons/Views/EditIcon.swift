@@ -20,6 +20,7 @@ struct EditIcon: View {
         VStack {
             IconView(vmIcon: vmIcon)
                 .frame(width: 400, height: 400)
+                
             GroupBox("Settings") {
                 ScrollView {
                     
@@ -28,45 +29,53 @@ struct EditIcon: View {
                         HStack {
                             Text("Background")
                             //ColorPicker("",selection: $vmIcon.background)
+                            ColorPicker("", selection: $vmIcon.backgroundColor)
+                                .labelsHidden()
                         }
                         .labelsHidden()
-                        HStack {
-                            Text("Foreground")
-                            ForEach($vmIcon.frontColor, id: \.self) { $color in
-                                HStack {
-                                    //ColorPicker("",selection: $color)
-                                }
-                                .labelsHidden()
-                            }
-                            Button {
-                                vmIcon.addColor()
-                            } label: {
-                                Image(systemName: "plus")
-                            }
-                            .opacity(vmIcon.frontColor.count > 2 ? 0 : 1 )
-                            Button {
-                                vmIcon.removeColor()
-                            } label: {
-                                Image(systemName: "minus")
-                            }
-                            .opacity(vmIcon.frontColor.count <= 1 ? 0 : 1 )
-                        }
+                        
+                         HStack {
+                             Text("Foreground")
+                             /*
+                              ForEach($vmIcon.colorTest, id: \.self) { $color in
+                                 HStack {
+                                     ColorPicker("",selection: $color)
+                                 }
+                                 .labelsHidden()
+                             }
+                             Button {
+                                 vmIcon.addColor()
+                             } label: {
+                                 Image(systemName: "plus")
+                             }
+                             .opacity(vmIcon.frontColor.count > 2 ? 0 : 1 )
+                             Button {
+                                 vmIcon.removeColor()
+                             } label: {
+                                 Image(systemName: "minus")
+                             }
+                             .opacity(vmIcon.frontColor.count <= 1 ? 0 : 1 )
+                              */
+                             ColorPicker("",selection: $vmIcon.frontColor)
+                                 .labelsHidden()
+                         }
+                         
                         HStack {
                             Text("Border")
-                            //ColorPicker("", selection: $vmIcon.boderColor)
+                            ColorPicker("", selection: $vmIcon.borderColor)
                                 .labelsHidden()
                         }
                         // Orientations
                         HStack {
-                           Text("Orientation")
+                            Text("Orientation")
                             Slider(
                                 value: $vmIcon.orientation,
                                 in: 0...100
                             )
                         }
-                       // Zoom
+                        // Zoom
                         HStack {
-                           Text("Zoom")
+                            Text("Zoom")
                             Slider(
                                 value: $vmIcon.zoom,
                                 in: 0...1
@@ -74,16 +83,16 @@ struct EditIcon: View {
                         }
                         // Border
                         HStack {
-                           Text("Border width")
+                            Text("Border width")
                             Slider(
                                 value: $vmIcon.borderWidth,
                                 in: 0...15
                             )
                         }
-                       
+                        
                         HStack {
-                            Text("Gradient type: \(vmIcon.gradientType)")
-                           
+                            Text("Gradient type")
+                            
                             Picker("Claro", selection: $vmIcon.gradientType) {
                                 ForEach(GradientType.allCases, id: \.self) { type in
                                     Text("\(type)").textCase(.uppercase)
@@ -92,7 +101,17 @@ struct EditIcon: View {
                             .pickerStyle(.menu)
                             
                         }
-                      
+                        
+                        HStack {
+                            Text("Style type")
+                            Picker("", selection: $vmIcon.styleShape) {
+                                ForEach(StyleShape.allCases, id: \.self) { style in
+                                    //Text(style.rawValue.capitalized)
+                                    Text("\(style)").textCase(.uppercase)
+                                }
+                            }
+                        }
+                        
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                 }
@@ -102,7 +121,7 @@ struct EditIcon: View {
                 let num = coordinator.path.count > 2 ? 2 : 1
                 coordinator.popByNumber(num)
             } label: {
-               Text("Go Back")
+                Text("Go Back")
             }
         }
     }
