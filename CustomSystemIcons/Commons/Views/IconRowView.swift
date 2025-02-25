@@ -16,10 +16,9 @@ struct IconRowView: View {
             HStack {
                 
                 
-                    IconView(vmIcon: icon)
-                        .frame(width: 60, height: 60, alignment: .center)
+                IconView(vmIcon: icon, bWidth: 80, bHeight: 80)
+                        .frame(alignment: .center)
                 
-                .background(icon.backgroundColor)
                 VStack {
                     Text(icon.tareaName)
                         .font(.footnote)

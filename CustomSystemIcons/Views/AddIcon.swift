@@ -21,8 +21,7 @@ struct AddIcon: View {
             }
             
             GroupBox("Choose an Icon") {
-                IconView(vmIcon: vmIcon)
-                    .frame(width: 100, height: 100)
+                IconView(vmIcon: vmIcon, bWidth: 100, bHeight: 100)
                     .overlay(alignment: .bottomTrailing) {
                         Image(systemName: "plus.circle.fill")
                             .font(.system(size: 30))

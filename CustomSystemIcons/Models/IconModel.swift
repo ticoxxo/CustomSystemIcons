@@ -198,6 +198,8 @@ class IconModel: Identifiable {
     var orientation: Double
     var zoom: CGFloat
     var borderWidth: CGFloat
+    var position: CGPoint
+    var dragging: Bool
     
     init(
         id: UUID = UUID(),
@@ -205,16 +207,18 @@ class IconModel: Identifiable {
          tareaName: String = "",
         iconSF : String = "star.fill",
          status: Bool = false,
-        styleShape: StyleShape = .star,
+        styleShape: StyleShape = .circle,
          startDate: Date = .now,
          expireDate: Date = Date.now.addingTimeInterval(86400),
         gradientType: GradientType = GradientType.linear,
          orientation: Double = 0.0,
          zoom: CGFloat = 0.8,
-         borderWidth: CGFloat = 0.0,
+         borderWidth: CGFloat = 15.0,
         backgroundColorComputed: Colores = .init(),
         borderColorComputed: Colores = .init(red: 0.4,blue: 0.4,green: 0.4),
-        frontColorComputed: Colores = .init(red: 0.0,blue: 0.4,green: 0.1)) {
+        frontColorComputed: Colores = .init(red: 0.0,blue: 0.4,green: 0.1),
+        position: CGPoint = .zero,
+        dragging: Bool = false) {
         self.id = UUID()
         self.title = title
         self.tareaName = tareaName
@@ -231,6 +235,8 @@ class IconModel: Identifiable {
         self.backgroundColorComputed = backgroundColorComputed
         self.borderColorComputed = borderColorComputed
         self.frontColorComputed = frontColorComputed
+        self.position = position
+            self.dragging =  dragging
     }
  
 }
@@ -323,9 +329,15 @@ extension IconModel {
         self[keyPath: keyPath] = value
         
     }
-    
-    
-    
+   
+    func changePosition(width: CGFloat, height: CGFloat) -> CGPoint {
+        if (self.position == .zero) {
+            self.position.x = width / 2
+            self.position.y = height / 2
+        }
+        
+        return self.position
+    }
 }
 
 
