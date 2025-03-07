@@ -17,14 +17,14 @@ struct EditIcon: View {
         GridItem(.flexible(minimum: 200, maximum: .infinity)),
     ]
     var body: some View {
-        VStack {
-            IconView(vmIcon: vmIcon, bWidth: 400, bHeight: 400)
+        
                 
-                
+                /*
             Form {
                 ScrollView {
                     VStack(alignment: .leading) {
                         // Colors
+                        
                         Section(header: Text("Colors").font(.headline)) {
                             ColorPicker("Background", selection: $vmIcon.backgroundColor)
                             /*
@@ -109,6 +109,11 @@ struct EditIcon: View {
                     
                 }
             }
+            */
+            
+        Form {
+            IconView(vmIcon: vmIcon, bWidth: 300, bHeight: 300)
+            ColorSection(vmIcon: vmIcon)
             
             Button {
                 let num = coordinator.path.count > 2 ? 2 : 1
@@ -116,14 +121,24 @@ struct EditIcon: View {
             } label: {
                 Text("Go Back")
             }
+            Button {
+                vmIcon.addIcon()
+            } label: {
+                Text("Add icon")
+            }
+            
         }
+        //PositionSection(vmIcon: vmIcon)
     }
+    
 }
 
 #Preview {
     @Previewable @State var coordinator = Coordinator()
     @Previewable @State var vmIcon = IconModel()
-    NavigationStack(path: $coordinator.path) {
+    vmIcon.addIcon()
+    vmIcon.addIcon()
+    return NavigationStack(path: $coordinator.path) {
         EditIcon(vmIcon: vmIcon)
     }
     .environment(\.coordinator, coordinator)

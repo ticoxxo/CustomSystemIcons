@@ -13,26 +13,12 @@ struct IconView: View {
     var bWidth: CGFloat
     var bHeight: CGFloat
     var body: some View {
-        VStack {
-            Image(systemName: vmIcon.iconSF)
-                .resizable()
-                .scaleEffect(vmIcon.zoom)
-                .scaledToFit()
-                .foregroundStyle(
-                    //vmIcon.buildIt(gradientType: .linear)
-                    vmIcon.frontColor
-                )
-                .rotationEffect(.degrees(vmIcon.orientation))
-                .position(vmIcon.changePosition(width: bWidth, height: bHeight))
-                .gesture(DragGesture()
-                    .onChanged { value in
-                    vmIcon.position = value.location
-                        vmIcon.dragging = true
-                }
-                    .onEnded {_ in 
-                        vmIcon.dragging = false
-                    }
-                )
+        ZStack {
+            ForEach(vmIcon.icons) { icono in
+                IconChildView(icono: icono, bWidth: bWidth, bHeight: bWidth)
+                    
+            }
+                
         }
         .background(
             //Color(hex: vmIcon.background)

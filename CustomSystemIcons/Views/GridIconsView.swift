@@ -18,7 +18,7 @@ struct GridIconsView: View {
     @State var searchText: String = ""
     var body: some View {
         VStack {
-            Text("Selected icon: \(Image(systemName: vmIcon.iconSF))")
+
             TextField("Buscar...", text: $searchText)
             ScrollView {
                 if iconsList.iconList.isEmpty {
@@ -41,7 +41,7 @@ struct GridIconsView: View {
                                 .font(.system(size: 50))
                                 .onTapGesture {
                                     
-                                    vmIcon.iconSF = element
+                                    //vmIcon.iconSF = element
                                     coordinator.push(page: .EditIcon(vmIcon: vmIcon))
                                 }
                         }

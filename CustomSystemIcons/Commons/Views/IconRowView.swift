@@ -17,7 +17,7 @@ struct IconRowView: View {
                 
                 
                 IconView(vmIcon: icon, bWidth: 80, bHeight: 80)
-                        .frame(alignment: .center)
+                        //.frame(alignment: .center)
                 
                 VStack {
                     Text(icon.tareaName)
