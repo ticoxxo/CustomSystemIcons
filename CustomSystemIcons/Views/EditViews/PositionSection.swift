@@ -9,73 +9,26 @@ import SwiftUI
 
 struct PositionSection: View {
     @Bindable var vmIcon: IconModel
-    var off: CGFloat = 0
-    @State private var offset = CGSize.zero
-    let sports = ["figure.badminton", "figure.cricket", "figure.fencing"]
-    @State private var dropImage = Image(systemName: "photo")
+    @State private var expanded: Bool = false
     
     var body: some View {
-        
-        Section(header: Text("List Section").font(.headline)) {
-            List {
-                ForEach(vmIcon.icons) { item in
-                    
-                    Rectangle()
-                        .fill(Color.gray)
-                        .frame(width: 200, height: 50)
-                        .overlay {
-                            HStack {
-                                Text("\(item.zIndex)")
-                                ImageDraggable(item: item)
-                            }
-                        }
-                        
-                }
-                .onMove(perform: vmIcon.moveRow)
-            }
-        }
-       
-    }
-    
-   
-}
-
-struct ImageDraggable: View {
-    let item: IconChild
-    var body: some View {
-        Image(systemName: item.name)
-            .resizable()
-            .foregroundStyle(item.frontColor)
-            .frame(width: 25, height: 25)
-            .draggable(Image(systemName: item.name)) {
-                Image(systemName: item.name)
-                    .resizable()
-                    .foregroundStyle(item.frontColor)
-                    .frame(width: 20, height: 20)
-            }
-    }
-}
-
-struct ImagePosition: View {
-    
-    @State private var dropImage = Image(systemName: "photo")
-
-    var body: some View {
-        
-        VStack {
-            dropImage
-                .resizable()
-                .zIndex(1)
-                .background(.green)
-                .foregroundStyle(.white)
-                .dropDestination(for: Image.self) { items, location in
-                    dropImage =  Image(systemName: "star.fill")
-                    return true
+        DisclosureGroup(isExpanded: $expanded) {
+            ForEach($vmIcon.icons) { item in
+                HStack {
+                    Image(systemName: item.name.wrappedValue)
+                        .resizable()
+                        .foregroundStyle(item.frontColor.wrappedValue)
+                        .frame(width: 25, height: 25)
+                    Slider(value: item.zoom, in:0.2...1.0)
                 }
                 
+            }
+        } label: {
+            Text("Manual zoom").font(.headline)
         }
     }
 }
+
 
 #Preview {
     @Previewable @State var vmIcon = IconModel()

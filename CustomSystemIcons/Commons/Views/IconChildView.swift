@@ -11,6 +11,7 @@ struct IconChildView: View {
     var icono: IconChild
     var bWidth: CGFloat
     var bHeight: CGFloat
+    
     var body: some View {
         Image(systemName: icono.name)
             .resizable()
@@ -28,12 +29,46 @@ struct IconChildView: View {
                 .onChanged { value in
                     icono.position = value.location
                     icono.dragging = true
-            }
+                }
                 .onEnded {_ in
                     icono.dragging = false
                 }
             )
-            
+            .simultaneousGesture(
+                MagnifyGesture()
+                    .onChanged { value in
+                        if value.magnification < 0.2 || value.magnification > 1.0 {
+                            icono.zoom = value.magnification
+                        }
+                    }
+            )
+            /*
+             
+             .onEnded { value in
+                 icono.zoom *= magnification
+                 magnification = 1.0
+             }
+             
+            .gesture(DragGesture()
+                .onChanged { value in
+                    icono.position = value.location
+                    icono.dragging = true
+                }
+                .onEnded {_ in
+                    icono.dragging = false
+                }
+            )
+            .simultaneousGesture(
+                MagnificationGesture()
+                    .onChanged { value in
+                        magnification = value
+                    }
+                    .onEnded { value in
+                        icono.zoom += magnification
+                        magnification = 1.0
+                    }
+            )
+        */
     }
 }
 

@@ -12,10 +12,6 @@ struct EditIcon: View {
     @Environment(\.coordinator) var coordinator
     //@Binding var vmIcon: SFSymbol
     @Bindable var vmIcon: IconModel
-    let columns = [
-        GridItem(.fixed(100)),
-        GridItem(.flexible(minimum: 200, maximum: .infinity)),
-    ]
     var body: some View {
         
                 
@@ -110,24 +106,27 @@ struct EditIcon: View {
                 }
             }
             */
-            
-        Form {
+        VStack {
             IconView(vmIcon: vmIcon, bWidth: 300, bHeight: 300)
-            ColorSection(vmIcon: vmIcon)
-            
-            Button {
-                let num = coordinator.path.count > 2 ? 2 : 1
-                coordinator.popByNumber(num)
-            } label: {
-                Text("Go Back")
+            Form {
+                ColorSection(vmIcon: vmIcon)
+                OrientationSection(vmIcon: vmIcon)
+                PositionSection(vmIcon: vmIcon)
+                Button {
+                    let num = coordinator.path.count > 2 ? 2 : 1
+                    coordinator.popByNumber(num)
+                } label: {
+                    Text("Go Back")
+                }
+                Button {
+                    vmIcon.addIcon()
+                } label: {
+                    Text("Add icon")
+                }
+                
             }
-            Button {
-                vmIcon.addIcon()
-            } label: {
-                Text("Add icon")
-            }
-            
         }
+        
         //PositionSection(vmIcon: vmIcon)
     }
     

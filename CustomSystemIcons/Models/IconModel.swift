@@ -157,10 +157,14 @@ extension IconModel {
     }
     
     func updateZIndex() {
-        for (index, icon) in self.icons.enumerated() {
+        for (index, _) in self.icons.enumerated() {
             icons[index].zIndex = Double(index) + 1.0
         }
     }
+    
+    func customMove(fromOffsets indices: IndexSet, toOffset newOffset: Int) {
+            icons.move(fromOffsets: indices, toOffset: newOffset)
+        }
 }
 
 

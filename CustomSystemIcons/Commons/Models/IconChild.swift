@@ -18,15 +18,17 @@ class IconChild: Identifiable {
     var dragging: Bool
     var zIndex: Double
     var offset: CGSize
+    var test: Double
     
     init(name: String = "star.fill",
          frontColorComputed: Colores = .init(red: Double.random(in: 0.09...0.9),blue: Double.random(in: 0.09...0.9),green:Double.random(in: 0.09...0.9)),
          orientation: Double = 0.0,
-         zoom: CGFloat = 0.8,
+         zoom: CGFloat = 1.0,
          position: CGPoint = .zero,
          dragging: Bool = false,
          zIndex: Double = 1,
-         offset: CGSize = .zero) {
+         offset: CGSize = .zero,
+         test: Double = 0) {
         self.name = name
         self.frontColorComputed = frontColorComputed
         self.orientation = orientation
@@ -35,6 +37,7 @@ class IconChild: Identifiable {
         self.dragging =  dragging
         self.zIndex = zIndex
         self.offset = offset
+        self.test = test
     }
 }
 
