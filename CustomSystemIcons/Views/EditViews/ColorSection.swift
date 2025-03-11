@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ColorSection: View {
+    @Environment(\.coordinator) var coordinator
     @Bindable var vmIcon: IconModel
     @State private var expanded: Bool = true
     var body: some View {
@@ -24,11 +25,13 @@ struct ColorSection: View {
                             .resizable()
                             .foregroundStyle(icon.frontColor.wrappedValue)
                             .frame(width: 25, height: 25)
+                        PickIcon(item: icon)
                         ColorPicker("", selection: icon.frontColor)
                     }
                 }
                 .onMove(perform: vmIcon.moveRow)
             }
+            
         } label: {
             Text("Colors").font(.headline)
         }

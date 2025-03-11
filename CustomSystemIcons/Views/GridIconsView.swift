@@ -14,7 +14,7 @@ struct GridIconsView: View {
     @State private var set: Set<String> = ["value1", "value2", "value3", "value4"]
 
     //@Binding var vmIcon: SFSymbol
-    @Bindable var vmIcon: IconModel
+    @Binding var vmIcon: IconChild
     @State var searchText: String = ""
     var body: some View {
         VStack {
@@ -40,9 +40,10 @@ struct GridIconsView: View {
                             Image(systemName: "\(element)")
                                 .font(.system(size: 50))
                                 .onTapGesture {
-                                    
+                                    vmIcon.name = element
+                                    coordinator.pop()
                                     //vmIcon.iconSF = element
-                                    coordinator.push(page: .EditIcon(vmIcon: vmIcon))
+                                    //coordinator.push(page: .EditIcon(vmIcon: vmIcon))
                                 }
                         }
                         .onChange(of: searchText){
@@ -59,9 +60,9 @@ struct GridIconsView: View {
 #Preview {
     @Previewable @State var coordinator = Coordinator()
     @Previewable let list = IconsListModel().iconList
-    @Previewable @State var vmIcon = IconModel()
+    @Previewable @State var vmIcon = IconChild()
     NavigationStack(path: $coordinator.path) {
-        GridIconsView(vmIcon: vmIcon)
+        GridIconsView(vmIcon: $vmIcon)
     }
     .environment(\.coordinator, coordinator)
 }

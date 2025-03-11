@@ -18,7 +18,7 @@ class IconChild: Identifiable {
     var dragging: Bool
     var zIndex: Double
     var offset: CGSize
-    var test: Double
+    var borderColorComputed: Colores
     
     init(name: String = "star.fill",
          frontColorComputed: Colores = .init(red: Double.random(in: 0.09...0.9),blue: Double.random(in: 0.09...0.9),green:Double.random(in: 0.09...0.9)),
@@ -28,7 +28,7 @@ class IconChild: Identifiable {
          dragging: Bool = false,
          zIndex: Double = 1,
          offset: CGSize = .zero,
-         test: Double = 0) {
+         borderColorComputed: Colores = .init(red: 0.4,blue: 0.4,green: 0.4)) {
         self.name = name
         self.frontColorComputed = frontColorComputed
         self.orientation = orientation
@@ -37,18 +37,33 @@ class IconChild: Identifiable {
         self.dragging =  dragging
         self.zIndex = zIndex
         self.offset = offset
-        self.test = test
+        self.borderColorComputed = borderColorComputed
     }
 }
 
 extension IconChild {
     var frontColor: Color {
-        get { Color(red: frontColorComputed.red, green: frontColorComputed.green, blue: frontColorComputed.blue)}
+        get {
+            return Color(red: frontColorComputed.red, green: frontColorComputed.green, blue: frontColorComputed.blue)
+        }
         set {
             if let components = newValue.cgColor?.components {
                 frontColorComputed.red = components[0]
                 frontColorComputed.green = components[1]
                 frontColorComputed.blue = components[2]
+            }
+        }
+    }
+    
+    var borderColor: Color {
+        get {
+            Color(red: borderColorComputed.red, green: borderColorComputed.green, blue: borderColorComputed.blue)
+        }
+        set {
+            if let components = newValue.cgColor?.components {
+                borderColorComputed.red = components[0]
+                borderColorComputed.green = components[1]
+                borderColorComputed.blue = components[2]
             }
         }
     }

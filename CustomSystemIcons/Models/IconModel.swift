@@ -8,11 +8,7 @@ class IconModel: Identifiable {
     // Details
     var title: String
     var tareaName: String
-    var status: Bool
     var styleShape: StyleShape
-    // Date
-    var startDate: Date
-    var expireDate: Date
     // Color
     var backgroundColorComputed: Colores
     var borderColorComputed: Colores
@@ -28,8 +24,7 @@ class IconModel: Identifiable {
     Color(.sRGB, red: 0.98, green: 0.9, blue: 0.2)
     }
     */
-    var gradientType: GradientType
-    var borderWidth: CGFloat
+    var borderWidth: Double
     var position: CGPoint
     var dragging: Bool
     var icons: [IconChild]
@@ -38,14 +33,10 @@ class IconModel: Identifiable {
         id: UUID = UUID(),
         title: String = "",
          tareaName: String = "",
-         status: Bool = false,
         styleShape: StyleShape = .circle,
-         startDate: Date = .now,
-         expireDate: Date = Date.now.addingTimeInterval(86400),
-        gradientType: GradientType = GradientType.linear,
          orientation: Double = 0.0,
          zoom: CGFloat = 0.8,
-         borderWidth: CGFloat = 15.0,
+         borderWidth: Double = 15.0,
         backgroundColorComputed: Colores = .init(),
         borderColorComputed: Colores = .init(red: 0.4,blue: 0.4,green: 0.4),
         position: CGPoint = .zero,
@@ -54,11 +45,7 @@ class IconModel: Identifiable {
         self.id = UUID()
         self.title = title
         self.tareaName = tareaName
-        self.status = status
         self.styleShape = styleShape
-        self.startDate = startDate
-        self.expireDate = expireDate
-        self.gradientType = gradientType
         self.borderWidth = borderWidth
         self.backgroundColorComputed = backgroundColorComputed
         self.borderColorComputed = borderColorComputed

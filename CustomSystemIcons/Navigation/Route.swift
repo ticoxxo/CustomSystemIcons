@@ -46,7 +46,7 @@ enum AppPage: Hashable, Equatable {
     case Home
     case AddIcon(vmIcon: IconModel)
     case EditIcon(vmIcon: IconModel)
-    case GridIconsView(vmIcon: IconModel)
+    case GridIconsView(vmIcon: Binding<IconChild>)
     case DateView(date: Binding<Date>, title: String)
 }
 

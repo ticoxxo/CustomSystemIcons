@@ -14,6 +14,7 @@ struct AddIcon: View {
     @Environment(\.modelContext) var modelContext
     @Bindable var vmIcon: IconModel
     var body: some View {
+        /*
         VStack() {
             GroupBox("Details ") {
                 TextField("Task title", text: $vmIcon.title)
@@ -22,15 +23,6 @@ struct AddIcon: View {
             
             GroupBox("Choose an Icon") {
                 IconView(vmIcon: vmIcon, bWidth: 100, bHeight: 100)
-                    .overlay(alignment: .bottomTrailing) {
-                        Image(systemName: "plus.circle.fill")
-                            .font(.system(size: 30))
-                            .fontWeight(.bold)
-                            .foregroundColor(.blue)
-                            .onTapGesture {
-                                coordinator.push(page: .GridIconsView(vmIcon: vmIcon))
-                            }
-                    }
                     .onTapGesture {
                         coordinator.push(page: .EditIcon(vmIcon: vmIcon))
                     }
@@ -58,13 +50,26 @@ struct AddIcon: View {
                 
         }
         .padding()
+         */
+        Form {
+            GroupBox("Choose an Icon") {
+                IconView(vmIcon: vmIcon, bWidth: 100, bHeight: 100, editable: false)
+                    .onTapGesture {
+                        coordinator.push(page: .EditIcon(vmIcon: vmIcon))
+                    }
+            }
+            
+            GroupBox("Details ") {
+                TextField("Title", text: $vmIcon.title)
+            }
+            
+        }
     }
 }
 
 
-#Preview(traits: .modifier(SampleData())) {
+#Preview {
     @Previewable @State var coordinator = Coordinator()
-    @Previewable @Query var task: [IconModel]
     @Previewable @State var vmIcon = IconModel()
     NavigationStack(path: $coordinator.path) {
         coordinator.build(page: .AddIcon(vmIcon: vmIcon))
