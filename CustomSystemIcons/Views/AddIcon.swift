@@ -63,6 +63,13 @@ struct AddIcon: View {
                 TextField("Title", text: $vmIcon.title)
             }
             
+            Button {
+                modelContext.insert(vmIcon)
+                coordinator.toRoot()
+            } label: {
+                Text("Agregar model")
+            }
+            
         }
     }
 }

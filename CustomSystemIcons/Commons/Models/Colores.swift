@@ -19,3 +19,28 @@ struct Colores: Codable, Hashable {
         self.blue = blue
     }
 }
+
+struct ColorComponents: Codable {
+var red: Double
+    var green: Double
+    var blue: Double
+    var alpha: Double
+
+    init(color: Color) {
+        if let components = color.cgColor?.components {
+            self.red = Double(components[0])
+            self.green = Double(components[1])
+            self.blue = Double(components[2])
+            self.alpha = Double(components[3])
+        } else {
+            self.red = 0
+            self.green = 0
+            self.blue = 0
+            self.alpha = 1
+        }
+    }
+
+    var color: Color {
+        return Color(red: red, green: green, blue: blue, opacity: alpha)
+    }
+}

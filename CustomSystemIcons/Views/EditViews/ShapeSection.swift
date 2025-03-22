@@ -17,7 +17,7 @@ struct ShapeSection: View {
                     //Text("\(shape)").tag(shape)
                     ShapeView(shape: shape)
                         .onTapGesture {
-                            vmIcon.styleShape = shape
+                            //vmIcon.styleShape = shape
                         }
                     Spacer()
                 }

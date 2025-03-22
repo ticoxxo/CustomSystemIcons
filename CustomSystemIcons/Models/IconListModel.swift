@@ -4,6 +4,7 @@
 //
 //  Created by Alberto Almeida on 16/12/24.
 //
+
 import SwiftUI
 import SFSafeSymbols
 import SwiftData

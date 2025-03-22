@@ -3,72 +3,67 @@ import SFSafeSymbols
 import SwiftData
 
 @Model
-class IconModel: Identifiable {
+final class IconModel: Identifiable {
     var id: UUID
     // Details
     var title: String
     var tareaName: String
-    var styleShape: StyleShape
+    //var styleShape: StyleShape
     // Color
-    var backgroundColorComputed: Colores
-    var borderColorComputed: Colores
-   /* var gradient: Gradient {
-        get {
-            Gradient(colors: frontColor)
-        }
-        set {
-            let s = frontColor
-            return frontColor = s
-        }
-    
-    Color(.sRGB, red: 0.98, green: 0.9, blue: 0.2)
-    }
-    */
+    var backgroundColorComputed: ColorComponents
+    var borderColorComputed: ColorComponents
     var borderWidth: Double
-    var position: CGPoint
-    var dragging: Bool
+    @Relationship(deleteRule: .cascade)
     var icons: [IconChild]
+    @Attribute(originalName: "creation_date") var creationDate: Date
+    var isFavorite: Bool
     
     init(
         id: UUID = UUID(),
         title: String = "",
-         tareaName: String = "",
-        styleShape: StyleShape = .circle,
-         orientation: Double = 0.0,
-         zoom: CGFloat = 0.8,
-         borderWidth: Double = 15.0,
-        backgroundColorComputed: Colores = .init(),
-        borderColorComputed: Colores = .init(red: 0.4,blue: 0.4,green: 0.4),
-        position: CGPoint = .zero,
-        dragging: Bool = false,
-        icons: [IconChild] = [IconChild()]) {
-        self.id = UUID()
-        self.title = title
-        self.tareaName = tareaName
-        self.styleShape = styleShape
-        self.borderWidth = borderWidth
-        self.backgroundColorComputed = backgroundColorComputed
-        self.borderColorComputed = borderColorComputed
-        self.position = position
-        self.dragging =  dragging
-        self.icons = icons
-    }
- 
+        tareaName: String = "",
+        //styleShape: StyleShape = .circle,
+        orientation: Double = 0.0,
+        zoom: CGFloat = 0.8,
+        borderWidth: Double = 15.0,
+        //backgroundColorComputed: Colores = .init(red: 0.4,blue: 0.4,green: 0.4),
+        //borderColorComputed: Colores = .init(red: 0.4,blue: 0.4,green: 0.4),
+        backgroundColorComputed: ColorComponents = ColorComponents(color: .white),
+        borderColorComputed: ColorComponents = ColorComponents(color: .black),
+        icons: [IconChild] = [IconChild()],
+        creationDate: Date = Date(),
+        is isFavorite: Bool = false) {
+            self.id = UUID()
+            self.title = title
+            self.tareaName = tareaName
+            //self.styleShape = styleShape
+            self.borderWidth = borderWidth
+            self.backgroundColorComputed = backgroundColorComputed
+            self.borderColorComputed = borderColorComputed
+            self.icons = icons
+            self.creationDate = creationDate
+            self.isFavorite = isFavorite
+        }
+    
+    enum CodingKeys: String, CodingKey {
+            case id
+            case title
+            case tareaName
+            //case styleShape
+            case backgroundColorComputed
+            case borderColorComputed
+            case borderWidth
+            case icons
+            case creationDate
+            case isFavorite
+        }
+    
 }
 
 extension IconModel {
     
     /*
-    public static func == (lhs: IconModel, rhs: IconModel) -> Bool {
-        return lhs.id == rhs.id
-    }
-    
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
-    }
-    
-    */
-    var backgroundColor: Color {
+     var backgroundColor: Color {
         get { Color(red: backgroundColorComputed.red, green: backgroundColorComputed.green, blue: backgroundColorComputed.blue)}
         set {
             if let components = newValue.cgColor?.components {
@@ -89,32 +84,16 @@ extension IconModel {
             }
         }
     }
-    
-    func buildGradient(gradientType: GradientType) -> AnyShapeStyle {
-            switch gradientType {
-            case .linear:
-                return AnyShapeStyle(LinearGradient(gradient: Gradient(colors: [Color.black]), startPoint: .topLeading, endPoint: .bottomTrailing))
-            case .radial:
-              // return AnyShapeStyle(RadialGradient(gradient: Gradient(colors: frontColor), center: .center, startRadius: 1, endRadius: 100))
-                return AnyShapeStyle(RadialGradient(gradient: Gradient(colors: [Color.black]), center: .center, startRadius: 1, endRadius: 100))
-            case .angular:
-                return AnyShapeStyle(AngularGradient(gradient: Gradient(colors: [Color.black]), center: .center))
-            case .elliptical:
-                return AnyShapeStyle(EllipticalGradient(gradient: Gradient(colors: [Color.black]), center: .center))
+     */
+    var backgroundColor: Color {
+            get { backgroundColorComputed.color }
+            set { backgroundColorComputed = ColorComponents(color: newValue) }
         }
-    }
-    
-    func buildIt(gradientType: GradientType) ->  AnyShapeStyle {
-        if gradientType == .linear {
-            AnyShapeStyle(LinearGradient(gradient: Gradient(colors: [Color.black]), startPoint: .topLeading, endPoint: .bottomTrailing))
-        } else if gradientType == .radial {
-            AnyShapeStyle(RadialGradient(gradient: Gradient(colors: [Color.black]), center: .center, startRadius: 1, endRadius: 100))
-        } else if gradientType == .angular {
-            AnyShapeStyle(AngularGradient(gradient: Gradient(colors: [Color.black]), center: .center))
-        } else {
-            AnyShapeStyle(EllipticalGradient(gradient: Gradient(colors: [Color.black]), center: .center))
+
+        var borderColor: Color {
+            get { borderColorComputed.color }
+            set { borderColorComputed = ColorComponents(color: newValue) }
         }
-    }
     
     // Add color to the foreground
     
@@ -150,8 +129,8 @@ extension IconModel {
     }
     
     func customMove(fromOffsets indices: IndexSet, toOffset newOffset: Int) {
-            icons.move(fromOffsets: indices, toOffset: newOffset)
-        }
+        icons.move(fromOffsets: indices, toOffset: newOffset)
+    }
 }
 
 

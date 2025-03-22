@@ -6,7 +6,7 @@
 //
 import SwiftUI
 
-enum StyleShape: Int,CaseIterable , Codable, Shape {
+enum StyleShape:String, CaseIterable , Shape, Codable {
     
     func createStar(corners: Int, smoothness: Double, path: inout Path, center: CGPoint, rect: CGRect) -> Path {
         
@@ -74,10 +74,10 @@ enum StyleShape: Int,CaseIterable , Codable, Shape {
         return path
     }
     
-    case star = 0
-    case circle = 1
-    case square = 2
-    case triangle = 3
-    case hexagone = 4
-    case gearshape = 5
+    case star = "star"
+    case circle = "circle"
+    case square = "square"
+    case triangle   = "triangle"
+    case hexagone   = "hexagone"
+    case gearshape  = "gearshape"
 }

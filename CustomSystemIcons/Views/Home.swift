@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftData
 
 struct Home: View {
-    @Query var listIcons: [IconModel]
+    @Query(sort: \IconModel.tareaName) var listIcons: [IconModel]
     @Environment(\.coordinator) var coordinator
     @Environment(\.modelContext) var modelContext
     var list = IconsListModel()
@@ -19,20 +19,32 @@ struct Home: View {
         VStack {
             List {
                 ForEach(listIcons) { item in
-                    IconRowView(icon: item)
-                        .onTapGesture {
-                            coordinator.push(page: .AddIcon(vmIcon: item))
-                        }
+                    /*
+                     IconRowView(icon: item)
+                         .onTapGesture {
+                             coordinator.push(page: .AddIcon(vmIcon: item))
+                         }
+                     */
+                    Text("\(item.tareaName)")
                 }
                 .onDelete(perform: deleteDestinations)
                 
             }
             Button {
+                if let url = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first {
+                    print("Database location: \(url.path)")
+                }
                 @State var icon = IconModel()
                 coordinator.push(page: .AddIcon(vmIcon: icon))
             } label: {
                 Image(systemName: "plus.app")
                 Text("Add Icon")
+            }
+            Button {
+                print(modelContext.sqliteCommand)
+            } label: {
+                Image(systemName: "plus.app")
+                Text("SQL lite")
             }
         }
     }
@@ -45,9 +57,9 @@ struct Home: View {
     }
 }
 
-#Preview(traits: .modifier(SampleData())) {
+#Preview {
     @Previewable @State var coordinator = Coordinator()
-    @Previewable @Query var task: [IconModel]
+    @Previewable @State var vmIcon = IconModel()
     NavigationStack(path: $coordinator.path) {
         coordinator.build(page: .Home)
             .navigationDestination(for: AppPage.self) { page in
