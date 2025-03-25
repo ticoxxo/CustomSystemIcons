@@ -14,9 +14,22 @@
 		C1BA32302D10E71A00ECF5B8 /* CustomSystemIcons.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CustomSystemIcons.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		C13BA17D2D91062400B04C58 /* Exceptions for "CustomSystemIcons" folder in "CustomSystemIcons" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = C1BA322F2D10E71A00ECF5B8 /* CustomSystemIcons */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		C1BA32322D10E71A00ECF5B8 /* CustomSystemIcons */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				C13BA17D2D91062400B04C58 /* Exceptions for "CustomSystemIcons" folder in "CustomSystemIcons" target */,
+			);
 			path = CustomSystemIcons;
 			sourceTree = "<group>";
 		};
@@ -264,6 +277,8 @@
 				DEVELOPMENT_TEAM = 426H2D8TKH;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CustomSystemIcons/Info.plist;
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need access to save your Icon in Photo Library";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -294,6 +309,8 @@
 				DEVELOPMENT_TEAM = 426H2D8TKH;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CustomSystemIcons/Info.plist;
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need access to save your Icon in Photo Library";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

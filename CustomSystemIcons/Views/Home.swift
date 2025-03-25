@@ -14,37 +14,30 @@ struct Home: View {
     @Environment(\.modelContext) var modelContext
     var list = IconsListModel()
     
-    
     var body: some View {
         VStack {
             List {
                 ForEach(listIcons) { item in
-                    /*
-                     IconRowView(icon: item)
-                         .onTapGesture {
-                             coordinator.push(page: .AddIcon(vmIcon: item))
-                         }
-                     */
-                    Text("\(item.tareaName)")
+                    VStack {
+                        IconView(vmIcon: item, bWidth: 50, bHeight: 50, editable: false)
+                            .onTapGesture {
+                                coordinator.push(page: .AddIcon(vmIcon: item, addMode: false))
+                            }
+                        Text("\(item.title)")
+                            .font(.footnote)
+                            .lineLimit(1)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .center)
                 }
                 .onDelete(perform: deleteDestinations)
                 
             }
             Button {
-                if let url = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first {
-                    print("Database location: \(url.path)")
-                }
                 @State var icon = IconModel()
-                coordinator.push(page: .AddIcon(vmIcon: icon))
+                coordinator.push(page: .AddIcon(vmIcon: icon, addMode: true))
             } label: {
                 Image(systemName: "plus.app")
                 Text("Add Icon")
-            }
-            Button {
-                print(modelContext.sqliteCommand)
-            } label: {
-                Image(systemName: "plus.app")
-                Text("SQL lite")
             }
         }
     }
@@ -57,9 +50,10 @@ struct Home: View {
     }
 }
 
-#Preview {
+#Preview(traits: .sampleData) {
     @Previewable @State var coordinator = Coordinator()
     @Previewable @State var vmIcon = IconModel()
+    
     NavigationStack(path: $coordinator.path) {
         coordinator.build(page: .Home)
             .navigationDestination(for: AppPage.self) { page in

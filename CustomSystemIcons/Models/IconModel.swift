@@ -1,6 +1,8 @@
 import SwiftUI
 import SFSafeSymbols
 import SwiftData
+import Photos
+
 
 @Model
 final class IconModel: Identifiable {
@@ -8,7 +10,7 @@ final class IconModel: Identifiable {
     // Details
     var title: String
     var tareaName: String
-    //var styleShape: StyleShape
+    var styleShape: StyleShape
     // Color
     var backgroundColorComputed: ColorComponents
     var borderColorComputed: ColorComponents
@@ -22,7 +24,7 @@ final class IconModel: Identifiable {
         id: UUID = UUID(),
         title: String = "",
         tareaName: String = "",
-        //styleShape: StyleShape = .circle,
+        styleShape: StyleShape = .circle,
         orientation: Double = 0.0,
         zoom: CGFloat = 0.8,
         borderWidth: Double = 15.0,
@@ -36,7 +38,7 @@ final class IconModel: Identifiable {
             self.id = UUID()
             self.title = title
             self.tareaName = tareaName
-            //self.styleShape = styleShape
+            self.styleShape = styleShape
             self.borderWidth = borderWidth
             self.backgroundColorComputed = backgroundColorComputed
             self.borderColorComputed = borderColorComputed
@@ -85,6 +87,8 @@ extension IconModel {
         }
     }
      */
+    
+    
     var backgroundColor: Color {
             get { backgroundColorComputed.color }
             set { backgroundColorComputed = ColorComponents(color: newValue) }
@@ -94,6 +98,8 @@ extension IconModel {
             get { borderColorComputed.color }
             set { borderColorComputed = ColorComponents(color: newValue) }
         }
+    
+    
     
     // Add color to the foreground
     
@@ -131,6 +137,7 @@ extension IconModel {
     func customMove(fromOffsets indices: IndexSet, toOffset newOffset: Int) {
         icons.move(fromOffsets: indices, toOffset: newOffset)
     }
+    
 }
 
 

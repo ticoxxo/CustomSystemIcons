@@ -23,7 +23,7 @@ struct IconChildView: View {
                     icono.frontColor
                 )
                 .contentShape(StyleShape.star)
-                .clipShape(StyleShape.star)
+                .clipShape(StyleShape.square)
                 .rotationEffect(.degrees(icono.orientation))
                 .frame(width: geometry.size.width, height: geometry.size.height)
                 .position(x: icono.positionX == 0 ? geometry.size.width / 2 : icono.positionX ,

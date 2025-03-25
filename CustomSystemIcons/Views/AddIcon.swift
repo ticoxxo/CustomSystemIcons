@@ -13,6 +13,10 @@ struct AddIcon: View {
     @Environment(\.coordinator) var coordinator
     @Environment(\.modelContext) var modelContext
     @Bindable var vmIcon: IconModel
+    var addMode: Bool
+    var helperImage: ImageConverter = ImageConverter()
+    // @State private var renderedImage = Image(systemName: "photo")
+    
     var body: some View {
         /*
         VStack() {
@@ -63,15 +67,48 @@ struct AddIcon: View {
                 TextField("Title", text: $vmIcon.title)
             }
             
-            Button {
-                modelContext.insert(vmIcon)
-                coordinator.toRoot()
-            } label: {
-                Text("Agregar model")
+            if addMode {
+                HStack {
+                    Spacer()
+                    Button {
+                        modelContext.insert(vmIcon)
+                        coordinator.toRoot()
+                    } label: {
+                        Label("Add Icon", systemImage: "plus.rectangle")
+                    }
+                    Spacer()
+                }
+            } else {
+                HStack {
+                    Spacer()
+                    Button {
+                        do {
+                            try modelContext.save()
+                        } catch {
+                            print("Error updating model")
+                        }
+                        coordinator.toRoot()
+                    } label: {
+                        Label("Editar Icon", systemImage: "square.and.pencil")
+                    }
+                    Spacer()
+                }
+                
+                HStack {
+                    Spacer()
+                    Button {
+                        helperImage.downloadViewAsImage(iconModel: vmIcon)
+                    } label: {
+                        Label("Download", systemImage: "square.and.arrow.down")
+                    }
+                    Spacer()
+                }
+                
             }
             
         }
     }
+    
 }
 
 
@@ -79,7 +116,7 @@ struct AddIcon: View {
     @Previewable @State var coordinator = Coordinator()
     @Previewable @State var vmIcon = IconModel()
     NavigationStack(path: $coordinator.path) {
-        coordinator.build(page: .AddIcon(vmIcon: vmIcon))
+        coordinator.build(page: .AddIcon(vmIcon: vmIcon, addMode: false))
             .navigationDestination(for: AppPage.self) { page in
                 coordinator.build(page: page)
             }

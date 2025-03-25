@@ -13,11 +13,13 @@ struct ShapeSection: View {
     var body: some View {
         DisclosureGroup(isExpanded: $expanded) {
             HStack {
+                IconView(vmIcon: vmIcon, bWidth: 25, bHeight: 25, editable: false)
                 ForEach(StyleShape.allCases, id: \.self) { shape in
-                    //Text("\(shape)").tag(shape)
+                    Spacer()
                     ShapeView(shape: shape)
                         .onTapGesture {
-                            //vmIcon.styleShape = shape
+                            print(shape)
+                            vmIcon.styleShape = shape
                         }
                     Spacer()
                 }

@@ -9,9 +9,9 @@ import SwiftUI
 import SFSafeSymbols
 import SwiftData
 
-@Observable
-class IconsListModel {
-    var _iconList: [String] = []
+
+struct IconsListModel {
+    private var _iconList: [String] = []
     var iconList: [String] {
         get {
             let a = SFSymbol.allSymbols
@@ -27,18 +27,14 @@ class IconsListModel {
         }
     }
     
-    init(){}
-    
-}
-
-extension IconsListModel {
-    
+    init() {}
+  
     func returnRandomIcon() -> SFSymbol {
         return SFSymbol.allSymbols.randomElement() ?? SFSymbol.xCircle
     }
     
-    func filterIcons(_ searchText: String) {
-        if searchText.isEmpty {
+    mutating func filterIcons(_ searchText: String) {
+        if searchText.isEmpty || searchText == "" {
             let s =  SFSymbol.allSymbols
             var arr: [String] = []
             s.forEach {
@@ -53,3 +49,5 @@ extension IconsListModel {
     }
     
 }
+
+

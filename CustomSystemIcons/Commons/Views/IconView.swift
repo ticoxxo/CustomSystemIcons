@@ -24,10 +24,8 @@ struct IconView: View {
             //Color(hex: vmIcon.background)
             vmIcon.backgroundColor
         )
-        //.clipShape(vmIcon.styleShape)
-        .clipShape(.circle)
-        //.overlay(vmIcon.styleShape.stroke(vmIcon.borderColor, lineWidth: vmIcon.borderWidth * 0.5)) // TODO: Upgrade algorithm for the border width relative to frame size
-        .overlay(Circle().stroke(vmIcon.borderColor, lineWidth: vmIcon.borderWidth * 0.5)) 
+        .clipShape(vmIcon.styleShape)
+        .overlay(vmIcon.styleShape.stroke(vmIcon.borderColor, lineWidth: vmIcon.borderWidth * 0.5)) // TODO: Upgrade algorithm for the border width relative to frame size
         .frame(width: bWidth, height: bHeight)
         .padding()
     }

@@ -10,47 +10,48 @@ import SFSafeSymbols
 
 struct GridIconsView: View {
     @Environment(\.coordinator) var coordinator
-    @State var iconsList = IconsListModel()
-    @State private var set: Set<String> = ["value1", "value2", "value3", "value4"]
-
-    //@Binding var vmIcon: SFSymbol
+    @State var iconsList: IconsListModel = IconsListModel()
+    let columns = [
+            GridItem(.flexible()),
+            GridItem(.flexible()),
+            GridItem(.flexible())
+        ]
     @Binding var vmIcon: IconChild
     @State var searchText: String = ""
+    var filteredIcons: [String] {
+            if searchText.isEmpty {
+                return iconsList.iconList
+            } else {
+                return iconsList.iconList.filter { $0.localizedCaseInsensitiveContains(searchText) }
+            }
+        }
     var body: some View {
         VStack {
-
-            TextField("Buscar...", text: $searchText)
+            HStack {
+                Spacer()
+                TextField("Search icon...", text: $searchText)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .frame(maxWidth: .infinity)
+                Spacer()
+            }
+            .padding()
             ScrollView {
-                if iconsList.iconList.isEmpty {
-                    Text("No hay iconos")
-                } else {
-                    LazyVGrid(columns: [GridItem(spacing: 22), GridItem(spacing: 22), GridItem(spacing: 22)], spacing: 34) {
-                        /*
-                         ForEach(Array(iconsList.iconList), id: \.self) { icon in
-                             Image(systemName: "\(icon.rawValue)")
-                                 .font(.system(size: 50))
-                                 .onTapGesture {
-                                     let d = icon.rawValue
-                                     vmIcon.icon = d
-                                     coordinator.push(page: .EditIcon(vmIcon: $vmIcon))
-                                 }
-                         }
-                         */
-                        ForEach($iconsList.iconList, id: \.self) { $element in
-                            Image(systemName: "\(element)")
-                                .font(.system(size: 50))
-                                .onTapGesture {
-                                    vmIcon.name = element
-                                    coordinator.pop()
-                                    //vmIcon.iconSF = element
-                                    //coordinator.push(page: .EditIcon(vmIcon: vmIcon))
-                                }
-                        }
-                        .onChange(of: searchText){
-                            iconsList.filterIcons(searchText)
-                        }
+                LazyVGrid(columns: columns, spacing: 20) {
+                    ForEach(filteredIcons, id: \.self) { icon in
+                        Image(systemName: "\(icon)")
+                            .resizable()
+                            .scaledToFit()
+                            .onTapGesture {
+                                vmIcon.name = icon
+                                coordinator.pop()
+                            }
+                    }
+                    .onChange(of: searchText){
+                        print(searchText)
+                        iconsList.filterIcons(searchText)
                     }
                 }
+                .padding()
             }
         }
     }

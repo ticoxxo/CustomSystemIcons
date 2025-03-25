@@ -44,7 +44,7 @@ final class IconChild: Identifiable {
     }
     
     enum CodingKeys: String, CodingKey {
-        case id, name, frontColorComputed, orientation, zoom, dragging, zIndex, borderColorComputed, positionX, positionY
+        case id, name, frontColorComputed, orientation, zoom, dragging, zIndex, borderColorComputed, positionX, positionY, styleShape
     }
 }
 
@@ -73,4 +73,5 @@ extension IconChild {
     func randomColor() -> Double {
         Double.random(in: 0.1...100)
     }
+ 
 }
