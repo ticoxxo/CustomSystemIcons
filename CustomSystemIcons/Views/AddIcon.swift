@@ -14,7 +14,8 @@ struct AddIcon: View {
     @Environment(\.modelContext) var modelContext
     @Bindable var vmIcon: IconModel
     var addMode: Bool
-    var helperImage: ImageConverter = ImageConverter()
+    @State var helperImage: ImageConverter = ImageConverter()
+    
     // @State private var renderedImage = Image(systemName: "photo")
     
     var body: some View {
@@ -97,15 +98,31 @@ struct AddIcon: View {
                 HStack {
                     Spacer()
                     Button {
-                        helperImage.downloadViewAsImage(iconModel: vmIcon)
+                        helperImage.convertViewAsImage(iconModel: vmIcon)
                     } label: {
                         Label("Download", systemImage: "square.and.arrow.down")
+                    }
+                    Spacer()
+                }
+                HStack {
+                    Spacer()
+                    let uiImagu =  helperImage.shareViewAsImage(iconModel: vmIcon)
+                    let img = Image(uiImage: uiImagu ?? UIImage(systemName: "photo")!)
+                    ShareLink(item: img, preview: SharePreview("Instafilter image", image: img)) {
+                        Label("Click to share", systemImage: "airplane")
                     }
                     Spacer()
                 }
                 
             }
             
+        }
+        .alert("\(helperImage.alertMessage)" ,isPresented: $helperImage.showAlert) {
+            /*
+            CustomAlertView(message: helperImage.alertMessage, image: helperImage.savedImage, onDismiss: {
+                helperImage.showAlert.toggle()
+            })
+             */
         }
     }
     
