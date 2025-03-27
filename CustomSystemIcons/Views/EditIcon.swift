@@ -139,6 +139,14 @@ struct EditIcon: View {
                 }
             
         }
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button("Add Icon") {
+                    vmIcon.addIcon()
+                }
+                .disabled(vmIcon.icons.count > 5)
+            }
+        }
         
         //PositionSection(vmIcon: vmIcon)
     }

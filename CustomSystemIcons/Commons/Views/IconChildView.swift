@@ -9,8 +9,6 @@ import SwiftUI
 
 struct IconChildView: View {
     var icono: IconChild
-    var bWidth: CGFloat
-    var bHeight: CGFloat
     var editable: Bool
    
     var body: some View {
@@ -26,14 +24,16 @@ struct IconChildView: View {
                 .clipShape(StyleShape.square)
                 .rotationEffect(.degrees(icono.orientation))
                 .frame(width: geometry.size.width, height: geometry.size.height)
-                .position(x: icono.positionX == 0 ? geometry.size.width / 2 : icono.positionX ,
-                          y: icono.positionY == 0 ? geometry.size.height / 2 : icono.positionY)
+                .position(
+                                    x: max(0, min(geometry.size.width, icono.positionX == 0 ? geometry.size.width / 2 : geometry.size.width * icono.positionX)),
+                                    y: max(0, min(geometry.size.height, icono.positionY == 0 ? geometry.size.height / 2 : geometry.size.height * icono.positionY))
+                                )
                 .gesture(
                     editable ? DragGesture()
                         .onChanged { value in
-                            icono.positionX = value.location.x
-                            icono.positionY = value.location.y
-                            icono.dragging = true
+                            icono.positionX = value.location.x / geometry.size.width
+                                                        icono.positionY = value.location.y / geometry.size.height
+                                                        icono.dragging = true
                         }
                         .onEnded {_ in
                             icono.dragging = false
@@ -54,5 +54,5 @@ struct IconChildView: View {
 
 #Preview {
     let icono = IconChild()
-    IconChildView(icono: icono, bWidth: 200, bHeight: 200, editable: true)
+    IconChildView(icono: icono, editable: true)
 }

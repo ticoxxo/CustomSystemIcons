@@ -27,9 +27,11 @@ struct ColorSection: View {
                             .frame(width: 25, height: 25)
                         PickIcon(item: icon)
                         ColorPicker("", selection: icon.frontColor)
+                        
                     }
                 }
                 .onMove(perform: vmIcon.moveRow)
+                .onDelete(perform: vmIcon.removeIcon)
             }
             
         } label: {

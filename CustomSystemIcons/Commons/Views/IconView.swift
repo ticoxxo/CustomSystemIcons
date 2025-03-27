@@ -16,7 +16,7 @@ struct IconView: View {
     var body: some View {
         ZStack {
             ForEach(vmIcon.icons) { icono in
-                IconChildView(icono: icono, bWidth: bWidth, bHeight: bWidth, editable: editable)
+                IconChildView(icono: icono, editable: editable)
             }
                 
         }
@@ -34,5 +34,5 @@ struct IconView: View {
 #Preview {
     //@Previewable @State var bgColor = Color(.sRGB, red: 0.98, green: 0.9, blue: 0.2)
     @Previewable @State var vmIcon = IconModel()
-    IconView(vmIcon: vmIcon, bWidth: 100, bHeight: 100, editable: false)
+    IconView(vmIcon: vmIcon, bWidth: 200, bHeight: 200, editable: true)
 }

@@ -19,7 +19,7 @@ struct Home: View {
             List {
                 ForEach(listIcons) { item in
                     VStack {
-                        IconView(vmIcon: item, bWidth: 50, bHeight: 50, editable: false)
+                        IconView(vmIcon: item, bWidth: 50, bHeight: 50,editable: false)
                             .onTapGesture {
                                 coordinator.push(page: .AddIcon(vmIcon: item, addMode: false))
                             }
