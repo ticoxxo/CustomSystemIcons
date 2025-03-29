@@ -129,11 +129,6 @@ struct EditIcon: View {
                         } label: {
                             Text("Go Back")
                         }
-                        Button {
-                            vmIcon.addIcon()
-                        } label: {
-                            Text("Add icon")
-                        }
                         
                     }
                 }

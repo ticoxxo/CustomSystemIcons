@@ -13,9 +13,9 @@ struct AddIcon: View {
     @Environment(\.coordinator) var coordinator
     @Environment(\.modelContext) var modelContext
     @Bindable var vmIcon: IconModel
-    var addMode: Bool
     @State var helperImage: ImageConverter = ImageConverter()
-    
+    @State var imageTypes: ImageType = .jpeg
+    var addMode: Bool
     // @State private var renderedImage = Image(systemName: "photo")
     
     var body: some View {
@@ -68,6 +68,17 @@ struct AddIcon: View {
                 TextField("Title", text: $vmIcon.title)
             }
             
+            GroupBox("Share ") {
+                VStack {
+                    Picker("Please choose a color", selection: $imageTypes) {
+                        ForEach(ImageType.allCases) { types in
+                            Text(types.rawValue.capitalized).tag(types)
+                        }
+                    }
+                    .pickerStyle(SegmentedPickerStyle())
+                }
+            }
+            
             if addMode {
                 HStack {
                     Spacer()
@@ -80,36 +91,20 @@ struct AddIcon: View {
                     Spacer()
                 }
             } else {
-                HStack {
-                    Spacer()
-                    Button {
-                        do {
-                            try modelContext.save()
-                        } catch {
-                            print("Error updating model")
-                        }
-                        coordinator.toRoot()
-                    } label: {
-                        Label("Editar Icon", systemImage: "square.and.pencil")
-                    }
-                    Spacer()
-                }
                 
                 HStack {
                     Spacer()
-                    Button {
-                        helperImage.convertViewAsImage(iconModel: vmIcon)
-                    } label: {
-                        Label("Download", systemImage: "square.and.arrow.down")
-                    }
-                    Spacer()
-                }
-                HStack {
-                    Spacer()
-                    let uiImagu =  helperImage.shareViewAsImage(iconModel: vmIcon)
-                    let img = Image(uiImage: uiImagu ?? UIImage(systemName: "photo")!)
-                    ShareLink(item: img, preview: SharePreview("Instafilter image", image: img)) {
-                        Label("Click to share", systemImage: "airplane")
+                    if imageTypes == .jpeg {
+                        let uiImagu = helperImage.shareViewAsImage(iconModel: vmIcon)
+                        let img = Image(uiImage: uiImagu ?? UIImage(systemName: "photo")!)
+                        ShareLink(item: img, preview: SharePreview("Instafilter image", image: Image(systemName: "photo"))) {
+                            Label("Share \(imageTypes.rawValue.uppercased())", systemImage: "airplane")
+                        }
+                    } else {
+                        let uiImagu =  helperImage.sharePng(iconModel: vmIcon, type: imageTypes)
+                        ShareLink(item: uiImagu, preview: SharePreview("Instafilter image", image: Image(systemName: "photo"))) {
+                            Label("Share \(imageTypes.rawValue.uppercased())", systemImage: "airplane")
+                        }
                     }
                     Spacer()
                 }
@@ -123,6 +118,35 @@ struct AddIcon: View {
                 helperImage.showAlert.toggle()
             })
              */
+        }
+        .toolbar {
+            ToolbarItemGroup(placement: .topBarTrailing) {
+                if addMode {
+                    Button {
+                        modelContext.insert(vmIcon)
+                        coordinator.toRoot()
+                    } label: {
+                        Label("Add Icon", systemImage: "plus.rectangle")
+                    }
+                } else {
+                    Button {
+                        do {
+                            try modelContext.save()
+                        } catch {
+                            print("Error updating model")
+                        }
+                        coordinator.toRoot()
+                    } label: {
+                        Label("Editar Icon", systemImage: "square.and.pencil")
+                    }
+                }
+            }
+            
+            ToolbarItemGroup(placement: .topBarLeading) {
+                Button("Cancel") {
+                    coordinator.toRoot()
+                }
+            }
         }
     }
     
