@@ -30,12 +30,6 @@ struct CustomAlertView: View {
                         .foregroundColor(Color.blue)
                         .cornerRadius(10)
                 }
-                Button {
-                    
-                } label: {
-                    Label("Share", systemImage: "arrowshape.turn.up.forward")
-                }
-                
             }
         }
         .padding()

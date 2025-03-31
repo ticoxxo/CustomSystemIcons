@@ -95,10 +95,10 @@ class ImageConverter: NSObject {
     
     @objc func saveCompleted(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
         if let error = error {
-                    print("Error saving image: \(error.localizedDescription)")
+                    
             self.alertMessage = "Error saving image: \(error.localizedDescription)"
                 } else {
-                    print("Image saved successfully!")
+                    
                     self.alertMessage = "Image saved successfully in your Photo Library!"
                 }
         self.showAlert = true

@@ -27,7 +27,7 @@ final class IconModel: Identifiable {
         styleShape: StyleShape = .circle,
         orientation: Double = 0.0,
         zoom: CGFloat = 0.8,
-        borderWidth: Double = 15.0,
+        borderWidth: Double = 0.01,
         //backgroundColorComputed: Colores = .init(red: 0.4,blue: 0.4,green: 0.4),
         //borderColorComputed: Colores = .init(red: 0.4,blue: 0.4,green: 0.4),
         backgroundColorComputed: ColorComponents = ColorComponents(color: .white),

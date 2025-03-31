@@ -29,6 +29,7 @@ struct ColorSection: View {
                         ColorPicker("", selection: icon.frontColor)
                         
                     }
+                    .deleteDisabled(vmIcon.icons.count < 2)
                 }
                 .onMove(perform: vmIcon.moveRow)
                 .onDelete(perform: vmIcon.removeIcon)

@@ -18,7 +18,7 @@ struct BorderSection: View {
             }
             HStack {
                 Text("Width").lineLimit(1)
-                Slider(value: $vmIcon.borderWidth, in:0.0...15)
+                Slider(value: $vmIcon.borderWidth, in:0.0...0.1)
             }
         } label: {
             Text("Border").font(.headline)

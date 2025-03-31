@@ -123,13 +123,6 @@ struct EditIcon: View {
                         OrientationSection(vmIcon: vmIcon)
                         PositionSection(vmIcon: vmIcon)
                         BorderSection(vmIcon: vmIcon)
-                        Button {
-                            //let num = coordinator.path.count > 2 ? 2 : 1
-                            coordinator.pop()
-                        } label: {
-                            Text("Go Back")
-                        }
-                        
                     }
                 }
             
@@ -141,8 +134,12 @@ struct EditIcon: View {
                 }
                 .disabled(vmIcon.icons.count > 5)
             }
+            
+            ToolbarItem(placement: .topBarLeading) {
+                GoBackButton()
+            }
         }
-        
+        .navigationBarBackButtonHidden(true)
         //PositionSection(vmIcon: vmIcon)
     }
     

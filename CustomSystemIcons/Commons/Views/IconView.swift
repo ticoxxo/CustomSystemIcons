@@ -25,7 +25,10 @@ struct IconView: View {
             vmIcon.backgroundColor
         )
         .clipShape(vmIcon.styleShape)
-        .overlay(vmIcon.styleShape.stroke(vmIcon.borderColor, lineWidth: vmIcon.borderWidth * 0.5)) // TODO: Upgrade algorithm for the border width relative to frame size
+        .overlay(
+            vmIcon.styleShape.stroke(vmIcon.borderColor,
+                                     lineWidth: bWidth * vmIcon.borderWidth)
+        )
         .frame(width: bWidth, height: bHeight)
         .padding()
     }

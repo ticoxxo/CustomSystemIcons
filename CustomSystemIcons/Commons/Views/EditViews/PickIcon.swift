@@ -13,20 +13,19 @@ struct PickIcon: View {
     @State private var expanded: Bool = true
     var body: some View {
         
-        Button {
-            coordinator.push(page: .GridIconsView(vmIcon: $item))
-        } label: {
-            Image(systemName: "photo")
-                .resizable()
-                .foregroundStyle(item.frontColor)
-                .frame(width: 25, height: 25)
-                .overlay(alignment: .bottomTrailing) {
-                    Image(systemName: "plus.circle.fill")
-                        .font(.system(size: 10))
-                        .fontWeight(.bold)
-                        .foregroundColor(.blue)
-                }
-        }
+        Image(systemName: "photo")
+            .resizable()
+            .foregroundStyle(item.frontColor)
+            .frame(width: 25, height: 25)
+            .overlay(alignment: .bottomTrailing) {
+                Image(systemName: "plus.circle.fill")
+                    .font(.system(size: 10))
+                    .fontWeight(.bold)
+                    .foregroundColor(.blue)
+            }
+            .onTapGesture {
+                coordinator.push(page: .GridIconsView(vmIcon: $item))
+            }
     }
 }
 

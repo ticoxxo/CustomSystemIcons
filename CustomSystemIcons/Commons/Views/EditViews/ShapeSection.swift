@@ -18,7 +18,6 @@ struct ShapeSection: View {
                     Spacer()
                     ShapeView(shape: shape)
                         .onTapGesture {
-                            print(shape)
                             vmIcon.styleShape = shape
                         }
                     Spacer()

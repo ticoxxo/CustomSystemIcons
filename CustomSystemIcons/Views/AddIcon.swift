@@ -16,46 +16,10 @@ struct AddIcon: View {
     @State var helperImage: ImageConverter = ImageConverter()
     @State var imageTypes: ImageType = .jpeg
     var addMode: Bool
-    // @State private var renderedImage = Image(systemName: "photo")
+    @State var showAlert: Bool = false
+    @State var messageAlert: String = ""
     
     var body: some View {
-        /*
-        VStack() {
-            GroupBox("Details ") {
-                TextField("Task title", text: $vmIcon.title)
-                TextField("Description", text: $vmIcon.tareaName)
-            }
-            
-            GroupBox("Choose an Icon") {
-                IconView(vmIcon: vmIcon, bWidth: 100, bHeight: 100)
-                    .onTapGesture {
-                        coordinator.push(page: .EditIcon(vmIcon: vmIcon))
-                    }
-            }
-            
-            GroupBox("Date settings") {
-                DatePicker("Start date",
-                           selection: $vmIcon.startDate,
-                           in: vmIcon.startDate...,
-                           displayedComponents: [.date])
-                DatePicker("Start date",
-                           selection: $vmIcon.expireDate,
-                           in: vmIcon.expireDate...,
-                           displayedComponents: [.date])
-               // .frame(width: .infinity, height: 50)
-            }
-            
-            
-            Button {
-                modelContext.insert(vmIcon)
-                coordinator.toRoot()
-            } label: {
-                Text("Agregar model")
-            }
-                
-        }
-        .padding()
-         */
         Form {
             GroupBox("Choose an Icon") {
                 IconView(vmIcon: vmIcon, bWidth: 100, bHeight: 100, editable: false)
@@ -98,12 +62,12 @@ struct AddIcon: View {
                         let uiImagu = helperImage.shareViewAsImage(iconModel: vmIcon)
                         let img = Image(uiImage: uiImagu ?? UIImage(systemName: "photo")!)
                         ShareLink(item: img, preview: SharePreview("Instafilter image", image: Image(systemName: "photo"))) {
-                            Label("Share \(imageTypes.rawValue.uppercased())", systemImage: "airplane")
+                            Label("Share \(imageTypes.rawValue.uppercased())", systemImage: "square.and.arrow.up")
                         }
                     } else {
                         let uiImagu =  helperImage.sharePng(iconModel: vmIcon, type: imageTypes)
                         ShareLink(item: uiImagu, preview: SharePreview("Instafilter image", image: Image(systemName: "photo"))) {
-                            Label("Share \(imageTypes.rawValue.uppercased())", systemImage: "airplane")
+                            Label("Share \(imageTypes.rawValue.uppercased())", systemImage: "square.and.arrow.up")
                         }
                     }
                     Spacer()
@@ -112,43 +76,45 @@ struct AddIcon: View {
             }
             
         }
-        .alert("\(helperImage.alertMessage)" ,isPresented: $helperImage.showAlert) {
-            /*
-            CustomAlertView(message: helperImage.alertMessage, image: helperImage.savedImage, onDismiss: {
-                helperImage.showAlert.toggle()
-            })
-             */
+        .alert(messageAlert ,isPresented: $showAlert) {
+            Button("OK", role: .cancel) {
+                coordinator.toRoot()
+            }
         }
         .toolbar {
             ToolbarItemGroup(placement: .topBarTrailing) {
                 if addMode {
                     Button {
                         modelContext.insert(vmIcon)
-                        coordinator.toRoot()
+                        messageAlert = "Icono agregado"
+                        showAlert = true
                     } label: {
-                        Label("Add Icon", systemImage: "plus.rectangle")
+                        Text("Add Icon")
                     }
                 } else {
                     Button {
                         do {
                             try modelContext.save()
+                            messageAlert = "Model updated"
+                            showAlert = true
                         } catch {
-                            print("Error updating model")
+                            messageAlert = "Error updating model"
+                            showAlert = true
                         }
-                        coordinator.toRoot()
+                        
                     } label: {
-                        Label("Editar Icon", systemImage: "square.and.pencil")
+                        Text("Save Icon")
                     }
                 }
             }
             
-            ToolbarItemGroup(placement: .topBarLeading) {
-                Button("Cancel") {
-                    coordinator.toRoot()
-                }
+            ToolbarItem(placement: .topBarLeading) {
+                GoBackButton()
             }
         }
+        .navigationBarBackButtonHidden(true)
     }
+        
     
 }
 

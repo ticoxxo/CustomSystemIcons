@@ -47,13 +47,18 @@ struct GridIconsView: View {
                             }
                     }
                     .onChange(of: searchText){
-                        print(searchText)
                         iconsList.filterIcons(searchText)
                     }
                 }
                 .padding()
             }
         }
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                GoBackButton()
+            }
+        }
+        .navigationBarBackButtonHidden(true)
     }
 }
 
