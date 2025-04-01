@@ -21,20 +21,20 @@ struct AddIcon: View {
     
     var body: some View {
         Form {
-            GroupBox("Choose an Icon") {
+            GroupBox(String(localized: "Choose an Icon")) {
                 IconView(vmIcon: vmIcon, bWidth: 100, bHeight: 100, editable: false)
                     .onTapGesture {
                         coordinator.push(page: .EditIcon(vmIcon: vmIcon))
                     }
             }
             
-            GroupBox("Details ") {
+            GroupBox(String(localized:"Details")) {
                 TextField("Title", text: $vmIcon.title)
             }
             
-            GroupBox("Share ") {
+            GroupBox(String(localized: "Share")) {
                 VStack {
-                    Picker("Please choose a color", selection: $imageTypes) {
+                    Picker("Please choose one", selection: $imageTypes) {
                         ForEach(ImageType.allCases) { types in
                             Text(types.rawValue.capitalized).tag(types)
                         }
@@ -61,13 +61,13 @@ struct AddIcon: View {
                     if imageTypes == .jpeg {
                         let uiImagu = helperImage.shareViewAsImage(iconModel: vmIcon)
                         let img = Image(uiImage: uiImagu ?? UIImage(systemName: "photo")!)
-                        ShareLink(item: img, preview: SharePreview("Instafilter image", image: Image(systemName: "photo"))) {
-                            Label("Share \(imageTypes.rawValue.uppercased())", systemImage: "square.and.arrow.up")
+                        ShareLink(item: img, preview: SharePreview(String(localized: "Enjoy!"), image: Image(systemName: "photo"))) {
+                            Label("\(imageTypes.rawValue.uppercased())", systemImage: "square.and.arrow.up")
                         }
                     } else {
                         let uiImagu =  helperImage.sharePng(iconModel: vmIcon, type: imageTypes)
-                        ShareLink(item: uiImagu, preview: SharePreview("Instafilter image", image: Image(systemName: "photo"))) {
-                            Label("Share \(imageTypes.rawValue.uppercased())", systemImage: "square.and.arrow.up")
+                        ShareLink(item: uiImagu, preview: SharePreview(String(localized: "Enjoy!"), image: Image(systemName: "photo"))) {
+                            Label("\(imageTypes.rawValue.uppercased())", systemImage: "square.and.arrow.up")
                         }
                     }
                     Spacer()
@@ -76,6 +76,7 @@ struct AddIcon: View {
             }
             
         }
+        .navigationTitle(addMode ? "Add Icon" : "Edit Icon")
         .alert(messageAlert ,isPresented: $showAlert) {
             Button("OK", role: .cancel) {
                 coordinator.toRoot()
@@ -123,7 +124,7 @@ struct AddIcon: View {
     @Previewable @State var coordinator = Coordinator()
     @Previewable @State var vmIcon = IconModel()
     NavigationStack(path: $coordinator.path) {
-        coordinator.build(page: .AddIcon(vmIcon: vmIcon, addMode: false))
+        coordinator.build(page: .AddIcon(vmIcon: vmIcon, addMode: true))
             .navigationDestination(for: AppPage.self) { page in
                 coordinator.build(page: page)
             }

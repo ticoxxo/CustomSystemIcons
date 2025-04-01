@@ -7,10 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C175E08C2D9B577300DF5CBA /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = C175E08B2D9B577300DF5CBA /* Localizable.xcstrings */; };
 		C1BA32602D133BE100ECF5B8 /* SFSafeSymbols in Frameworks */ = {isa = PBXBuildFile; productRef = C1BA325F2D133BE100ECF5B8 /* SFSafeSymbols */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C175E08B2D9B577300DF5CBA /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		C1BA32302D10E71A00ECF5B8 /* CustomSystemIcons.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CustomSystemIcons.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -50,6 +52,7 @@
 		C1BA32272D10E71A00ECF5B8 = {
 			isa = PBXGroup;
 			children = (
+				C175E08B2D9B577300DF5CBA /* Localizable.xcstrings */,
 				C1BA32322D10E71A00ECF5B8 /* CustomSystemIcons */,
 				C1BA32312D10E71A00ECF5B8 /* Products */,
 			);
@@ -110,6 +113,7 @@
 			knownRegions = (
 				en,
 				Base,
+				"es-419",
 			);
 			mainGroup = C1BA32272D10E71A00ECF5B8;
 			minimizedProjectReferenceProxies = 1;
@@ -131,6 +135,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C175E08C2D9B577300DF5CBA /* Localizable.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -206,6 +211,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -262,6 +268,7 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

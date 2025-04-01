@@ -9,29 +9,39 @@ import SwiftUI
 import SwiftData
 
 struct Home: View {
-    @Query(sort: \IconModel.tareaName) var listIcons: [IconModel]
+    @Query(sort: \IconModel.creationDate) var listIcons: [IconModel]
+    @Query(filter: #Predicate<IconModel> { $0.isFavorite } ,sort: \IconModel.creationDate) var favoriteListIcons: [IconModel]
     @Environment(\.coordinator) var coordinator
     @Environment(\.modelContext) var modelContext
     var list = IconsListModel()
-    
+    @State private var searchText = ""
+    @State private var messageAlert = ""
+    @State private var showAlert = false
+    @State private var favoriteFilter = false
     var body: some View {
         VStack {
-            List {
-                ForEach(listIcons) { item in
-                    VStack {
-                        IconView(vmIcon: item, bWidth: 50, bHeight: 50,editable: false)
-                            .onTapGesture {
-                                coordinator.push(page: .AddIcon(vmIcon: item, addMode: false))
-                            }
-                        Text("\(item.title)")
-                            .font(.footnote)
-                            .lineLimit(1)
+            List(filteredIcons) { item in
+                ListRowView(item: item)
+                    .listRowSeparator(.hidden)
+                    .onTapGesture {
+                        coordinator.push(page: .AddIcon(vmIcon: item, addMode: false))
                     }
-                    .frame(maxWidth: .infinity, alignment: .center)
-                }
-                .onDelete(perform: deleteDestinations)
-                
+                    .overlay( alignment: .topTrailing) {
+                        StarView(item: item)
+                            .onTapGesture {
+                                item.isFavorite.toggle()
+                                do {
+                                    try modelContext.save()
+                                } catch {
+                                    messageAlert = "Error updating favorite"
+                                    showAlert = true
+                                }
+                            }
+                    }
             }
+            .listStyle(.plain)
+            .searchable(text: $searchText, prompt: "Search Icon")
+            
             Button {
                 @State var icon = IconModel()
                 coordinator.push(page: .AddIcon(vmIcon: icon, addMode: true))
@@ -40,7 +50,35 @@ struct Home: View {
                 Text("Add Icon")
             }
         }
+        .navigationTitle("Icons")
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    favoriteFilter.toggle()
+                } label : {
+                    Image(systemName: favoriteFilter ? "star.fill" : "star")
+                }
+            }
+        }
+        .alert(messageAlert ,isPresented: $showAlert) {
+            Button("OK", role: .cancel) {}
+        }
+        
     }
+}
+
+extension Home {
+    var filteredIcons: [IconModel] {
+            if searchText.isEmpty {
+                var list = favoriteFilter ? favoriteListIcons : listIcons
+                return list
+            } else {
+                var list = favoriteFilter ?
+                           favoriteListIcons.filter { $0.title.lowercased().contains(searchText.lowercased()) } :
+                           listIcons.filter { $0.title.lowercased().contains(searchText.lowercased()) }
+                return list
+            }
+        }
     
     func deleteDestinations(_ indexSet: IndexSet) {
         for indxex in indexSet {
@@ -48,6 +86,8 @@ struct Home: View {
             modelContext.delete(destination)
         }
     }
+    
+    
 }
 
 #Preview(traits: .sampleData) {

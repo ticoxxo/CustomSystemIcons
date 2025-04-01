@@ -14,7 +14,7 @@ struct BorderSection: View {
         DisclosureGroup(isExpanded: $expanded) {
             HStack {
                 Text("Color").lineLimit(1)
-                ColorPicker("", selection: $vmIcon.borderColor)
+                ColorPicker("Border Color", selection: $vmIcon.borderColor)
             }
             HStack {
                 Text("Width").lineLimit(1)
