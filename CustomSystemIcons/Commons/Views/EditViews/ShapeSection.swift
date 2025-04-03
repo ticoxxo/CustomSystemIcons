@@ -14,12 +14,11 @@ struct ShapeSection: View {
         DisclosureGroup(isExpanded: $expanded) {
             HStack {
                 IconView(vmIcon: vmIcon, bWidth: 25, bHeight: 25, editable: false)
+                    
                 ForEach(StyleShape.allCases, id: \.self) { shape in
                     Spacer()
-                    ShapeView(shape: shape)
-                        .onTapGesture {
-                            vmIcon.styleShape = shape
-                        }
+                    ShapeView(shape: shape, vmIcon: vmIcon)
+                        
                     Spacer()
                 }
             }
@@ -31,11 +30,23 @@ struct ShapeSection: View {
 
 struct ShapeView: View {
     var shape: StyleShape
+    @Bindable var vmIcon: IconModel
+    @State var animate: Bool = false
     var body: some View {
         shape
             .fill(Color.blue)
             .foregroundStyle(Color.red)
+            .scaleEffect(animate ? 1 : 1.5)
+            .transition(.scale)
             .frame(width: 20, height: 20)
+            .onTapGesture {
+                withAnimation(.easeInOut(duration: 0.5)) {
+                    animate.toggle()
+                } completion: {
+                    animate.toggle()
+                }
+                vmIcon.styleShape = shape
+            }
 
     }
 }

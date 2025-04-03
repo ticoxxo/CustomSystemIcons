@@ -29,6 +29,12 @@ struct IconView: View {
             vmIcon.styleShape.stroke(vmIcon.borderColor,
                                      lineWidth: bWidth * vmIcon.borderWidth)
         )
+        .shadow(
+            color: Color.gray.opacity(0.7),
+            radius: 8,
+            x: 8,
+            y: 8
+        )
         .frame(width: bWidth, height: bHeight)
         .padding()
     }

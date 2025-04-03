@@ -18,6 +18,7 @@ struct Home: View {
     @State private var messageAlert = ""
     @State private var showAlert = false
     @State private var favoriteFilter = false
+    
     var body: some View {
         VStack {
             List(filteredIcons) { item in
@@ -46,9 +47,10 @@ struct Home: View {
                 @State var icon = IconModel()
                 coordinator.push(page: .AddIcon(vmIcon: icon, addMode: true))
             } label: {
-                Image(systemName: "plus.app")
-                Text("Add Icon")
+                Label("Add Icon", systemImage: "plus.app")
             }
+            .buttonStyle(CustomButton(color: MyColor.skyblue.value, width: horizontalPadding / 2))
+            
         }
         .navigationTitle("Icons")
         .toolbar {
@@ -58,6 +60,7 @@ struct Home: View {
                 } label : {
                     Image(systemName: favoriteFilter ? "star.fill" : "star")
                 }
+                
             }
         }
         .alert(messageAlert ,isPresented: $showAlert) {
@@ -70,10 +73,10 @@ struct Home: View {
 extension Home {
     var filteredIcons: [IconModel] {
             if searchText.isEmpty {
-                var list = favoriteFilter ? favoriteListIcons : listIcons
+                let list = favoriteFilter ? favoriteListIcons : listIcons
                 return list
             } else {
-                var list = favoriteFilter ?
+                let list = favoriteFilter ?
                            favoriteListIcons.filter { $0.title.lowercased().contains(searchText.lowercased()) } :
                            listIcons.filter { $0.title.lowercased().contains(searchText.lowercased()) }
                 return list

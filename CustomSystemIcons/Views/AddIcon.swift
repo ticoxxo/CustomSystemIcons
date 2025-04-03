@@ -18,6 +18,7 @@ struct AddIcon: View {
     var addMode: Bool
     @State var showAlert: Bool = false
     @State var messageAlert: String = ""
+    @State private var animateIcon = false
     
     var body: some View {
         Form {
@@ -43,19 +44,7 @@ struct AddIcon: View {
                 }
             }
             
-            if addMode {
-                HStack {
-                    Spacer()
-                    Button {
-                        modelContext.insert(vmIcon)
-                        coordinator.toRoot()
-                    } label: {
-                        Label("Add Icon", systemImage: "plus.rectangle")
-                    }
-                    Spacer()
-                }
-            } else {
-                
+            if !addMode {
                 HStack {
                     Spacer()
                     if imageTypes == .jpeg {
@@ -64,18 +53,27 @@ struct AddIcon: View {
                         ShareLink(item: img, preview: SharePreview(String(localized: "Enjoy!"), image: Image(systemName: "photo"))) {
                             Label("\(imageTypes.rawValue.uppercased())", systemImage: "square.and.arrow.up")
                         }
+                        .buttonStyle(CustomButton(color: MyColor.steelGray.value, width: horizontalPadding ))
                     } else {
                         let uiImagu =  helperImage.sharePng(iconModel: vmIcon, type: imageTypes)
                         ShareLink(item: uiImagu, preview: SharePreview(String(localized: "Enjoy!"), image: Image(systemName: "photo"))) {
                             Label("\(imageTypes.rawValue.uppercased())", systemImage: "square.and.arrow.up")
                         }
+                        .buttonStyle(CustomButton(color: MyColor.steelGray.value, width: horizontalPadding))
                     }
                     Spacer()
                 }
-                
+    
             }
             
         }
+        .offset(x: animateIcon ? 0 : -UIScreen.main.bounds.width)
+        .transition(.scale)
+        .onAppear {
+                            withAnimation(.easeInOut(duration: 1.0)) {
+                                animateIcon = true
+                            }
+                        }
         .navigationTitle(addMode ? "Add Icon" : "Edit Icon")
         .alert(messageAlert ,isPresented: $showAlert) {
             Button("OK", role: .cancel) {
@@ -92,6 +90,7 @@ struct AddIcon: View {
                     } label: {
                         Text("Add Icon")
                     }
+                    .buttonStyle(CustomButton(color: MyColor.skyblue.value, width: horizontalPadding / 3))
                 } else {
                     Button {
                         do {
@@ -106,6 +105,7 @@ struct AddIcon: View {
                     } label: {
                         Text("Save Icon")
                     }
+                    .buttonStyle(CustomButton(color: MyColor.skyblue.value, width: horizontalPadding / 3))
                 }
             }
             
@@ -124,7 +124,7 @@ struct AddIcon: View {
     @Previewable @State var coordinator = Coordinator()
     @Previewable @State var vmIcon = IconModel()
     NavigationStack(path: $coordinator.path) {
-        coordinator.build(page: .AddIcon(vmIcon: vmIcon, addMode: true))
+        coordinator.build(page: .AddIcon(vmIcon: vmIcon, addMode: false))
             .navigationDestination(for: AppPage.self) { page in
                 coordinator.build(page: page)
             }
