@@ -23,8 +23,8 @@ struct EditIcon: View {
             
                 VStack {
                     IconView(vmIcon: vmIcon,
-                             bWidth: min(widtho, heighto),
-                             bHeight: min(widtho, heighto),
+                             bWidth: min(widtho, heighto) / 2,
+                             bHeight: min(widtho, heighto) / 2,
                              editable: true)
                     .offset(
                         x: animateIcon ? 0 : horizontalPadding
@@ -50,15 +50,22 @@ struct EditIcon: View {
                         }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                Button("Add Icon") {
+                Button {
                     vmIcon.addIcon()
+                } label: {
+                    Label("Add Icon",systemImage: "plus.square.fill" )
                 }
                 .disabled(vmIcon.icons.count > 5)
-                .buttonStyle(CustomButton(color: MyColor.skyblue.value, width: widtho / 3))
+
             }
             
-            ToolbarItem(placement: .topBarLeading) {
+            ToolbarItemGroup(placement: .topBarLeading) {
                 GoBackButton()
+                Button() {
+                    coordinator.toRoot()
+                } label: {
+                    Label("Home",systemImage: "house.fill" )
+                }
             }
         }
         .navigationBarBackButtonHidden(true)

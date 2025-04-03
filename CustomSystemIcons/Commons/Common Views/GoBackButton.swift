@@ -14,8 +14,11 @@ struct GoBackButton: View {
         Button {
             coordinator.toRoot()
         } label: {
-            Label("Go Back", systemImage: "arrowshape.turn.up.backward.fill")
+            Label("Go Back", systemImage: "arrow.left")
+                
         }
+        .foregroundColor(Color.blue)
+        
     }
 }
 

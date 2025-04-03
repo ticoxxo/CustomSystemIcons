@@ -23,7 +23,13 @@ struct AddIcon: View {
     var body: some View {
         Form {
             GroupBox(String(localized: "Choose an Icon")) {
-                IconView(vmIcon: vmIcon, bWidth: 100, bHeight: 100, editable: false)
+                IconView(vmIcon: vmIcon, bWidth: min(horizontalPadding, verticalPadding) / 2 , bHeight: min(horizontalPadding, verticalPadding) / 2, editable: false)
+                    .overlay( alignment: .bottomTrailing) {
+                        Image(systemName: "pencil.circle")
+                            .resizable()
+                            .foregroundColor(.blue)
+                            .frame(maxWidth: min(horizontalPadding, verticalPadding) / 8, maxHeight: min(horizontalPadding, verticalPadding) / 8)
+                    }
                     .onTapGesture {
                         coordinator.push(page: .EditIcon(vmIcon: vmIcon))
                     }
@@ -51,15 +57,15 @@ struct AddIcon: View {
                         let uiImagu = helperImage.shareViewAsImage(iconModel: vmIcon)
                         let img = Image(uiImage: uiImagu ?? UIImage(systemName: "photo")!)
                         ShareLink(item: img, preview: SharePreview(String(localized: "Enjoy!"), image: Image(systemName: "photo"))) {
-                            Label("\(imageTypes.rawValue.uppercased())", systemImage: "square.and.arrow.up")
+                            Label("Share", systemImage: "arrowshape.turn.up.right.fill")
                         }
-                        .buttonStyle(CustomButton(color: MyColor.steelGray.value, width: horizontalPadding ))
+                        .buttonStyle(CustomButton(color: Color.blue, width: horizontalPadding ))
                     } else {
                         let uiImagu =  helperImage.sharePng(iconModel: vmIcon, type: imageTypes)
                         ShareLink(item: uiImagu, preview: SharePreview(String(localized: "Enjoy!"), image: Image(systemName: "photo"))) {
-                            Label("\(imageTypes.rawValue.uppercased())", systemImage: "square.and.arrow.up")
+                            Label("Share", systemImage: "arrowshape.turn.up.right.fill")
                         }
-                        .buttonStyle(CustomButton(color: MyColor.steelGray.value, width: horizontalPadding))
+                        .buttonStyle(CustomButton(color: Color.blue, width: horizontalPadding))
                     }
                     Spacer()
                 }
@@ -88,9 +94,9 @@ struct AddIcon: View {
                         messageAlert = "Icono agregado"
                         showAlert = true
                     } label: {
-                        Text("Add Icon")
+                        Label("Add Icon",systemImage: "plus.square.fill" )
                     }
-                    .buttonStyle(CustomButton(color: MyColor.skyblue.value, width: horizontalPadding / 3))
+                    
                 } else {
                     Button {
                         do {
@@ -103,13 +109,13 @@ struct AddIcon: View {
                         }
                         
                     } label: {
-                        Text("Save Icon")
+                        Label("Save",systemImage: "line.3.horizontal.button.angledtop.vertical.right" )
                     }
-                    .buttonStyle(CustomButton(color: MyColor.skyblue.value, width: horizontalPadding / 3))
+                    
                 }
             }
             
-            ToolbarItem(placement: .topBarLeading) {
+            ToolbarItemGroup(placement: .topBarLeading) {
                 GoBackButton()
             }
         }

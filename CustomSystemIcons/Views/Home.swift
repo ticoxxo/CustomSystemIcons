@@ -49,7 +49,7 @@ struct Home: View {
             } label: {
                 Label("Add Icon", systemImage: "plus.app")
             }
-            .buttonStyle(CustomButton(color: MyColor.skyblue.value, width: horizontalPadding / 2))
+            .buttonStyle(CustomButton(color: Color.blue, width: horizontalPadding / 2))
             
         }
         .navigationTitle("Icons")
