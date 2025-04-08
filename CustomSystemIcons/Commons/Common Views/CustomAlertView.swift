@@ -20,8 +20,11 @@ struct CustomAlertView: View {
             }
             Text(message)
                 .font(.subheadline)
+                .customAccessibility(label: "Message in alert: \(message)", hint: "Custom message for alert")
             HStack {
-                Button(action: onDismiss) {
+                Button{
+                    onDismiss()
+                } label: {
                     Text("OK")
                         .bold()
                         .frame(minWidth: 100)
@@ -29,7 +32,9 @@ struct CustomAlertView: View {
                         .background(.white)
                         .foregroundColor(Color.blue)
                         .cornerRadius(10)
+                    
                 }
+                .customAccessibility(label: "OK button", hint: "Dissmiss alert")
             }
         }
         .padding()

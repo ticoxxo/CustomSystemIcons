@@ -53,8 +53,9 @@ struct EditIcon: View {
                 Button {
                     vmIcon.addIcon()
                 } label: {
-                    Label("Add Icon",systemImage: "plus.square.fill" )
+                    Label("Button.Add",systemImage: "plus.square.fill" )
                 }
+                .customAccessibility(label: "Button.Add.Accessibility", hint: "Click to add a new icon")
                 .disabled(vmIcon.icons.count > 5)
 
             }
@@ -64,8 +65,9 @@ struct EditIcon: View {
                 Button() {
                     coordinator.toRoot()
                 } label: {
-                    Label("Home",systemImage: "house.fill" )
+                    Label("Button.Home.Accessibility",systemImage: "house.fill" )
                 }
+                .customAccessibility(label: "Button.Home.Accessibility", hint: "Go back to Home screen")
             }
         }
         .navigationBarBackButtonHidden(true)

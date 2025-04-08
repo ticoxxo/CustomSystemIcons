@@ -22,11 +22,12 @@ struct OrientationSection: View {
                         value: item.orientation,
                         in: 0.0...99.99
                     )
+                    .customAccessibilityDouble(label: "Slider.Orientation.Accessibility", hint: "Slide to change orientation of icon", value: item.orientation)
                 }
             }
         } label: {
             Text("Orientation").font(.headline)
-            
+                .customAccessibility(label: "Label orientation", hint: "Title for orientation section")
         }
     }
 }

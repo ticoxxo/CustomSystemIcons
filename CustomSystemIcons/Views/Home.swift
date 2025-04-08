@@ -21,6 +21,15 @@ struct Home: View {
     
     var body: some View {
         VStack {
+            HStack {
+                Spacer()
+                TextField("Label.Search", text: $searchText)
+                    .customTextField(label: "Label.Search.Accessibility", hint: "Click to search for an icon", text: $searchText)
+                    .frame(maxWidth: .infinity)
+                    
+                Spacer()
+            }
+            .padding()
             List(filteredIcons) { item in
                 ListRowView(item: item)
                     .listRowSeparator(.hidden)
@@ -41,7 +50,6 @@ struct Home: View {
                     }
             }
             .listStyle(.plain)
-            .searchable(text: $searchText, prompt: "Search Icon")
             
             Button {
                 @State var icon = IconModel()

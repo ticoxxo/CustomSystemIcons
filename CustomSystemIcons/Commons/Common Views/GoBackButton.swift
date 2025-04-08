@@ -17,8 +17,8 @@ struct GoBackButton: View {
             Label("Go Back", systemImage: "arrow.left")
                 
         }
+        .customAccessibility(label: "Button.Back.Accessibility", hint: "Press to go back to the previous screen")
         .foregroundColor(Color.blue)
-        
     }
 }
 

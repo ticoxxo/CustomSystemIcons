@@ -139,6 +139,13 @@ extension IconModel {
         self.icons.remove(atOffsets: offsets)
     }
     
+    func removeSingleIcon(_ icon: IconChild) {
+        self.icons.removeAll(where : { $0.id == icon.id })
+    }
+    
+    func moveSingleIcon(perform action: ((IndexSet, Int) -> Void)?)  {
+        
+    }
 }
 
 

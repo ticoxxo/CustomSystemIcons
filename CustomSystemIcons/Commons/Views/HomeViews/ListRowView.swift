@@ -13,6 +13,7 @@ struct ListRowView: View {
         VStack {
             IconView(vmIcon: item, bWidth: 100, bHeight: 100,editable: false)
             Text("\(item.title)")
+                .customAccessibility(label: "Label title", hint: "Text for icon")
                 .font(.footnote)
         }
         .frame(maxWidth: .infinity)

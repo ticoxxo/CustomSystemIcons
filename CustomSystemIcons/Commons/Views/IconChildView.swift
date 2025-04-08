@@ -15,6 +15,7 @@ struct IconChildView: View {
         GeometryReader { geometry in
             Image(systemName: icono.name)
                 .resizable()
+                .customAccessibility(label: "Child icon", hint: "Drag to change of place", isButton: true)
                 .scaleEffect(CGFloat(icono.zoom))
                 .scaledToFit()
                 .foregroundStyle(
@@ -38,6 +39,7 @@ struct IconChildView: View {
                         .onEnded {_ in
                             icono.dragging = false
                         }
+                    
                     : nil
                 )
                 .simultaneousGesture(
@@ -48,6 +50,26 @@ struct IconChildView: View {
                             }
                         }
                 )
+                .accessibilityZoomAction { action in
+                    switch action.direction {
+                    case .zoomIn:
+                        icono.zoom = Float(icono.zoom + 0.1)
+                    case .zoomOut:
+                        icono.zoom = Float(icono.zoom - 0.1)
+                    }
+                }
+                .accessibilityAction(named: Text("Drag.Right")) {
+                    icono.positionX = icono.positionX + 0.1
+                }
+                .accessibilityAction(named: Text("Drag.Left")) {
+                    icono.positionX = icono.positionX - 0.1
+                }
+                .accessibilityAction(named: Text("Drag.Top")) {
+                    icono.positionX = icono.positionY + 0.1
+                }
+                .accessibilityAction(named: Text("Drag.Bottom")) {
+                    icono.positionX = icono.positionY - 0.1
+                }
         }
     }
 }

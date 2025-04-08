@@ -15,6 +15,7 @@ struct PickIcon: View {
         
         Image(systemName: "photo")
             .resizable()
+            .customAccessibility(label: "Button to pick icon", hint:"Press to pick a new icon", isButton: true)
             .foregroundStyle(item.frontColor)
             .frame(width: 25, height: 25)
             .overlay(alignment: .bottomTrailing) {

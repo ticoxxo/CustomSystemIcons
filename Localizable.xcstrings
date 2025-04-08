@@ -157,6 +157,9 @@
         }
       }
     },
+    "Edit Icon" : {
+
+    },
     "Enjoy!" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -192,6 +195,12 @@
     },
     "Hello, World!" : {
       "shouldTranslate" : false
+    },
+    "Home" : {
+
+    },
+    "Icons" : {
+
     },
     "Manual zoom" : {
       "localizations" : {
@@ -247,6 +256,9 @@
     "Prueba de sheet" : {
       "shouldTranslate" : false
     },
+    "Save" : {
+
+    },
     "Save Icon" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -265,7 +277,14 @@
       }
     },
     "Search Icon" : {
-
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buscar Icono"
+          }
+        }
+      }
     },
     "Search icon..." : {
       "localizations" : {

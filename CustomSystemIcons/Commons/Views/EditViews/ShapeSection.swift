@@ -18,12 +18,15 @@ struct ShapeSection: View {
                 ForEach(StyleShape.allCases, id: \.self) { shape in
                     Spacer()
                     ShapeView(shape: shape, vmIcon: vmIcon)
-                        
                     Spacer()
                 }
             }
+            .customAccessibility(label: "lbl.Shape.Accessibility", hint: "Click on the shape to change the icon shape")
+            .accessibilityAddTraits(.isButton)
         } label: {
             Text("Shape").font(.headline)
+                .customAccessibility(label: "lbl.shape", hint: "Title for shape section")
+                .accessibilityAddTraits(.isHeader)
         }
     }
 }

@@ -14,8 +14,8 @@ struct ColorSection: View {
     var body: some View {
         DisclosureGroup(isExpanded: $expanded) {
             HStack {
-                Text("Background and layers").lineLimit(1)
-                ColorPicker("", selection: $vmIcon.backgroundColor)
+                ColorPicker("Background color", selection: $vmIcon.backgroundColor)
+                    .customAccessibility(label: "Background color picker", hint: "Pick a color for the background")
             }
             List {
                 ForEach($vmIcon.icons.sorted { $0.zIndex.wrappedValue < $1.zIndex.wrappedValue }) { icon in
@@ -23,10 +23,13 @@ struct ColorSection: View {
                         Text("\(Int(icon.zIndex.wrappedValue))")
                         Image(systemName: "\(icon.name.wrappedValue)")
                             .resizable()
+                            .customAccessibility(label: "Icon button", hint: "Press to select the a new icon", isButton: true)
                             .foregroundStyle(icon.frontColor.wrappedValue)
                             .frame(width: 25, height: 25)
+                        
                         PickIcon(item: icon)
-                        ColorPicker("", selection: icon.frontColor)
+                        ColorPicker("Pick a color for the icon", selection: icon.frontColor)
+                            .customAccessibility(label: "Background color picker", hint: "Pick a color for the icon")
                         
                     }
                     .deleteDisabled(vmIcon.icons.count < 2)
@@ -36,7 +39,9 @@ struct ColorSection: View {
             }
             
         } label: {
-            Text("Colors").font(.headline)
+            Text("Background and layers")
+                .customAccessibility(label: "lbl.layers", hint: "Title for background and layers section")
+                .font(.headline)
         }
     }
 }

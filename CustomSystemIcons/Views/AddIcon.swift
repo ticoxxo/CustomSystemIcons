@@ -22,11 +22,12 @@ struct AddIcon: View {
     
     var body: some View {
         Form {
-            GroupBox(String(localized: "Choose an Icon")) {
+            GroupBox(label: Text("GroupBox.Title.Icon")) {
                 IconView(vmIcon: vmIcon, bWidth: min(horizontalPadding, verticalPadding) / 2 , bHeight: min(horizontalPadding, verticalPadding) / 2, editable: false)
                     .overlay( alignment: .bottomTrailing) {
                         Image(systemName: "pencil.circle")
                             .resizable()
+                            .customAccessibility(label: "Change icon button", hint: "Click to change to a new icon", isButton: true)
                             .foregroundColor(.blue)
                             .frame(maxWidth: min(horizontalPadding, verticalPadding) / 8, maxHeight: min(horizontalPadding, verticalPadding) / 8)
                     }
@@ -34,21 +35,25 @@ struct AddIcon: View {
                         coordinator.push(page: .EditIcon(vmIcon: vmIcon))
                     }
             }
+            .customAccessibility(label: "GroupBox.Title.Icon.Accesibility", hint: "Title for icon section")
             
-            GroupBox(String(localized:"Details")) {
+            GroupBox(label: Text("GroupBox.Title.Detail")) {
                 TextField("Title", text: $vmIcon.title)
             }
+            .customAccessibility(label: "GroupBox.Title.Detail.Accesibility", hint: "Title for details seccion")
             
-            GroupBox(String(localized: "Share")) {
+            GroupBox(label: Text("GroupBox.Title.Share")) {
                 VStack {
                     Picker("Please choose one", selection: $imageTypes) {
                         ForEach(ImageType.allCases) { types in
                             Text(types.rawValue.capitalized).tag(types)
                         }
                     }
+                    .customAccessibility(label: "Picker for image type", hint: "Click the image type to select to share")
                     .pickerStyle(SegmentedPickerStyle())
                 }
             }
+            .customAccessibility(label: "Group.Title.Share.Accesibility", hint: "Title for share section")
             
             if !addMode {
                 HStack {
@@ -65,39 +70,47 @@ struct AddIcon: View {
                         ShareLink(item: uiImagu, preview: SharePreview(String(localized: "Enjoy!"), image: Image(systemName: "photo"))) {
                             Label("Share", systemImage: "arrowshape.turn.up.right.fill")
                         }
+                        
                         .buttonStyle(CustomButton(color: Color.blue, width: horizontalPadding))
                     }
                     Spacer()
                 }
-    
+                
             }
             
         }
         .offset(x: animateIcon ? 0 : -UIScreen.main.bounds.width)
         .transition(.scale)
         .onAppear {
-                            withAnimation(.easeInOut(duration: 1.0)) {
-                                animateIcon = true
-                            }
-                        }
-        .navigationTitle(addMode ? "Add Icon" : "Edit Icon")
-        .alert(messageAlert ,isPresented: $showAlert) {
-            Button("OK", role: .cancel) {
-                coordinator.toRoot()
+            withAnimation(.easeInOut(duration: 1.0)) {
+                animateIcon = true
             }
         }
+        .navigationTitle(addMode ? "Add Icon" : "Edit Icon")
+        .alert(messageAlert ,isPresented: $showAlert) {
+            
+            Button {
+                coordinator.toRoot()
+            } label: {
+                Label("Button.OK.Accessibility", systemImage: "trash")
+            }
+            .customAccessibility(label: "Button.OK.Accessibility", hint: "Click to go back to the main screen")
+        }
         .toolbar {
-            ToolbarItemGroup(placement: .topBarTrailing) {
+            
+            ToolbarItem(placement: .topBarTrailing) {
                 if addMode {
                     Button {
                         modelContext.insert(vmIcon)
                         messageAlert = "Icono agregado"
                         showAlert = true
                     } label: {
-                        Label("Add Icon",systemImage: "plus.square.fill" )
+                        Label("Button.Add",systemImage: "plus.square.fill" )
                     }
+                    .customAccessibility(label: "Button.Add.Accessibility", hint: "Click to add a new icon")
                     
-                } else {
+                }
+                else {
                     Button {
                         do {
                             try modelContext.save()
@@ -109,11 +122,14 @@ struct AddIcon: View {
                         }
                         
                     } label: {
-                        Label("Save",systemImage: "line.3.horizontal.button.angledtop.vertical.right" )
+                        Label("Button.Save",systemImage: "line.3.horizontal.button.angledtop.vertical.right")
                     }
+                    .customAccessibility(label: "Button.Save.Accessibility", hint: "Click to save the icon")
                     
                 }
+                
             }
+            
             
             ToolbarItemGroup(placement: .topBarLeading) {
                 GoBackButton()
@@ -121,7 +137,6 @@ struct AddIcon: View {
         }
         .navigationBarBackButtonHidden(true)
     }
-        
     
 }
 

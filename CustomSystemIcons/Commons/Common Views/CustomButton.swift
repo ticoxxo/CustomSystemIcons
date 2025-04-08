@@ -32,7 +32,6 @@ struct CustomButton: ButtonStyle {
                         .animation(.easeOut(duration: 0.2), value: configuration.isPressed)
             .frame(maxWidth: width)
             //x: 20, y: 20
-            
     }
 }
 

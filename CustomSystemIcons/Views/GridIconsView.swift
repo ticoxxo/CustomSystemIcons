@@ -29,9 +29,10 @@ struct GridIconsView: View {
         VStack {
             HStack {
                 Spacer()
-                TextField("Search icon...", text: $searchText)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                TextField("Label.Search", text: $searchText)
+                    .customTextField(label: "Label.Search.Accessibility", hint: "Click to search for an icon", text: $searchText)
                     .frame(maxWidth: .infinity)
+                    
                 Spacer()
             }
             .padding()
@@ -40,6 +41,7 @@ struct GridIconsView: View {
                     ForEach(filteredIcons, id: \.self) { icon in
                         Image(systemName: "\(icon)")
                             .resizable()
+                            .customAccessibility(label: "Icon \(icon)", hint: "Press to select icon", isButton: true)
                             .scaledToFit()
                             .onTapGesture {
                                 vmIcon.name = icon
