@@ -13,7 +13,7 @@ struct ShapeSection: View {
     var body: some View {
         DisclosureGroup(isExpanded: $expanded) {
             HStack {
-                IconView(vmIcon: vmIcon, bWidth: 25, bHeight: 25, editable: false)
+                //IconView(vmIcon: vmIcon, bWidth: 25, bHeight: 25, editable: false)
                     
                 ForEach(StyleShape.allCases, id: \.self) { shape in
                     Spacer()

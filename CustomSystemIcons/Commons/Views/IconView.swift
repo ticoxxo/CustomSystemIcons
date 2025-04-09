@@ -20,10 +20,19 @@ struct IconView: View {
             }
                 
         }
-        .background(
+        .background {
+            
             //Color(hex: vmIcon.background)
-            vmIcon.backgroundColor
-        )
+            if vmIcon.backgroundImage.backgroundImage != nil {
+                
+                BackgroundView(background: vmIcon.backgroundImage)
+                    
+                
+            } else {
+                vmIcon.backgroundColor
+            }
+            
+        }
         .clipShape(vmIcon.styleShape)
         .overlay(
             vmIcon.styleShape.stroke(vmIcon.borderColor,
@@ -39,6 +48,9 @@ struct IconView: View {
         .padding()
     }
 }
+/*
+ if let imageData =  vmIcon.backgroundImage, let uiImage = UIImage(data: imageData) {
+ */
 
 #Preview {
     //@Previewable @State var bgColor = Color(.sRGB, red: 0.98, green: 0.9, blue: 0.2)

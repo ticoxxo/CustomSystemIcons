@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+// TODO: Add background controls for orientation
 struct OrientationSection: View {
     @Bindable var vmIcon: IconModel
     @State private var expanded: Bool = false

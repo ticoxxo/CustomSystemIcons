@@ -1,7 +1,7 @@
 import SwiftUI
 import SFSafeSymbols
 import SwiftData
-import Photos
+import PhotosUI
 
 
 @Model
@@ -18,6 +18,8 @@ final class IconModel: Identifiable {
     var icons: [IconChild]
     @Attribute(originalName: "creation_date") var creationDate: Date
     var isFavorite: Bool
+    @Relationship(deleteRule: .cascade)
+    var backgroundImage: BackgroundImageModel
     
     init(
         id: UUID = UUID(),
@@ -32,7 +34,8 @@ final class IconModel: Identifiable {
         borderColorComputed: ColorComponents = ColorComponents(color: .black),
         icons: [IconChild] = [IconChild()],
         creationDate: Date = Date(),
-        is isFavorite: Bool = false) {
+        is isFavorite: Bool = false,
+        backgroundImage: BackgroundImageModel = BackgroundImageModel()) {
             self.id = UUID()
             self.title = title
             self.styleShape = styleShape
@@ -42,6 +45,7 @@ final class IconModel: Identifiable {
             self.icons = icons
             self.creationDate = creationDate
             self.isFavorite = isFavorite
+            self.backgroundImage = backgroundImage
         }
     
     enum CodingKeys: String, CodingKey {
@@ -143,9 +147,12 @@ extension IconModel {
         self.icons.removeAll(where : { $0.id == icon.id })
     }
     
-    func moveSingleIcon(perform action: ((IndexSet, Int) -> Void)?)  {
-        
-    }
+    func loadImageData(from item: PhotosPickerItem?) async {
+            if let data = try? await item?.loadTransferable(type: Data.self) {
+                self.backgroundImage.backgroundImage = data
+            }
+        }
+
 }
 
 

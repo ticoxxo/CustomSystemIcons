@@ -74,7 +74,10 @@ struct IconChildView: View {
     }
 }
 
+/*
+
 #Preview {
     let icono = IconChild()
     IconChildView(icono: icono, editable: true)
 }
+*/
