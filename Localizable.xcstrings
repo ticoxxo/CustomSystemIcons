@@ -1,9 +1,6 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "" : {
-      "shouldTranslate" : false
-    },
     "%@" : {
       "shouldTranslate" : false
     },
@@ -43,6 +40,9 @@
         }
       }
     },
+    "Background color" : {
+
+    },
     "Border" : {
       "localizations" : {
         "en" : {
@@ -75,7 +75,20 @@
         }
       }
     },
+    "Button.Add" : {
+
+    },
+    "Button.Home.Accessibility" : {
+
+    },
+    "Button.OK.Accessibility" : {
+
+    },
+    "Button.Save" : {
+
+    },
     "Checked" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -109,6 +122,7 @@
       }
     },
     "Color" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -125,6 +139,7 @@
       }
     },
     "Colors" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -156,6 +171,18 @@
           }
         }
       }
+    },
+    "Drag.Bottom" : {
+
+    },
+    "Drag.Left" : {
+
+    },
+    "Drag.Right" : {
+
+    },
+    "Drag.Top" : {
+
     },
     "Edit Icon" : {
 
@@ -193,13 +220,22 @@
         }
       }
     },
-    "Hello, World!" : {
-      "shouldTranslate" : false
+    "GroupBox.Title.Detail" : {
+
     },
-    "Home" : {
+    "GroupBox.Title.Icon" : {
+
+    },
+    "GroupBox.Title.Share" : {
 
     },
     "Icons" : {
+
+    },
+    "Label.Search" : {
+
+    },
+    "Lbl.PhotosPicker" : {
 
     },
     "Manual zoom" : {
@@ -237,6 +273,9 @@
         }
       }
     },
+    "Pick a color for the icon" : {
+
+    },
     "Please choose one" : {
       "localizations" : {
         "en" : {
@@ -252,12 +291,6 @@
           }
         }
       }
-    },
-    "Prueba de sheet" : {
-      "shouldTranslate" : false
-    },
-    "Save" : {
-
     },
     "Save Icon" : {
       "extractionState" : "manual",
@@ -277,6 +310,7 @@
       }
     },
     "Search Icon" : {
+      "extractionState" : "stale",
       "localizations" : {
         "es-419" : {
           "stringUnit" : {
@@ -287,6 +321,7 @@
       }
     },
     "Search icon..." : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -353,6 +388,7 @@
       }
     },
     "Unchecked" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {

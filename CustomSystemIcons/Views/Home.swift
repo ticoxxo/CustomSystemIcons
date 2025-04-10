@@ -10,7 +10,7 @@ import SwiftData
 
 struct Home: View {
     @Query(sort: \IconModel.creationDate) var listIcons: [IconModel]
-    @Query(filter: #Predicate<IconModel> { $0.isFavorite } ,sort: \IconModel.creationDate) var favoriteListIcons: [IconModel]
+    @Query(filter: #Predicate<IconModel> { $0.isFavorite }, sort: \IconModel.creationDate) var favoriteListIcons: [IconModel]
     @Environment(\.coordinator) var coordinator
     @Environment(\.modelContext) var modelContext
     var list = IconsListModel()
@@ -18,65 +18,61 @@ struct Home: View {
     @State private var messageAlert = ""
     @State private var showAlert = false
     @State private var favoriteFilter = false
-    
+
+    let columns = [
+        GridItem(.flexible()),
+        GridItem(.flexible())
+    ]
+
     var body: some View {
-        VStack {
-            HStack {
-                Spacer()
-                TextField("Label.Search", text: $searchText)
-                    .customTextField(label: "Label.Search.Accessibility", hint: "Click to search for an icon", text: $searchText)
-                    .frame(maxWidth: .infinity)
-                    
-                Spacer()
-            }
-            .padding()
-            List(filteredIcons) { item in
-                ListRowView(item: item)
-                    .listRowSeparator(.hidden)
-                    .onTapGesture {
-                        coordinator.push(page: .AddIcon(vmIcon: item, addMode: false))
-                    }
-                    .overlay( alignment: .topTrailing) {
-                        StarView(item: item)
+        GeometryReader { geometry in
+            VStack {
+                HStack {
+                    Spacer()
+                    TextField("Label.Search", text: $searchText)
+                        .customTextField(label: "Label.Search.Accessibility", hint: "Click to search for an icon", text: $searchText)
+                        .frame(maxWidth: .infinity)
+                    Spacer()
+                }
+                .padding()
+
+                LazyVGrid(columns: columns, spacing: 16) {
+                    ForEach(filteredIcons) { item in
+                        ListRowView(item: item)
                             .onTapGesture {
-                                item.isFavorite.toggle()
-                                do {
-                                    try modelContext.save()
-                                } catch {
-                                    messageAlert = "Error updating favorite"
-                                    showAlert = true
-                                }
+                                coordinator.push(page: .AddIcon(vmIcon: item, addMode: false))
                             }
                     }
+                }
+                .padding()
+                Spacer()
+                Button {
+                    @State var icon = IconModel()
+                    coordinator.push(page: .AddIcon(vmIcon: icon, addMode: true))
+                } label: {
+                    Label("Add Icon", systemImage: "plus.app")
+                }
+                .buttonStyle(CustomButton(color: Color.blue, width: geometry.size.width / 2))
             }
-            .listStyle(.plain)
-            
-            Button {
-                @State var icon = IconModel()
-                coordinator.push(page: .AddIcon(vmIcon: icon, addMode: true))
-            } label: {
-                Label("Add Icon", systemImage: "plus.app")
-            }
-            .buttonStyle(CustomButton(color: Color.blue, width: horizontalPadding / 2))
-            
         }
         .navigationTitle("Icons")
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
                     favoriteFilter.toggle()
-                } label : {
+                } label: {
                     Image(systemName: favoriteFilter ? "star.fill" : "star")
                 }
-                
             }
         }
-        .alert(messageAlert ,isPresented: $showAlert) {
+        .alert(messageAlert, isPresented: $showAlert) {
             Button("OK", role: .cancel) {}
         }
-        
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
+
+
 
 extension Home {
     var filteredIcons: [IconModel] {

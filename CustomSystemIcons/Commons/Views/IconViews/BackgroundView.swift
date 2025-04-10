@@ -15,7 +15,10 @@ struct BackgroundView: View {
             if let img = background.backgroundImage, let ui = UIImage(data: img) {
                 Image(uiImage: ui)
                     .resizable()
-                    .aspectRatio(contentMode: .fit)
+                    .scaleEffect(CGFloat(background.zoom))
+                    .scaledToFit()
+                    //.aspectRatio(contentMode: .fit)
+                    .rotationEffect(.degrees(background.orientation))
                     .position(
                         x: max(0, min(geometry.size.width, background.positionX == 0 ? geometry.size.width / 2 : geometry.size.width * background.positionX)),
                         y: max(0, min(geometry.size.height, background.positionY == 0 ? geometry.size.height / 2 : geometry.size.height * background.positionY)
@@ -35,9 +38,7 @@ struct BackgroundView: View {
                     .simultaneousGesture(
                         MagnifyGesture()
                             .onChanged { value in
-                                if value.magnification < 0.2 || value.magnification > 1.0 {
-                                    background.zoom = Float(value.magnification)
-                                }
+                                background.zoom = Float(value.magnification)
                             }
                     )
                     .accessibilityZoomAction { action in

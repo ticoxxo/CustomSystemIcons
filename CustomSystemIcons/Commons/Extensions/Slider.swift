@@ -28,4 +28,5 @@ extension Slider {
             .accessibilityValue(Text("\(value) in slider"))
             .accessibilityElement(children: .combine)
     }
+    
 }
