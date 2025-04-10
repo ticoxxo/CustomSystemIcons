@@ -30,29 +30,33 @@ struct Home: View {
                 HStack {
                     Spacer()
                     TextField("Label.Search", text: $searchText)
-                        .customTextField(label: "Label.Search.Accessibility", hint: "Click to search for an icon", text: $searchText)
+                        .customTextField(label: "Label.Search.Accessibility", hint: "Label.Search.Accessibility.Hint", text: $searchText)
                         .frame(maxWidth: .infinity)
                     Spacer()
                 }
                 .padding()
 
-                LazyVGrid(columns: columns, spacing: 16) {
-                    ForEach(filteredIcons) { item in
-                        ListRowView(item: item)
-                            .onTapGesture {
-                                coordinator.push(page: .AddIcon(vmIcon: item, addMode: false))
-                            }
+                ScrollView {
+                    LazyVGrid(columns: columns, spacing: 16) {
+                        ForEach(filteredIcons) { item in
+                            ListRowView(item: item)
+                                .onTapGesture {
+                                    coordinator.push(page: .AddIcon(vmIcon: item, addMode: false))
+                                }
+                        }
                     }
+                    .padding()
                 }
-                .padding()
                 Spacer()
                 Button {
                     @State var icon = IconModel()
                     coordinator.push(page: .AddIcon(vmIcon: icon, addMode: true))
                 } label: {
-                    Label("Add Icon", systemImage: "plus.app")
+                    Label("Label.AddIcon", systemImage: "plus.app")
                 }
+                .customAccessibility(label: "Label.AddIcon.Accessibility", hint: "Label.AddIcon.Accessibility.Hint")
                 .buttonStyle(CustomButton(color: Color.blue, width: geometry.size.width / 2))
+                
             }
         }
         .navigationTitle("Icons")
@@ -63,10 +67,16 @@ struct Home: View {
                 } label: {
                     Image(systemName: favoriteFilter ? "star.fill" : "star")
                 }
+                .customAccessibility(label: "Label.AddIcon.Accessibility", hint: "Label.AddIcon.Accessibility")
             }
         }
         .alert(messageAlert, isPresented: $showAlert) {
-            Button("OK", role: .cancel) {}
+            Button {
+                
+            } label: {
+                Text("Label.OK")
+            }
+            .customAccessibility(label: "Label.OK.Accessibility", hint: "Label.OK.Accessibility.Hint")
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }

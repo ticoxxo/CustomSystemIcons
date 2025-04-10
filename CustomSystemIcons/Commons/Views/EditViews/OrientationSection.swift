@@ -22,7 +22,7 @@ struct OrientationSection: View {
                         value: item.orientation,
                         in: 0.0...360.0
                     )
-                    .customAccessibilityDouble(label: "Slider.Orientation.Accessibility", hint: "Slide to change orientation of icon", value: item.orientation)
+                    .customAccessibilityDouble(label: "Slider.Orientation.Accessibility", hint: "Slider.Orientation.Accessibility.Hint", value: item.orientation)
                 }
             }
             
@@ -39,7 +39,7 @@ struct OrientationSection: View {
                         value: $vmIcon.backgroundImage.orientation,
                         in: 0.0...360.0
                     )
-                    .customAccessibilityDouble(label: "Slider.Background.Accessibility", hint: "Slide to change orientation of background", value: $vmIcon.backgroundImage.orientation)
+                    .customAccessibilityDouble(label: "Slider.Background.Accessibility", hint: "Slider.Background.Accessibility.Hint", value: $vmIcon.backgroundImage.orientation)
                         
                 }
                     
@@ -47,7 +47,7 @@ struct OrientationSection: View {
             
         } label: {
             Text("Orientation").font(.headline)
-                .customAccessibility(label: "Label orientation", hint: "Title for orientation section")
+                .customAccessibility(label: "Label.Orientation", hint: "Label.Orientation.Hint")
         }
         
     }

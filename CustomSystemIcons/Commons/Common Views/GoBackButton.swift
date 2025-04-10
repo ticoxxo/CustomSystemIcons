@@ -14,10 +14,10 @@ struct GoBackButton: View {
         Button {
             coordinator.toRoot()
         } label: {
-            Label("Go Back", systemImage: "arrow.left")
+            Label("Label.GoBack", systemImage: "arrow.left")
                 
         }
-        .customAccessibility(label: "Button.Back.Accessibility", hint: "Press to go back to the previous screen")
+        .customAccessibility(label: "Button.Back.Accessibility", hint: "Button.Back.Accessibility.Hint")
         .foregroundColor(Color.blue)
     }
 }

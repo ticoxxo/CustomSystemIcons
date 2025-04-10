@@ -15,6 +15,7 @@ struct BackgroundView: View {
             if let img = background.backgroundImage, let ui = UIImage(data: img) {
                 Image(uiImage: ui)
                     .resizable()
+                    .customAccessibility(label: "Icon.Background", hint: "Drag to change of place", isButton: true)
                     .scaleEffect(CGFloat(background.zoom))
                     .scaledToFit()
                     //.aspectRatio(contentMode: .fit)

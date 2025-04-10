@@ -15,7 +15,7 @@ struct IconChildView: View {
         GeometryReader { geometry in
             Image(systemName: icono.name)
                 .resizable()
-                .customAccessibility(label: "Child icon", hint: "Drag to change of place", isButton: true)
+                .customAccessibility(label: "Icon.Child", hint: "Drag to change of place", isButton: true)
                 .scaleEffect(CGFloat(icono.zoom))
                 .scaledToFit()
                 .foregroundStyle(

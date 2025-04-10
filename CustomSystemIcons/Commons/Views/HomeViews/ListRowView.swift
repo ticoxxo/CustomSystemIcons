@@ -25,7 +25,6 @@ struct ListRowView: View {
                         .cornerRadius(2)
                         .padding()
                     Text("\(item.title)")
-                        .customAccessibility(label: "Label title", hint: "Text for icon")
                         .font(.subheadline)
                         .fontWeight(.bold)
                         .lineLimit(1) // Restrict to one line
@@ -43,7 +42,7 @@ struct ListRowView: View {
                     do {
                         try modelContext.save()
                     } catch {
-                        messageAlert = "Error updating favorite"
+                        messageAlert = "Label.Error.Save"
                         showAlert = true
                     }
                 }

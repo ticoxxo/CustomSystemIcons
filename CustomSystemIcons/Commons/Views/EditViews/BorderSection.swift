@@ -13,20 +13,20 @@ struct BorderSection: View {
     var body: some View {
         DisclosureGroup(isExpanded: $expanded) {
             HStack {
-                ColorPicker("Border Color", selection: $vmIcon.borderColor)
-                    .customAccessibility(label: "Color in Border Section", hint: "Choose a color for the border")
+                ColorPicker("ColorPicker.BorderColor", selection: $vmIcon.borderColor)
+                    .customAccessibility(label: "ColorPicker.BorderColor.Accessibility", hint: "ColorPicker.BorderColor.Accessibility.Hint")
                     .lineLimit(1)
             }
             HStack {
-                Text("Width")
+                Text("Label.Width")
                     .lineLimit(1)
                 Slider(value: $vmIcon.borderWidth, in:0.0...0.1)
-                    .customAccessibilityDouble(label: "Slider in Border Section", hint: "Slide to change the width of the border", value: $vmIcon.borderWidth)
+                    .customAccessibilityDouble(label: "Slider.BorderWidth.Accessibility", hint: "Slider.BorderWidth.Accessibility.Hint", value: $vmIcon.borderWidth)
                     
             }
         } label: {
-            Text("Border").font(.headline)
-                .customAccessibility(label: "Border name for the form section", hint: "Name of the group")
+            Text("Label.Border").font(.headline)
+                .customAccessibility(label: "Label.Border.Accessibility", hint: "Label.Border.Accessibility.Hint")
         }
     }
 }

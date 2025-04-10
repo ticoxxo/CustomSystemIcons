@@ -17,8 +17,8 @@ struct ColorSection: View {
         DisclosureGroup(isExpanded: $expanded) {
             
             HStack {
-                ColorPicker("Background color", selection: $vmIcon.backgroundColor)
-                    .customAccessibility(label: "Background color picker", hint: "Pick a color for the background")
+                ColorPicker("ColorPicker.Background", selection: $vmIcon.backgroundColor)
+                    .customAccessibility(label: "ColorPicker.Background.Accessibility", hint: "ColorPicker.Background.Accessibility.Hint")
                     
             }
             HStack {
@@ -27,8 +27,8 @@ struct ColorSection: View {
                     matching: .images,
                     photoLibrary: .shared()
                 ) {
-                    Text("Lbl.PhotosPicker")
-                        .customAccessibility(label: "Lbl.PhotosPicker.Accessibility", hint: "Press to pick a photo from the library")
+                    Text("Label.PhotosPicker")
+                        .customAccessibility(label: "Label.PhotosPicker.Accessibility", hint: "Label.PhotosPicker.Accessibility.Hint")
                 }
                 .onChange(of: selectedPhoto) {
                     Task {
@@ -58,7 +58,7 @@ struct ColorSection: View {
                                    height: min(horizontalPadding / 10, verticalPadding / 10))
                             
                     }
-                    .customAccessibility(label: "Lbl.BackgroundImage.Accessibility", hint: "Lbl.BackgroundImage.Accessibility.Hint")
+                    .customAccessibility(label: "Label.BackgroundImage.Accessibility", hint: "Label.BackgroundImage.Accessibility.Hint")
                     .accessibilityAddTraits(.isButton)
                     .accessibilityAction {
                         vmIcon.backgroundImage.backgroundImage = nil
@@ -81,13 +81,13 @@ struct ColorSection: View {
                         Text("\(Int(icon.zIndex.wrappedValue))")
                         Image(systemName: "\(icon.name.wrappedValue)")
                             .resizable()
-                            .customAccessibility(label: "Icon button", hint: "Press to select the a new icon", isButton: true)
+                            .customAccessibility(label: "Button.Add.Accessibility", hint: "Button.Add.Hint", isButton: true)
                             .foregroundStyle(icon.frontColor.wrappedValue)
                             .frame(width: 25, height: 25)
                         
                         PickIcon(item: icon)
-                        ColorPicker("Pick a color for the icon", selection: icon.frontColor)
-                            .customAccessibility(label: "Background color picker", hint: "Pick a color for the icon")
+                        ColorPicker("ColorPicker.Icon", selection: icon.frontColor)
+                            .customAccessibility(label: "ColorPicker.Icon.Accessibility", hint: "ColorPicker.Icon.Hint")
                         
                     }
                     .deleteDisabled(vmIcon.icons.count < 2)
@@ -104,7 +104,7 @@ struct ColorSection: View {
     }
 }
 
-/*
+
 
 #Preview {
     @Previewable @State var vmIcon = IconModel()
@@ -115,4 +115,4 @@ struct ColorSection: View {
     return ColorSection(vmIcon: vmIcon)
 }
 
-*/
+

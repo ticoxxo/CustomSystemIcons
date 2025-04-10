@@ -36,11 +36,23 @@ struct CustomTextFieldStyle: ViewModifier {
     }
 }
 
+extension TextField {
+    func customAccessibility(label: String, hint: String) -> some View {
+        let label = NSLocalizedString(label, comment: "")
+        let hint = NSLocalizedString(hint, comment: "")
+        
+        return self.accessibilityLabel(Text(label))
+            .accessibilityHint(Text(hint))
+            .dynamicTypeSize(.large ... .accessibility3)
+    }
+}
+
 extension View {
     func customTextField(label: String, hint: String, text: Binding<String>) -> some View {
         self.modifier(CustomTextFieldStyle(label: label, hint: hint, text: text))
     }
 }
+
 /*
  
  .accessibilityElement(children: .combine)

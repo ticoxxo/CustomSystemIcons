@@ -21,11 +21,10 @@ struct ShapeSection: View {
                     Spacer()
                 }
             }
-            .customAccessibility(label: "lbl.Shape.Accessibility", hint: "Click on the shape to change the icon shape")
+            .customAccessibility(label: "Label.Shape.Accessibility", hint: "Click on the shape to change the icon shape")
             .accessibilityAddTraits(.isButton)
         } label: {
-            Text("Shape").font(.headline)
-                .customAccessibility(label: "lbl.shape", hint: "Title for shape section")
+            Text("Label.Shape").font(.headline)
                 .accessibilityAddTraits(.isHeader)
         }
     }

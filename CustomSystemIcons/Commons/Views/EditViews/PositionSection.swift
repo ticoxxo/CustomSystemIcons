@@ -45,8 +45,8 @@ struct PositionSection: View {
             }
             
         } label: {
-            Text("Manual zoom").font(.headline)
-                .customAccessibility(label: "Label manual zoom", hint: "Title for zoom manual section")
+            Text("Label.Zoom").font(.headline)
+                .customAccessibility(label: "Label.Zoom.Accessibility", hint: "Title for zoom manual section")
         }
     }
 }
