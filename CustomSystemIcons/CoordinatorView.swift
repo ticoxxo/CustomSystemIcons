@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct CoordinatorView: View {
     @State private var coordinator = Coordinator()
@@ -16,7 +17,9 @@ struct CoordinatorView: View {
                     coordinator.build(page: page)
                 }
         }
-            .environment(\.coordinator, coordinator)
+        .environment(\.coordinator, coordinator)
+        .modelContainer(for: IconModel.self)
+        
     }
 }
 

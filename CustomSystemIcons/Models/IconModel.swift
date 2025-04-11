@@ -1,93 +1,108 @@
 import SwiftUI
 import SFSafeSymbols
+import SwiftData
+import PhotosUI
 
 
-@Observable
-class IconModel: Identifiable, Hashable, Equatable {
-    var id = UUID()
+@Model
+final class IconModel: Identifiable {
+    var id: UUID
     // Details
     var title: String
-    var description: String
-    var icon: SFSymbol
-    var status: Bool = false
-    // Date
-    var startDate: Date = Date.now
-    var expireDate: Date = Date.now.addingTimeInterval(86400)
+    var styleShape: StyleShape
     // Color
-    var frontColor: [Color] = [.red, .blue]
-    var background: Color = Color(.sRGB, red: 0.98, green: 0.9, blue: 0.2)
-    var gradient: Gradient {
-        get {
-            Gradient(colors: frontColor)
-        }
-        set {
-            let s = frontColor
-            return frontColor = s
-        }
-    }
-    var boderColor: Color = .black
-    var gradientType: GradientType = .linear
-    var orientation: Double = 0.0
-    var zoom: CGFloat = 0.8
-    var borderWidth: CGFloat = 0.0
+    var backgroundColorComputed: ColorComponents
+    var borderColorComputed: ColorComponents
+    var borderWidth: Double
+    @Relationship(deleteRule: .cascade)
+    var icons: [IconChild]
+    @Attribute(originalName: "creation_date") var creationDate: Date
+    var isFavorite: Bool
+    @Relationship(deleteRule: .cascade)
+    var backgroundImage: BackgroundImageModel
     
-    init() {
-        title = ""
-        description = ""
-        icon = SFSymbol.star
-    }
+    init(
+        id: UUID = UUID(),
+        title: String = "",
+        styleShape: StyleShape = .circle,
+        orientation: Double = 0.0,
+        zoom: CGFloat = 0.8,
+        borderWidth: Double = 0.01,
+        //backgroundColorComputed: Colores = .init(red: 0.4,blue: 0.4,green: 0.4),
+        //borderColorComputed: Colores = .init(red: 0.4,blue: 0.4,green: 0.4),
+        backgroundColorComputed: ColorComponents = ColorComponents(color: .white),
+        borderColorComputed: ColorComponents = ColorComponents(color: .black),
+        icons: [IconChild] = [IconChild()],
+        creationDate: Date = Date(),
+        is isFavorite: Bool = false,
+        backgroundImage: BackgroundImageModel = BackgroundImageModel()) {
+            self.id = UUID()
+            self.title = title
+            self.styleShape = styleShape
+            self.borderWidth = borderWidth
+            self.backgroundColorComputed = backgroundColorComputed
+            self.borderColorComputed = borderColorComputed
+            self.icons = icons
+            self.creationDate = creationDate
+            self.isFavorite = isFavorite
+            self.backgroundImage = backgroundImage
+        }
     
-    init(title: String, description: String) {
-        self.title = title
-        self.description = description
-        icon = SFSymbol.star
-    }
- 
+    enum CodingKeys: String, CodingKey {
+            case id
+            case title
+            case tareaName
+            //case styleShape
+            case backgroundColorComputed
+            case borderColorComputed
+            case borderWidth
+            case icons
+            case creationDate
+            case isFavorite
+        }
+    
 }
 
 extension IconModel {
     
-    static func == (lhs: IconModel, rhs: IconModel) -> Bool {
-        return lhs.id == rhs.id
-    }
-    
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
-    }
-    
-    func buildGradient(gradientType: GradientType) -> AnyShapeStyle {
-            switch gradientType {
-            case .linear:
-                return AnyShapeStyle(LinearGradient(gradient: gradient, startPoint: .topLeading, endPoint: .bottomTrailing))
-            case .radial:
-                return AnyShapeStyle(RadialGradient(gradient: gradient, center: .center, startRadius: 1, endRadius: 100))
-            case .angular:
-                return AnyShapeStyle(AngularGradient(gradient: gradient, center: .center))
-            case .elliptical:
-                return AnyShapeStyle(EllipticalGradient(gradient: gradient, center: .center))
+    /*
+     var backgroundColor: Color {
+        get { Color(red: backgroundColorComputed.red, green: backgroundColorComputed.green, blue: backgroundColorComputed.blue)}
+        set {
+            if let components = newValue.cgColor?.components {
+                backgroundColorComputed.red = components[0]
+                backgroundColorComputed.green = components[1]
+                backgroundColorComputed.blue = components[2]
+            }
         }
     }
     
-    func buildIt(gradientType: GradientType) ->  AnyShapeStyle {
-        if gradientType == .linear {
-            AnyShapeStyle(LinearGradient(gradient: gradient, startPoint: .topLeading, endPoint: .bottomTrailing))
-        } else if gradientType == .radial {
-            AnyShapeStyle(RadialGradient(gradient: gradient, center: .center, startRadius: 1, endRadius: 100))
-        } else if gradientType == .angular {
-            AnyShapeStyle(AngularGradient(gradient: gradient, center: .center))
-        } else {
-            AnyShapeStyle(EllipticalGradient(gradient: gradient, center: .center))
+    var borderColor: Color {
+        get { Color(red: borderColorComputed.red, green: borderColorComputed.green, blue: borderColorComputed.blue)}
+        set {
+            if let components = newValue.cgColor?.components {
+                borderColorComputed.red = components[0]
+                borderColorComputed.green = components[1]
+                borderColorComputed.blue = components[2]
+            }
         }
     }
+     */
+    
+    
+    var backgroundColor: Color {
+            get { backgroundColorComputed.color }
+            set { backgroundColorComputed = ColorComponents(color: newValue) }
+        }
+
+        var borderColor: Color {
+            get { borderColorComputed.color }
+            set { borderColorComputed = ColorComponents(color: newValue) }
+        }
+    
+    
     
     // Add color to the foreground
-    func addColor() {
-        frontColor.append(.red)
-    }
-    
-    func removeColor() {
-        frontColor.remove(at: frontColor.count - 1)
-    }
     
     func hour(_ startDate: Date) -> Int {
         let components = Calendar.current.dateComponents([.hour, .minute], from: startDate)
@@ -98,4 +113,46 @@ extension IconModel {
         let components = Calendar.current.dateComponents([.hour, .minute], from: Date.now)
         return components.minute ?? 0
     }
+    
+    func update<T>(keyPath: ReferenceWritableKeyPath<IconModel, T>, to value: T) {
+        self[keyPath: keyPath] = value
+    }
+    
+    func addIcon() {
+        let icon = IconChild()
+        icon.zIndex = Double(self.icons.count) + 1.0
+        self.icons.append(icon)
+    }
+    
+    func moveRow(source: IndexSet, destination: Int) {
+        self.icons.move(fromOffsets: source, toOffset: destination)
+        updateZIndex()
+    }
+    
+    func updateZIndex() {
+        for (index, _) in self.icons.enumerated() {
+            self.icons[index].zIndex = Double(index) + 1.0
+        }
+    }
+    
+    func customMove(fromOffsets indices: IndexSet, toOffset newOffset: Int) {
+        self.icons.move(fromOffsets: indices, toOffset: newOffset)
+    }
+    
+    func removeIcon(at offsets: IndexSet) {
+        self.icons.remove(atOffsets: offsets)
+    }
+    
+    func removeSingleIcon(_ icon: IconChild) {
+        self.icons.removeAll(where : { $0.id == icon.id })
+    }
+    
+    func loadImageData(from item: PhotosPickerItem?) async {
+            if let data = try? await item?.loadTransferable(type: Data.self) {
+                self.backgroundImage.backgroundImage = data
+            }
+        }
+
 }
+
+
