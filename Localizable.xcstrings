@@ -24,6 +24,23 @@
         }
       }
     },
+    "Alert.Added" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Icon saved!"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Icono guardado!"
+          }
+        }
+      }
+    },
     "Background and layers" : {
       "localizations" : {
         "en" : {

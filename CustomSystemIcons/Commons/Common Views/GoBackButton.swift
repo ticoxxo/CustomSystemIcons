@@ -12,7 +12,7 @@ struct GoBackButton: View {
     
     var body: some View {
         Button {
-            coordinator.toRoot()
+            coordinator.pop()
         } label: {
             Label("Label.GoBack", systemImage: "arrow.left")
                 

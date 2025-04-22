@@ -64,16 +64,21 @@ struct AddIcon: View {
                     if imageTypes == .jpeg {
                         let uiImagu = helperImage.shareViewAsImage(iconModel: vmIcon)
                         let img = Image(uiImage: uiImagu ?? UIImage(systemName: "photo")!)
-                        ShareLink(item: img, preview: SharePreview(String(localized: "Enjoy!"), image: Image(systemName: "photo"))) {
-                            Label("Label.Share", systemImage: "arrowshape.turn.up.right.fill")
-                        }
+                       
+                        ShareLink(
+                            item: img,
+                            preview: SharePreview(String(localized: "Enjoy!"), image: img)
+                        )
                         .customAccessibility(label: "Label.Share.Accessibility", hint: "Label.Share.Accessibility.Hint")
                         .buttonStyle(CustomButton(color: Color.blue, width: horizontalPadding ))
                     } else {
                         let uiImagu =  helperImage.sharePng(iconModel: vmIcon, type: imageTypes)
-                        ShareLink(item: uiImagu, preview: SharePreview(String(localized: "Enjoy!"), image: Image(systemName: "photo"))) {
-                            Label("Label.Share", systemImage: "arrowshape.turn.up.right.fill")
-                        }
+                        let imageVIew = helperImage.shareViewAsImage(iconModel: vmIcon)
+                        let img = Image(uiImage: imageVIew ?? UIImage(systemName: "photo")!)
+                        ShareLink(
+                                item: uiImagu,
+                                preview: SharePreview(String(localized: "Enjoy!"), image: img)
+                        )
                         .customAccessibility(label: "Label.Share.Accessibility", hint: "Label.Share.Accessibility.Hint")
                         .buttonStyle(CustomButton(color: Color.blue, width: horizontalPadding))
                     }
@@ -106,7 +111,7 @@ struct AddIcon: View {
                 if addMode {
                     Button {
                         modelContext.insert(vmIcon)
-                        messageAlert = "Alert.Added"
+                        messageAlert = NSLocalizedString("Alert.Added", comment: "")
                         showAlert = true
                     } label: {
                         Label("Button.Add",systemImage: "plus.square.fill" )
