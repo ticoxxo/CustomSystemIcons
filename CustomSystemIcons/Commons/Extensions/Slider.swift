@@ -29,4 +29,15 @@ extension Slider {
             .accessibilityElement(children: .combine)
     }
     
+    func customAccessibilityCGFloat(label: String, hint: String, value: Binding<CGFloat>) -> some View {
+        let label = NSLocalizedString(label, comment: "")
+        let hint = NSLocalizedString(hint, comment: "")
+        
+        return self
+            .accessibilityLabel(Text(label))
+            .accessibilityHint(Text(hint))
+            .accessibilityValue(Text("\(value) in slider"))
+            .accessibilityElement(children: .combine)
+    }
+    
 }

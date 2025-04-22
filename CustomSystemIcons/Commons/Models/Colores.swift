@@ -21,7 +21,7 @@ struct Colores: Codable, Hashable {
 }
 
 struct ColorComponents: Codable {
-var red: Double
+    var red: Double
     var green: Double
     var blue: Double
     var alpha: Double

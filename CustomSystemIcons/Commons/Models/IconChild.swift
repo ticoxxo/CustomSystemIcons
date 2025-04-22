@@ -19,6 +19,8 @@ final class IconChild: Identifiable {
     var borderColorComputed: ColorComponents
     var positionX: Double
     var positionY: Double
+    var xDistortion: CGFloat
+    var yDistortion: CGFloat
     
     init(
         id: UUID = UUID(),
@@ -30,7 +32,9 @@ final class IconChild: Identifiable {
          zIndex: Double = 1,
         borderColorComputed: ColorComponents = ColorComponents(color: .pink),
         positionX: Double = 0.0,
-        positionY: Double = 0.0) {
+        positionY: Double = 0.0,
+        xDistortion: CGFloat = 0.0,
+        yDistortion: CGFloat = 0.0) {
              self.id = id
         self.name = name
         self.frontColorComputed = frontColorComputed
@@ -39,12 +43,14 @@ final class IconChild: Identifiable {
         self.dragging =  dragging
         self.zIndex = zIndex
         self.borderColorComputed = borderColorComputed
-            self.positionX = positionX
-            self.positionY = positionY
+        self.positionX = positionX
+        self.positionY = positionY
+        self.xDistortion = xDistortion
+        self.yDistortion = yDistortion
     }
     
     enum CodingKeys: String, CodingKey {
-        case id, name, frontColorComputed, orientation, zoom, dragging, zIndex, borderColorComputed, positionX, positionY, styleShape
+        case id, name, frontColorComputed, orientation, zoom, dragging, zIndex, borderColorComputed, positionX, positionY, styleShape,xDistortion,yDistortion
     }
 }
 

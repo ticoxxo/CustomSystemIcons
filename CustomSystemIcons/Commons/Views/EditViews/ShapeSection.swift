@@ -21,7 +21,7 @@ struct ShapeSection: View {
                     Spacer()
                 }
             }
-            .customAccessibility(label: "Label.Shape.Accessibility", hint: "Click on the shape to change the icon shape")
+            .customAccessibility(label: "Label.Shape.Accessibility", hint: "Label.Shape.Accessibility.Hint")
             .accessibilityAddTraits(.isButton)
         } label: {
             Text("Label.Shape").font(.headline)

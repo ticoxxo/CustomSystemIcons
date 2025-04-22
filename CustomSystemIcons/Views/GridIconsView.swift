@@ -30,7 +30,7 @@ struct GridIconsView: View {
             HStack {
                 Spacer()
                 TextField("Label.Search", text: $searchText)
-                    .customTextField(label: "Label.Search.Accessibility", hint: "Click to search for an icon", text: $searchText)
+                    .customTextField(label: "Label.Search.Accessibility", hint: "Label.Search.Accessibility.Hint", text: $searchText)
                     .frame(maxWidth: .infinity)
                     
                 Spacer()

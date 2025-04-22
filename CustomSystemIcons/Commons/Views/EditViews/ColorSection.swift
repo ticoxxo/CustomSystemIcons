@@ -98,7 +98,7 @@ struct ColorSection: View {
             
         } label: {
             Text("Background and layers")
-                .customAccessibility(label: "lbl.layers", hint: "Title for background and layers section")
+                .customAccessibility(label: "lbl.layers", hint: "lbl.layers.hint")
                 .font(.headline)
         }
     }

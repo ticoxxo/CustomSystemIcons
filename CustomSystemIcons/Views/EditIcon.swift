@@ -36,6 +36,7 @@ struct EditIcon: View {
                         ShapeSection(vmIcon: vmIcon)
                         OrientationSection(vmIcon: vmIcon)
                         PositionSection(vmIcon: vmIcon)
+                        DistortionSection(vmIcon: vmIcon)
                         BorderSection(vmIcon: vmIcon)
                     }
                     

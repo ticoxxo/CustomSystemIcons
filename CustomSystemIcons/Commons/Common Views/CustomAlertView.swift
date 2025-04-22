@@ -34,7 +34,7 @@ struct CustomAlertView: View {
                         .cornerRadius(10)
                     
                 }
-                .customAccessibility(label: "Label.OK.Accessibility", hint: "Label.Ok.Hint")
+                .customAccessibility(label: "Label.OK.Accessibility", hint: "Label.Ok.Accessibility.Hint")
             }
         }
         .padding()

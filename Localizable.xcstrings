@@ -73,6 +73,74 @@
         }
       }
     },
+    "Button.Add.Accessibility" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Button add icon"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Botón agregar icono"
+          }
+        }
+      }
+    },
+    "Button.Add.Accessibility.Hint" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Click to add icon"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Click para agregar icono"
+          }
+        }
+      }
+    },
+    "Button.Back.Accessibility" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Button to last view"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Botón para ir hacia atras"
+          }
+        }
+      }
+    },
+    "Button.Back.Accessibility.Hint" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Click to go to last view"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Click para ir hacia atras"
+          }
+        }
+      }
+    },
     "Button.Home" : {
       "localizations" : {
         "en" : {
@@ -154,6 +222,40 @@
         }
       }
     },
+    "ColorPicker.Background.Accessibility" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Change background color"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cambiar el color del fondo"
+          }
+        }
+      }
+    },
+    "ColorPicker.Background.Accessibility.Hint" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Click to change background color"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pinchar para cambiar el color del fondo"
+          }
+        }
+      }
+    },
     "ColorPicker.BorderColor" : {
       "localizations" : {
         "en" : {
@@ -170,6 +272,40 @@
         }
       }
     },
+    "ColorPicker.BorderColor.Accessibility" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Change border color"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cambiar el color del contorno"
+          }
+        }
+      }
+    },
+    "ColorPicker.BorderColor.Accessibility.Hint" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Click to change border color"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pinchar para cambiar el color del contorno"
+          }
+        }
+      }
+    },
     "ColorPicker.Icon" : {
       "localizations" : {
         "en" : {
@@ -182,6 +318,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Color del Icono"
+          }
+        }
+      }
+    },
+    "ColorPicker.Icon.Accessibility" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Color of icons"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Color de iconos"
+          }
+        }
+      }
+    },
+    "ColorPicker.Icon.Accessibility.Hint" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pick color for icons"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elegir el color de los iconos"
           }
         }
       }
@@ -380,6 +550,74 @@
         }
       }
     },
+    "Label.AddIcon.Accessibility" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add an icon"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Agregar un icono"
+          }
+        }
+      }
+    },
+    "Label.AddIcon.Accessibility.Hint" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Click to add an icon"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pinchar para agregar un icono"
+          }
+        }
+      }
+    },
+    "Label.BackgroundImage.Accessibility" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Image background"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Imagen del fondo"
+          }
+        }
+      }
+    },
+    "Label.BackgroundImage.Accessibility.Hint" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Image background section"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sección del fondo de la imagen"
+          }
+        }
+      }
+    },
     "Label.Border" : {
       "localizations" : {
         "en" : {
@@ -392,6 +630,124 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Contorno"
+          }
+        }
+      }
+    },
+    "Label.Border.Accessibility" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Section for border"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sección del contorno"
+          }
+        }
+      }
+    },
+    "Label.Border.Accessibility.Hint" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Click to expand border section"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pinchar para expandir la sección del contorno"
+          }
+        }
+      }
+    },
+    "Label.ButtonPick.Accessibility" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New image"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nueva imagen"
+          }
+        }
+      }
+    },
+    "Label.ButtonPick.Accessibility.Hint" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pick a new image"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elegir nueva imagen"
+          }
+        }
+      }
+    },
+    "Label.Distortion" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Distort axis"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Distorsionar axis"
+          }
+        }
+      }
+    },
+    "Label.EditIcon.Accessibility" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit icon screen"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Editar la pantalla editar"
+          }
+        }
+      }
+    },
+    "Label.EditIcon.Accessibility.Hint" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Click to go to edit icon screen"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pinchar para ir a la pantalla editar icono"
           }
         }
       }
@@ -428,6 +784,57 @@
         }
       }
     },
+    "Label.OK.Accessibility" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Label OK"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Label OK"
+          }
+        }
+      }
+    },
+    "Label.Ok.Accessibility.Hint" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Click on button OK"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pinchar botón OK"
+          }
+        }
+      }
+    },
+    "Label.OK.Accessibility.Hint" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Label OK for Section"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pinchar OK"
+          }
+        }
+      }
+    },
     "Label.PhotosPicker" : {
       "localizations" : {
         "en" : {
@@ -460,6 +867,40 @@
         }
       }
     },
+    "Label.Search.Accessibility" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search "
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buscar"
+          }
+        }
+      }
+    },
+    "Label.Search.Accessibility.Hint" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Click to search"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pinchar para buscar"
+          }
+        }
+      }
+    },
     "Label.Shape" : {
       "localizations" : {
         "en" : {
@@ -476,18 +917,36 @@
         }
       }
     },
-    "Label.Share" : {
+    "Label.Shape.Accessibility" : {
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Share"
+            "value" : "Shape of the icon"
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Compartir"
+            "value" : "Forma del icono"
+          }
+        }
+      }
+    },
+    "Label.Shape.Accessibility.Hint" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Click on the shape to change the icon shape"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pinchar en la forma para cambiar la forma del icono"
           }
         }
       }
@@ -520,6 +979,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Acercar"
+          }
+        }
+      }
+    },
+    "lbl.layers" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Layers section"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sección para capas"
+          }
+        }
+      }
+    },
+    "lbl.layers.hint" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Title for background and layers section"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Titulo para la sección de capas y fondo"
           }
         }
       }
@@ -586,6 +1079,244 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Compartir"
+          }
+        }
+      }
+    },
+    "Slider.Background.Accessibility" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Orientation on the background image"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Orientación de la imagen del fondo"
+          }
+        }
+      }
+    },
+    "Slider.Background.Accessibility.Hint" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slide to change orientation on the background image"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deslizar para cambiar orientación de la imagen del fondo"
+          }
+        }
+      }
+    },
+    "Slider.Background.DistortionX.Accessibility" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slider for X Axis"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slider para Axis X"
+          }
+        }
+      }
+    },
+    "Slider.Background.DistortionX.Accessibility.Hint" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Move slider for axis X"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mueve el slider para Axis X"
+          }
+        }
+      }
+    },
+    "Slider.Background.DistortionY.Accessibility" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slider for Y Axis"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slider para Axis Y"
+          }
+        }
+      }
+    },
+    "Slider.Background.DistortionY.Accessibility.Hint" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Move slider for axis Y"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mueve el slider para Axis Y"
+          }
+        }
+      }
+    },
+    "Slider.Background.Zoom.Accessibility" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slider zoom background"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slider para el zoom de la imagen del fondo"
+          }
+        }
+      }
+    },
+    "Slider.Background.Zoom.Accessibility.Hint" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slider to change zoom on the background image"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deslizar para cambiar el zoom de la imagen del fondo"
+          }
+        }
+      }
+    },
+    "Slider.BorderWidth.Accessibility" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slide to change width of border"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slider para cambiar el ancho del borde"
+          }
+        }
+      }
+    },
+    "Slider.BorderWidth.Accessibility.Hint" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slide to change the width of border"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desliza para cambiar el ancho del borde"
+          }
+        }
+      }
+    },
+    "Slider.Orientation.Accessibility" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slider for orientation on the icon"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slider para cambiar orientación del icono"
+          }
+        }
+      }
+    },
+    "Slider.Orientation.Accessibility.Hint" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slide to change orientation on the icon"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desliza para cambiar orientación del icono"
+          }
+        }
+      }
+    },
+    "Slider.Zoom.Accessability" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slider for icon zoom"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slider para cambiar el zoom del icono"
+          }
+        }
+      }
+    },
+    "Slider.Zoom.Accessability.Hint" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slide to change icon zoom"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deslizar para cambiar el zoom del icono"
           }
         }
       }

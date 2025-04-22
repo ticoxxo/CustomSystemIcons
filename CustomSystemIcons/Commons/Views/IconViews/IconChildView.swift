@@ -23,6 +23,9 @@ struct IconChildView: View {
                 )
                 .contentShape(StyleShape.star)
                 .clipShape(StyleShape.square)
+                .modifier(
+                    DistortionEffect(xDistortion: icono.xDistortion, yDistortion: icono.yDistortion)
+                )
                 .rotationEffect(.degrees(icono.orientation))
                 .frame(width: geometry.size.width, height: geometry.size.height)
                 .position(
@@ -74,10 +77,10 @@ struct IconChildView: View {
     }
 }
 
-/*
+
 
 #Preview {
     let icono = IconChild()
     IconChildView(icono: icono, editable: true)
 }
-*/
+
