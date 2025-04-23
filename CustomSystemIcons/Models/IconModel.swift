@@ -20,6 +20,8 @@ final class IconModel: Identifiable {
     var isFavorite: Bool
     @Relationship(deleteRule: .cascade)
     var backgroundImage: BackgroundImageModel
+    @Relationship(deleteRule: .cascade)
+    var shadows: ShadowModel
     
     init(
         id: UUID = UUID(),
@@ -35,7 +37,9 @@ final class IconModel: Identifiable {
         icons: [IconChild] = [IconChild()],
         creationDate: Date = Date(),
         is isFavorite: Bool = false,
-        backgroundImage: BackgroundImageModel = BackgroundImageModel()) {
+        backgroundImage: BackgroundImageModel = BackgroundImageModel(),
+        shadows: ShadowModel = ShadowModel()
+    ) {
             self.id = UUID()
             self.title = title
             self.styleShape = styleShape
@@ -46,6 +50,7 @@ final class IconModel: Identifiable {
             self.creationDate = creationDate
             self.isFavorite = isFavorite
             self.backgroundImage = backgroundImage
+            self.shadows = shadows
         }
     
     enum CodingKeys: String, CodingKey {
@@ -59,6 +64,8 @@ final class IconModel: Identifiable {
             case icons
             case creationDate
             case isFavorite
+        case backgroundImage
+            case shadows
         }
     
 }

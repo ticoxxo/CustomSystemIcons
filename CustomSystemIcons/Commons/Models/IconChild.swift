@@ -21,20 +21,22 @@ final class IconChild: Identifiable {
     var positionY: Double
     var xDistortion: CGFloat
     var yDistortion: CGFloat
+    var shadows: ShadowModel
     
     init(
         id: UUID = UUID(),
         name: String = "star.fill",
         frontColorComputed: ColorComponents = ColorComponents(color: .yellow),
          orientation: Double = 0.0,
-         zoom: Float = 1.0,
+         zoom: Float = 0.5,
          dragging: Bool = false,
          zIndex: Double = 1,
         borderColorComputed: ColorComponents = ColorComponents(color: .pink),
         positionX: Double = 0.0,
         positionY: Double = 0.0,
         xDistortion: CGFloat = 0.0,
-        yDistortion: CGFloat = 0.0) {
+        yDistortion: CGFloat = 0.0,
+        shadows: ShadowModel = ShadowModel()) {
              self.id = id
         self.name = name
         self.frontColorComputed = frontColorComputed
@@ -47,10 +49,11 @@ final class IconChild: Identifiable {
         self.positionY = positionY
         self.xDistortion = xDistortion
         self.yDistortion = yDistortion
+        self.shadows = shadows
     }
     
     enum CodingKeys: String, CodingKey {
-        case id, name, frontColorComputed, orientation, zoom, dragging, zIndex, borderColorComputed, positionX, positionY, styleShape,xDistortion,yDistortion
+        case id, name, frontColorComputed, orientation, zoom, dragging, zIndex, borderColorComputed, positionX, positionY, styleShape,xDistortion,yDistortion, shadows
     }
 }
 

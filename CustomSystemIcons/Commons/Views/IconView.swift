@@ -39,10 +39,10 @@ struct IconView: View {
                                      lineWidth: bWidth * vmIcon.borderWidth)
         )
         .shadow(
-            color: Color.gray.opacity(0.7),
-            radius: 8,
-            x: 8,
-            y: 8
+            color: vmIcon.shadows.shadowColor.opacity(vmIcon.shadows.opacity),
+            radius: vmIcon.shadows.radius,
+            x: vmIcon.shadows.shadowX,
+            y: vmIcon.shadows.shadowY
         )
         .frame(width: bWidth, height: bHeight)
         .padding()

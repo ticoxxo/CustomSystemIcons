@@ -38,6 +38,7 @@ struct EditIcon: View {
                         PositionSection(vmIcon: vmIcon)
                         DistortionSection(vmIcon: vmIcon)
                         BorderSection(vmIcon: vmIcon)
+                        ShadowSection(vmIcon: vmIcon)
                     }
                     
                 }
@@ -57,7 +58,7 @@ struct EditIcon: View {
                     Label("Label.AddIcon",systemImage: "plus.square.fill" )
                 }
                 .customAccessibility(label: "Label.AddIcon.Accessibility", hint: "Click to add a new icon")
-                .disabled(vmIcon.icons.count > 5)
+                .disabled(vmIcon.icons.count > 10)
 
             }
             

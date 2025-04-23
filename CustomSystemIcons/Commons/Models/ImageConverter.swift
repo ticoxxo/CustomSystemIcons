@@ -26,7 +26,8 @@ class ImageConverter: NSObject {
     
     @MainActor
     func convertViewAsImage(iconModel: IconModel, type: String) {
-        let size = min(UIScreen.main.bounds.size.width, UIScreen.main.bounds.size.height) / 2
+        //let size = min(UIScreen.main.bounds.size.width, UIScreen.main.bounds.size.height) / 2
+        let size: CGFloat = 1024
         let renderer = ImageRenderer(content: IconView(vmIcon: iconModel, bWidth: size ,bHeight: size, editable: false)
             .aspectRatio(1.0, contentMode: .fit)
         )
@@ -35,28 +36,12 @@ class ImageConverter: NSObject {
             UIImageWriteToSavedPhotosAlbum(uiImage, self, #selector(saveCompleted), nil)
             //let pngData = uiImage.pngData()
         }
-        /*
-        if let uiImage = renderer.uiImage, let pngData = uiImage.pngData() {
-                let fileName = "iconImage.png"
-                if let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
-                    let fileURL = documentDirectory.appendingPathComponent(fileName)
-                    do {
-                        try pngData.write(to: fileURL)
-                        print("Image saved successfully at \(fileURL)")
-                        self.alertMessage = "Image saved successfully at \(fileURL)"
-                    } catch {
-                        print("Error saving image: \(error.localizedDescription)")
-                        self.alertMessage = "Error saving image: \(error.localizedDescription)"
-                    }
-                    self.showAlert = true
-                }
-            }
-         */
     }
     
     @MainActor
     func shareViewAsImage(iconModel: IconModel) -> UIImage? {
-        let size = min(UIScreen.main.bounds.size.width, UIScreen.main.bounds.size.height) / 2
+        //let size = min(UIScreen.main.bounds.size.width, UIScreen.main.bounds.size.height) / 2
+        let size: CGFloat = 1024
         let renderer = ImageRenderer(content: IconView(vmIcon: iconModel, bWidth: size ,bHeight: size, editable: false)
             .aspectRatio(1.0, contentMode: .fit)
         )
@@ -67,7 +52,8 @@ class ImageConverter: NSObject {
     
     @MainActor
     func sharePng(iconModel: IconModel, type: ImageType) -> URL{
-        let size = min(UIScreen.main.bounds.size.width, UIScreen.main.bounds.size.height) / 2
+        //let size = min(UIScreen.main.bounds.size.width, UIScreen.main.bounds.size.height) / 2
+        let size: CGFloat = 1024
         let renderer = ImageRenderer(content: IconView(vmIcon: iconModel, bWidth: size ,bHeight: size, editable: false)
             .aspectRatio(1.0, contentMode: .fit)
         )

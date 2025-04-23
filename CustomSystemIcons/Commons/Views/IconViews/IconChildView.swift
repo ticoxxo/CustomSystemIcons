@@ -32,6 +32,12 @@ struct IconChildView: View {
                                     x: max(0, min(geometry.size.width, icono.positionX == 0 ? geometry.size.width / 2 : geometry.size.width * icono.positionX)),
                                     y: max(0, min(geometry.size.height, icono.positionY == 0 ? geometry.size.height / 2 : geometry.size.height * icono.positionY))
                                 )
+                .shadow(
+                    color: icono.shadows.shadowColor.opacity(icono.shadows.opacity),
+                    radius: icono.shadows.radius,
+                    x: icono.shadows.shadowX,
+                    y: icono.shadows.shadowY
+                )
                 .gesture(
                     editable ? DragGesture()
                         .onChanged { value in
