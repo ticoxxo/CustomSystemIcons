@@ -21,13 +21,15 @@ struct IconChildView: View {
                 .foregroundStyle(
                     icono.frontColor
                 )
-                .contentShape(StyleShape.star)
-                .clipShape(StyleShape.square)
+                //.contentShape(StyleShape.star)
+                //.clipShape(StyleShape.square)
                 .modifier(
                     DistortionEffect(xDistortion: icono.xDistortion, yDistortion: icono.yDistortion)
                 )
                 .rotationEffect(.degrees(icono.orientation))
+                
                 .frame(width: geometry.size.width, height: geometry.size.height)
+                .padding()
                 .position(
                                     x: max(0, min(geometry.size.width, icono.positionX == 0 ? geometry.size.width / 2 : geometry.size.width * icono.positionX)),
                                     y: max(0, min(geometry.size.height, icono.positionY == 0 ? geometry.size.height / 2 : geometry.size.height * icono.positionY))

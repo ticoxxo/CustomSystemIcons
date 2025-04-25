@@ -15,7 +15,7 @@ struct ShapeSection: View {
             HStack {
                 //IconView(vmIcon: vmIcon, bWidth: 25, bHeight: 25, editable: false)
                     
-                ForEach(StyleShape.allCases, id: \.self) { shape in
+                ForEach(StyleShape.allCases(with: vmIcon.cornerRadio), id: \.self) { shape in
                     Spacer()
                     ShapeView(shape: shape, vmIcon: vmIcon)
                     Spacer()

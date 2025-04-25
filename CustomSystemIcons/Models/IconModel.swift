@@ -22,11 +22,12 @@ final class IconModel: Identifiable {
     var backgroundImage: BackgroundImageModel
     @Relationship(deleteRule: .cascade)
     var shadows: ShadowModel
+    var cornerRadio: CGFloat
     
     init(
         id: UUID = UUID(),
         title: String = "",
-        styleShape: StyleShape = .circle,
+        styleShape: StyleShape = .hexagon(radio: 10),
         orientation: Double = 0.0,
         zoom: CGFloat = 0.8,
         borderWidth: Double = 0.01,
@@ -38,7 +39,8 @@ final class IconModel: Identifiable {
         creationDate: Date = Date(),
         is isFavorite: Bool = false,
         backgroundImage: BackgroundImageModel = BackgroundImageModel(),
-        shadows: ShadowModel = ShadowModel()
+        shadows: ShadowModel = ShadowModel(),
+        cornerRadio: CGFloat = 10.0
     ) {
             self.id = UUID()
             self.title = title
@@ -51,6 +53,7 @@ final class IconModel: Identifiable {
             self.isFavorite = isFavorite
             self.backgroundImage = backgroundImage
             self.shadows = shadows
+            self.cornerRadio = cornerRadio
         }
     
     enum CodingKeys: String, CodingKey {
@@ -106,8 +109,6 @@ extension IconModel {
             get { borderColorComputed.color }
             set { borderColorComputed = ColorComponents(color: newValue) }
         }
-    
-    
     
     // Add color to the foreground
     

@@ -18,25 +18,20 @@ struct IconView: View {
             ForEach(vmIcon.icons) { icono in
                 IconChildView(icono: icono, editable: editable)
             }
-                
         }
         .background {
-            
-            //Color(hex: vmIcon.background)
             if vmIcon.backgroundImage.backgroundImage != nil {
-                
                 BackgroundView(background: vmIcon.backgroundImage)
-                    
-                
             } else {
                 vmIcon.backgroundColor
             }
-            
         }
         .clipShape(vmIcon.styleShape)
         .overlay(
             vmIcon.styleShape.stroke(vmIcon.borderColor,
                                      lineWidth: bWidth * vmIcon.borderWidth)
+            .padding(.all, (vmIcon.borderWidth * 100))
+            .cornerRadius(vmIcon.cornerRadio)
         )
         .shadow(
             color: vmIcon.shadows.shadowColor.opacity(vmIcon.shadows.opacity),
@@ -44,16 +39,17 @@ struct IconView: View {
             x: vmIcon.shadows.shadowX,
             y: vmIcon.shadows.shadowY
         )
-        .frame(width: bWidth, height: bHeight)
-        .padding()
+        .frame(width: bWidth , height: bHeight)
     }
 }
-/*
- if let imageData =  vmIcon.backgroundImage, let uiImage = UIImage(data: imageData) {
- */
 
 #Preview {
     //@Previewable @State var bgColor = Color(.sRGB, red: 0.98, green: 0.9, blue: 0.2)
-    @Previewable @State var vmIcon = IconModel()
+    //@Previewable @State var vmIcon = IconModel(styleShape: .square(radio: 5), borderWidth: 0.05)
+    //@Previewable @State var vmIcon = IconModel(styleShape: .circle, borderWidth: 0.01)
+    //@Previewable @State var vmIcon = IconModel(styleShape: .star(radio: 5), borderWidth: 0.05)
+    //@Previewable @State var vmIcon = IconModel(styleShape: .triangle(radio: 30), borderWidth: 0.05)
+    //@Previewable @State var vmIcon = IconModel(styleShape: .square(radio: 30), borderWidth: 0.05)
+    @Previewable @State var vmIcon = IconModel(styleShape: .hexagon(radio: 30), borderWidth: 0.05)
     IconView(vmIcon: vmIcon, bWidth: 200, bHeight: 200, editable: true)
 }

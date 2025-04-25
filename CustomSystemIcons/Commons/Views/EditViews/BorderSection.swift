@@ -20,8 +20,19 @@ struct BorderSection: View {
             HStack {
                 Text("Label.Width")
                     .lineLimit(1)
-                Slider(value: $vmIcon.borderWidth, in:0.0...0.1)
+                Slider(value: $vmIcon.borderWidth, in:0.01...0.1)
                     .customAccessibilityDouble(label: "Slider.BorderWidth.Accessibility", hint: "Slider.BorderWidth.Accessibility.Hint", value: $vmIcon.borderWidth)
+                    
+            }
+            
+            HStack {
+                Text("Label.CornerRadius")
+                    .lineLimit(1)
+                Slider(value: $vmIcon.cornerRadio, in:0.0...20)
+                    .customAccessibilityCGFloat(label: "Slider.CornerRadius.Accessibility", hint: "Slider.CornerRadius.Accessibility.Hint", value: $vmIcon.cornerRadio)
+                    .onChange(of: vmIcon.cornerRadio) {
+                        vmIcon.styleShape.updateRadio(to: vmIcon.cornerRadio)
+                    }
                     
             }
         } label: {

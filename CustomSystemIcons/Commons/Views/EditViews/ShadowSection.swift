@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ShadowSection: View {
     @Bindable var vmIcon: IconModel
-    @State private var expanded: Bool = true
+    @State private var expanded: Bool = false
     
     var body: some View {
         DisclosureGroup(isExpanded: $expanded) {

@@ -739,6 +739,23 @@
         }
       }
     },
+    "Label.CornerRadius" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Corner Radius"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esquinas"
+          }
+        }
+      }
+    },
     "Label.Distortion" : {
       "localizations" : {
         "en" : {
@@ -1403,6 +1420,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Desliza para cambiar el ancho del borde"
+          }
+        }
+      }
+    },
+    "Slider.CornerRadius.Accessibility" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Corner radius for the border"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cambiar las esquinas"
+          }
+        }
+      }
+    },
+    "Slider.CornerRadius.Accessibility.Hint" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slide to change corner radius of border"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slider para cambiar las esquinas"
           }
         }
       }
