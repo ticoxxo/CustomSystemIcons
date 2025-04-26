@@ -23,6 +23,7 @@ struct OrientationSection: View {
                         in: 0.0...360.0
                     )
                     .customAccessibilityDouble(label: "Slider.Orientation.Accessibility", hint: "Slider.Orientation.Accessibility.Hint", value: item.orientation)
+                    .tint(MyColor.skyblue.value)
                 }
             }
             
@@ -40,7 +41,7 @@ struct OrientationSection: View {
                         in: 0.0...360.0
                     )
                     .customAccessibilityDouble(label: "Slider.Background.Accessibility", hint: "Slider.Background.Accessibility.Hint", value: $vmIcon.backgroundImage.orientation)
-                        
+                    .tint(MyColor.skyblue.value)
                 }
                     
             }

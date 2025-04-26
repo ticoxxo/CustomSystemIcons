@@ -53,6 +53,7 @@ struct ColorSection: View {
                             }
                         Image(uiImage: uiImage)
                             .resizable()
+                            .foregroundStyle(MyColor.skyblue.value)
                             .aspectRatio(contentMode: .fit)
                             .frame(width: min(horizontalPadding / 10, verticalPadding / 10),
                                    height: min(horizontalPadding / 10, verticalPadding / 10))
@@ -68,6 +69,7 @@ struct ColorSection: View {
 
                     Image(systemName: "photo.badge.plus.fill")
                         .resizable()
+                        .foregroundStyle(MyColor.skyblue.value)
                         .aspectRatio(contentMode: .fit)
                         .frame(width: min(horizontalPadding / 10, verticalPadding / 10),
                                height: min(horizontalPadding / 10, verticalPadding / 10))

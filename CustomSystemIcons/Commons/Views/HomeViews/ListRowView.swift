@@ -17,19 +17,23 @@ struct ListRowView: View {
             VStack {
                 IconView(vmIcon: item, bWidth: min(geometry.size.width / 2, geometry.size.height / 2), bHeight: min(geometry.size.width / 2, geometry.size.height / 2),editable: false)
                 ZStack {
-                    Rectangle()
+                    RoundedRectangle(cornerRadius: 10)
+                        .fill(Color.white)
                         .strokeBorder(
-                            LinearGradient(gradient: Gradient(colors: [.black,.white]), startPoint: .topLeading, endPoint: .bottomTrailing)
-                            , lineWidth: 2)
-                        .background(.white)
-                        .cornerRadius(2)
+                            LinearGradient(gradient: Gradient(colors: [.black, item.backgroundColor]), startPoint: .topLeading, endPoint: .bottomTrailing),
+                            lineWidth: 2
+                        )
                         .padding()
+                        .frame(maxWidth: .infinity, maxHeight: min(geometry.size.width / 2, geometry.size.height / 2))
+                        
                     Text("\(item.title)")
-                        .font(.subheadline)
+                        .font(.caption)
                         .fontWeight(.bold)
                         .lineLimit(1) // Restrict to one line
-                                .truncationMode(.tail)
-                                .padding()// Truncate with ellipsis if needed
+                        .truncationMode(.tail)
+                    // Constrain text within the rectangle
+                        .clipped() // Prevent overflow
+                        .padding()
                 }
                 
             }
@@ -50,11 +54,11 @@ struct ListRowView: View {
         .background(
             //LinearGradient(gradient: Gradient(colors: [item.backgroundColor,.white]), startPoint: UnitPoint(x: 0.2, y: 0.2), endPoint: UnitPoint(x: 0.2, y: 0.2))
             LinearGradient(gradient: Gradient(colors: [item.backgroundColor,.white]), startPoint: UnitPoint(x: 0.1, y: 0.2), endPoint: UnitPoint(x: 0.2, y: 0.1))
-            )
+        )
         .glow(color: .gray, radius: 15)
         .cornerRadius(10)
         .frame(width:min(horizontalPadding / 3, verticalPadding / 3),
-        height: min(horizontalPadding / 2, verticalPadding / 2))
+               height: min(horizontalPadding / 2, verticalPadding / 2))
     }
 }
 

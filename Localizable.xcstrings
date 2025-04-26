@@ -426,6 +426,16 @@
         }
       }
     },
+    "Drag.Down" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mueve hacia abajo"
+          }
+        }
+      }
+    },
     "Drag.Left" : {
       "localizations" : {
         "en" : {
@@ -470,6 +480,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Arrastrar arriba"
+          }
+        }
+      }
+    },
+    "Drag.Up" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mueve hacia arriba"
           }
         }
       }
@@ -818,6 +838,193 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Regresar"
+          }
+        }
+      }
+    },
+    "Label.ManualPosition" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Manual position"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Posición manual"
+          }
+        }
+      }
+    },
+    "Label.ManualPosition.Accessibility" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Manual position of icon"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Posición manual del icono"
+          }
+        }
+      }
+    },
+    "Label.ManualPosition.Accessibility.Hint" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Manual position section for the icons"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sección para mover manualmente el icono"
+          }
+        }
+      }
+    },
+    "Label.ManualPosition.Down.Accessibility" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Button to move down the icon"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Botón para mover hacia abajo el icono"
+          }
+        }
+      }
+    },
+    "Label.ManualPosition.Down.Accessibility.Hint" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Click the button to move down the icon"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Click para mover el icono hacia abajo"
+          }
+        }
+      }
+    },
+    "Label.ManualPosition.Left.Accessibility" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Button to move to the left the icon"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Botón para mover hacia la izquierda el icono"
+          }
+        }
+      }
+    },
+    "Label.ManualPosition.Left.Accessibility.Hint" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Click the button to move to the left the icon"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Click para mover el icono hacia la izquierda"
+          }
+        }
+      }
+    },
+    "Label.ManualPosition.Right.Accessibility" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Button to move to the right the icon"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Botón para mover hacia la derecha el icono"
+          }
+        }
+      }
+    },
+    "Label.ManualPosition.Right.Accessibility.Hint" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Click the button to move to the right the icon"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Click para mover el icono hacia la derecha"
+          }
+        }
+      }
+    },
+    "Label.ManualPosition.Up.Accessibility" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Button to move up the icon"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Botón para mover hacia la arriba el icono"
+          }
+        }
+      }
+    },
+    "Label.ManualPosition.Up.Accessibility.Hint" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Click the button to move up the icon"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Click para mover el icono hacia arriba"
           }
         }
       }

@@ -36,7 +36,7 @@ struct ShapeView: View {
     @State var animate: Bool = false
     var body: some View {
         shape
-            .fill(Color.blue)
+            .fill(MyColor.skyblue.value)
             .foregroundStyle(Color.red)
             .scaleEffect(animate ? 1 : 1.5)
             .transition(.scale)

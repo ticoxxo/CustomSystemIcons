@@ -22,7 +22,7 @@ struct BorderSection: View {
                     .lineLimit(1)
                 Slider(value: $vmIcon.borderWidth, in:0.01...0.1)
                     .customAccessibilityDouble(label: "Slider.BorderWidth.Accessibility", hint: "Slider.BorderWidth.Accessibility.Hint", value: $vmIcon.borderWidth)
-                    
+                    .tint(MyColor.skyblue.value)
             }
             
             HStack {
@@ -33,6 +33,7 @@ struct BorderSection: View {
                     .onChange(of: vmIcon.cornerRadio) {
                         vmIcon.styleShape.updateRadio(to: vmIcon.cornerRadio)
                     }
+                    .tint(MyColor.skyblue.value)
                     
             }
         } label: {

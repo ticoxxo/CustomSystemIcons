@@ -19,21 +19,25 @@ struct ShadowSection: View {
                 VStack {
                     Slider(value: $vmIcon.shadows.radius, in: 0...10)
                         .customAccessibilityCGFloat(label: "Slider.Shadows.Accessibility", hint: "Slider.Shadows.Accessibility.Hint", value: $vmIcon.shadows.radius)
+                        .tint(MyColor.skyblue.value)
                     Text("Lbl.Shadows.Radius")
                 }
                 VStack {
                     Slider(value: $vmIcon.shadows.shadowX, in: 0...10)
                         .customAccessibilityCGFloat(label: "Slider.ShadowsX.Accessibility", hint: "Slider.ShadowsX.Accessibility.Hint", value: $vmIcon.shadows.shadowX)
+                        .tint(MyColor.skyblue.value)
                     Text("Lbl.Shadows.AxisX")
                 }
                 VStack {
                     Slider(value: $vmIcon.shadows.shadowY, in: 0...10)
                         .customAccessibilityCGFloat(label: "Slider.ShadowsY.Accessibility", hint: "Slider.ShadowsY.Accessibility.Hint", value: $vmIcon.shadows.shadowY)
+                        .tint(MyColor.skyblue.value)
                     Text("Lbl.Shadows.AxisY")
                 }
                 VStack {
                     Slider(value: $vmIcon.shadows.opacity, in: 0...10)
                         .customAccessibilityCGFloat(label: "Slider.Opacity.Accessibility", hint: "Slider.Opacity.Accessibility.Hint", value: $vmIcon.shadows.shadowY)
+                        .tint(MyColor.skyblue.value)
                     Text("Lbl.Shadows.Opacity")
                 }
                 ColorPicker("", selection: $vmIcon.shadows.shadowColor)
@@ -49,28 +53,33 @@ struct ShadowSection: View {
                     VStack {
                         Slider(value: item.shadows.radius, in: 0...10)
                             .customAccessibilityCGFloat(label: "Slider.Shadows.Accessibility", hint: "Slider.Shadows.Accessibility.Hint", value: item.shadows.radius)
+                            .tint(MyColor.skyblue.value)
                         Text("Lbl.Shadows.Radius")
                             
                     }
                     VStack {
                         Slider(value: item.shadows.shadowX, in: 0...10)
                             .customAccessibilityCGFloat(label: "Slider.ShadowsX.Accessibility", hint: "Slider.ShadowsX.Accessibility.Hint", value: item.shadows.shadowX)
+                            .tint(MyColor.skyblue.value)
                         Text("Lbl.Shadows.AxisX")
                     }
                     VStack {
                         Slider(value: item.shadows.shadowY, in: 0...10)
                             .customAccessibilityCGFloat(label: "Slider.ShadowsY.Accessibility", hint: "Slider.ShadowsY.Accessibility.Hint", value: item.shadows.shadowY)
+                            .tint(MyColor.skyblue.value)
                         Text("Lbl.Shadows.AxisY")
                     }
                     
                     VStack {
                         Slider(value: item.shadows.opacity, in: 0...10)
                             .customAccessibilityCGFloat(label: "Slider.Opacity.Accessibility", hint: "Slider.Opacity.Accessibility.Hint", value: item.shadows.shadowY)
+                            .tint(MyColor.skyblue.value)
                         Text("Lbl.Shadows.Opacity")
                             
                     }
                     ColorPicker("", selection: item.shadows.shadowColor)
                         .customAccessibility(label: "ColorPicker.Shadows.Accessibility", hint: "ColorPicker.Shadows.Accessibility.Hint")
+                        .tint(MyColor.skyblue.value)
                 }
             }
             

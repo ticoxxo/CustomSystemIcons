@@ -27,7 +27,7 @@ final class IconModel: Identifiable {
     init(
         id: UUID = UUID(),
         title: String = "",
-        styleShape: StyleShape = .hexagon(radio: 10),
+        styleShape: StyleShape = .square(radio: 10),
         orientation: Double = 0.0,
         zoom: CGFloat = 0.8,
         borderWidth: Double = 0.01,

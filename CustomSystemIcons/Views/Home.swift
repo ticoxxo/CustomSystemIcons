@@ -55,7 +55,7 @@ struct Home: View {
                     Label("Label.AddIcon", systemImage: "plus.app")
                 }
                 .customAccessibility(label: "Label.AddIcon.Accessibility", hint: "Label.AddIcon.Accessibility.Hint")
-                .buttonStyle(CustomButton(color: Color.blue, width: geometry.size.width / 2))
+                .buttonStyle(CustomButton(color: MyColor.skyblue.value, width: geometry.size.width / 2))
                 
             }
         }

@@ -19,8 +19,9 @@ struct PositionSection: View {
                         .resizable()
                         .foregroundStyle(item.frontColor.wrappedValue)
                         .frame(width: 25, height: 25)
-                    Slider(value: item.zoom, in:0.2...1.0)
+                    Slider(value: item.zoom, in:0.0...1.0)
                         .customAccessibilityFloat(label: "Slider.Zoom.Accessibility", hint: "Slider.Zoom.Accessibility.Hint", value: item.zoom)
+                        .tint(MyColor.skyblue.value)
                 }
                 
             }
@@ -39,7 +40,7 @@ struct PositionSection: View {
                         in:0.0...10.0
                     )
                     .customAccessibilityFloat(label: "Slider.Background.Zoom.Accessibility", hint: "Slider.Background.Zoom.Accessibility.Hint", value: $vmIcon.backgroundImage.zoom)
-                        
+                    .tint(MyColor.skyblue.value)
                 }
                     
             }

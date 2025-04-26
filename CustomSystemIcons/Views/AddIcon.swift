@@ -28,7 +28,7 @@ struct AddIcon: View {
                         Image(systemName: "pencil.circle")
                             .resizable()
                             .customAccessibility(label: "Label.EditIcon.Accessibility", hint: "Label.EditIcon.Accessibility.Hint", isButton: true)
-                            .foregroundColor(.blue)
+                            .foregroundColor(MyColor.skyblue.value)
                             .frame(maxWidth: min(horizontalPadding, verticalPadding) / 8, maxHeight: min(horizontalPadding, verticalPadding) / 8)
                     }
                     .onTapGesture {
@@ -70,7 +70,7 @@ struct AddIcon: View {
                             preview: SharePreview(String(localized: "Enjoy!"), image: img)
                         )
                         .customAccessibility(label: "Label.Share.Accessibility", hint: "Label.Share.Accessibility.Hint")
-                        .buttonStyle(CustomButton(color: Color.blue, width: horizontalPadding ))
+                        .buttonStyle(CustomButton(color: MyColor.skyblue.value, width: horizontalPadding ))
                     } else {
                         let uiImagu =  helperImage.sharePng(iconModel: vmIcon, type: imageTypes)
                         let imageVIew = helperImage.shareViewAsImage(iconModel: vmIcon)
@@ -80,7 +80,7 @@ struct AddIcon: View {
                                 preview: SharePreview(String(localized: "Enjoy!"), image: img)
                         )
                         .customAccessibility(label: "Label.Share.Accessibility", hint: "Label.Share.Accessibility.Hint")
-                        .buttonStyle(CustomButton(color: Color.blue, width: horizontalPadding))
+                        .buttonStyle(CustomButton(color: MyColor.skyblue.value, width: horizontalPadding))
                     }
                     Spacer()
                 }
@@ -123,7 +123,7 @@ struct AddIcon: View {
                     Button {
                         do {
                             try modelContext.save()
-                            messageAlert = "Model updated"
+                            messageAlert = "Saved"
                             showAlert = true
                         } catch {
                             messageAlert = "Error updating model"
