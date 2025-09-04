@@ -6,7 +6,7 @@
 //
 
 import Testing
-@testable import CustomSystemIcons
+@testable import MochicCraft
 import SwiftData
 import SwiftUI
 
