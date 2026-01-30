@@ -21,7 +21,7 @@ struct Colores: Codable, Hashable {
 }
 
 
-nonisolated struct ColorComponents: Codable {
+nonisolated struct ColorComponents: Codable, Equatable, Hashable {
     var red: Double = 0
     var green: Double = 0
     var blue: Double = 0

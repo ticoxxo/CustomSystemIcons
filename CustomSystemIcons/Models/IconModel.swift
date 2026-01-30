@@ -79,7 +79,7 @@ final class IconModel: Identifiable {
 
 extension IconModel {
     
-    
+    // Colors
     var backgroundColor: Color {
         get { backgroundColorComputed.color }
         set {
@@ -91,9 +91,7 @@ extension IconModel {
             get { borderColorComputed.color }
             set { borderColorComputed.setColor(newValue) }
         }
-
     
-    // Add color to the foreground
     
     func hour(_ startDate: Date) -> Int {
         let components = Calendar.current.dateComponents([.hour, .minute], from: startDate)

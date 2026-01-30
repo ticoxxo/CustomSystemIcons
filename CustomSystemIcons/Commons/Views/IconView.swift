@@ -51,5 +51,18 @@ struct IconView: View {
     //@Previewable @State var vmIcon = IconModel(styleShape: .triangle(radio: 30), borderWidth: 0.05)
     //@Previewable @State var vmIcon = IconModel(styleShape: .square(radio: 30), borderWidth: 0.05)
     @Previewable @State var vmIcon = IconModel(styleShape: .hexagon(radio: 30), borderWidth: 0.05)
-    IconView(vmIcon: vmIcon, bWidth: 200, bHeight: 200, editable: true)
+    vmIcon.backgroundColor = Color.blue
+    return ZStack {
+        
+        Rectangle()
+            .fill(.red)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+        IconView(vmIcon: vmIcon, bWidth: 200, bHeight: 200, editable: true)
+    }
+    .foregroundColor(Color.black)
+    .background(Color.primary
+                            .colorInvert()
+                            .opacity(0.75))
+    .frame(width: 200, height: 200)
+        
 }
