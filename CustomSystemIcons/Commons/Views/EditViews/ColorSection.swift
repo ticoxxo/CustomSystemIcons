@@ -28,7 +28,7 @@ struct ColorSection: View {
                     photoLibrary: .shared()
                 ) {
                     Text("Label.PhotosPicker")
-                        .customAccessibility(label: "Label.PhotosPicker.Accessibility", hint: "Label.PhotosPicker.Accessibility.Hint")
+                        
                 }
                 .onChange(of: selectedPhoto) {
                     Task {

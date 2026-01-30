@@ -24,6 +24,8 @@ final class IconModel: Identifiable {
     var shadows: ShadowModel
     var cornerRadio: CGFloat
     
+    
+    
     init(
         id: UUID = UUID(),
         title: String = "",
@@ -33,8 +35,10 @@ final class IconModel: Identifiable {
         borderWidth: Double = 0.01,
         //backgroundColorComputed: Colores = .init(red: 0.4,blue: 0.4,green: 0.4),
         //borderColorComputed: Colores = .init(red: 0.4,blue: 0.4,green: 0.4),
-        backgroundColorComputed: ColorComponents = ColorComponents(color: .white),
-        borderColorComputed: ColorComponents = ColorComponents(color: .black),
+        // ... other parameters
+            backgroundColorComputed: ColorComponents = ColorComponents(red: 1, green: 1, blue: 1, alpha: 1),  // white
+            borderColorComputed: ColorComponents = ColorComponents(red: 0, green: 0, blue: 0, alpha: 1),      // black
+            // ... rest
         icons: [IconChild] = [IconChild()],
         creationDate: Date = Date(),
         is isFavorite: Bool = false,
@@ -46,7 +50,7 @@ final class IconModel: Identifiable {
             self.title = title
             self.styleShape = styleShape
             self.borderWidth = borderWidth
-            self.backgroundColorComputed = backgroundColorComputed
+        self.backgroundColorComputed = backgroundColorComputed
             self.borderColorComputed = borderColorComputed
             self.icons = icons
             self.creationDate = creationDate
@@ -75,40 +79,19 @@ final class IconModel: Identifiable {
 
 extension IconModel {
     
-    /*
-     var backgroundColor: Color {
-        get { Color(red: backgroundColorComputed.red, green: backgroundColorComputed.green, blue: backgroundColorComputed.blue)}
-        set {
-            if let components = newValue.cgColor?.components {
-                backgroundColorComputed.red = components[0]
-                backgroundColorComputed.green = components[1]
-                backgroundColorComputed.blue = components[2]
-            }
-        }
-    }
-    
-    var borderColor: Color {
-        get { Color(red: borderColorComputed.red, green: borderColorComputed.green, blue: borderColorComputed.blue)}
-        set {
-            if let components = newValue.cgColor?.components {
-                borderColorComputed.red = components[0]
-                borderColorComputed.green = components[1]
-                borderColorComputed.blue = components[2]
-            }
-        }
-    }
-     */
-    
     
     var backgroundColor: Color {
-            get { backgroundColorComputed.color }
-            set { backgroundColorComputed = ColorComponents(color: newValue) }
+        get { backgroundColorComputed.color }
+        set {
+            backgroundColorComputed.setColor(newValue)
+             }
         }
 
         var borderColor: Color {
             get { borderColorComputed.color }
-            set { borderColorComputed = ColorComponents(color: newValue) }
+            set { borderColorComputed.setColor(newValue) }
         }
+
     
     // Add color to the foreground
     

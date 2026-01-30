@@ -31,7 +31,7 @@ struct BorderSection: View {
                 Slider(value: $vmIcon.cornerRadio, in:0.0...20)
                     .customAccessibilityCGFloat(label: "Slider.CornerRadius.Accessibility", hint: "Slider.CornerRadius.Accessibility.Hint", value: $vmIcon.cornerRadio)
                     .onChange(of: vmIcon.cornerRadio) {
-                        vmIcon.styleShape.updateRadio(to: vmIcon.cornerRadio)
+                        vmIcon.styleShape = vmIcon.styleShape.withRadio(vmIcon.cornerRadio)
                     }
                     .tint(MyColor.skyblue.value)
                     

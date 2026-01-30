@@ -26,30 +26,30 @@ final class IconChild: Identifiable {
     init(
         id: UUID = UUID(),
         name: String = "star.fill",
-        frontColorComputed: ColorComponents = ColorComponents(color: .yellow),
+        frontColorComputed: ColorComponents? = nil ,  // yellow
          orientation: Double = 0.0,
          zoom: Float = 0.5,
          dragging: Bool = false,
          zIndex: Double = 1,
-        borderColorComputed: ColorComponents = ColorComponents(color: .pink),
+        borderColorComputed: ColorComponents = ColorComponents(red: 1, green: 0.75, blue: 0.8, alpha: 1),  // pink
         positionX: Double = 0.0,
         positionY: Double = 0.0,
         xDistortion: CGFloat = 0.0,
         yDistortion: CGFloat = 0.0,
         shadows: ShadowModel = ShadowModel()) {
              self.id = id
-        self.name = name
-        self.frontColorComputed = frontColorComputed
-        self.orientation = orientation
-        self.zoom = zoom
-        self.dragging =  dragging
-        self.zIndex = zIndex
-        self.borderColorComputed = borderColorComputed
-        self.positionX = positionX
-        self.positionY = positionY
-        self.xDistortion = xDistortion
-        self.yDistortion = yDistortion
-        self.shadows = shadows
+             self.name = name
+             self.frontColorComputed = frontColorComputed ?? ColorComponents(red: 1, green: 1, blue: 0, alpha: 1)
+             self.orientation = orientation
+             self.zoom = zoom
+             self.dragging =  dragging
+             self.zIndex = zIndex
+             self.borderColorComputed = borderColorComputed
+             self.positionX = positionX
+             self.positionY = positionY
+             self.xDistortion = xDistortion
+             self.yDistortion = yDistortion
+             self.shadows = shadows
     }
     
     enum CodingKeys: String, CodingKey {

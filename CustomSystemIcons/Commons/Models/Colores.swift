@@ -20,27 +20,58 @@ struct Colores: Codable, Hashable {
     }
 }
 
-struct ColorComponents: Codable {
-    var red: Double
-    var green: Double
-    var blue: Double
-    var alpha: Double
 
-    init(color: Color) {
-        if let components = color.cgColor?.components {
-            self.red = Double(components[0])
-            self.green = Double(components[1])
-            self.blue = Double(components[2])
-            self.alpha = Double(components[3])
-        } else {
-            self.red = 0
-            self.green = 0
-            self.blue = 0
-            self.alpha = 1
-        }
+nonisolated struct ColorComponents: Codable {
+    var red: Double = 0
+    var green: Double = 0
+    var blue: Double = 0
+    var alpha: Double = 1
+    
+    init(red: Double = 0, green: Double = 0, blue: Double = 0, alpha: Double = 1) {
+        self.red = red
+        self.green = green
+        self.blue = blue
+        self.alpha = alpha
     }
-
+    
+    
+    init(color: Color) {
+        // Use UIColor which is not MainActor-isolated
+        let uiColor = UIColor(color)
+        var r: CGFloat = 0
+        var g: CGFloat = 0
+        var b: CGFloat = 0
+        var a: CGFloat = 0
+        uiColor.getRed(&r, green: &g, blue: &b, alpha: &a)
+        
+        self.red = Double(r)
+        self.green = Double(g)
+        self.blue = Double(b)
+        self.alpha = Double(a)
+    }
+    
+    mutating func setColor(_ color: Color?) {
+        guard let color = color else {
+            return
+        }
+        
+        let resolved = extractColor(color)
+        self.red = Double(resolved.red)
+        self.green = Double(resolved.green)
+        self.blue = Double(resolved.blue)
+        self.alpha = Double(resolved.opacity)
+    }
+    
+    func extractColor(_ color: Color) -> Color.Resolved {
+       //color.resolve(in: EnvironmentValues())
+        let colorExtractor = ColorExtractor()
+        return colorExtractor.extractColor(color)
+    }
+    
     var color: Color {
         return Color(red: red, green: green, blue: blue, opacity: alpha)
     }
 }
+
+
+
