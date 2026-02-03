@@ -28,10 +28,8 @@ struct IconView: View {
         }
         .clipShape(vmIcon.styleShape)
         .overlay(
-            vmIcon.styleShape.stroke(vmIcon.borderColor,
-                                     lineWidth: bWidth * vmIcon.borderWidth)
-            .padding(.all, (vmIcon.borderWidth * 100))
-            .cornerRadius(vmIcon.cornerRadio)
+            vmIcon.styleShape
+                .strokeBorder(vmIcon.borderColor, lineWidth: bWidth * vmIcon.borderWidth)
         )
         .shadow(
             color: vmIcon.shadows.shadowColor.opacity(vmIcon.shadows.opacity),
@@ -50,8 +48,10 @@ struct IconView: View {
     //@Previewable @State var vmIcon = IconModel(styleShape: .star(radio: 5), borderWidth: 0.05)
     //@Previewable @State var vmIcon = IconModel(styleShape: .triangle(radio: 30), borderWidth: 0.05)
     //@Previewable @State var vmIcon = IconModel(styleShape: .square(radio: 30), borderWidth: 0.05)
-    @Previewable @State var vmIcon = IconModel(styleShape: .hexagon(radio: 30), borderWidth: 0.05)
+    @Previewable @State var vmIcon = IconModel( )
     vmIcon.backgroundColor = Color.blue
+    vmIcon.borderWidth = 0.09
+    vmIcon.styleShape = .hexagon(radio: 0.0)
     return ZStack {
         
         Rectangle()

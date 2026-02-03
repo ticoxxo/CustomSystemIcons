@@ -13,7 +13,7 @@ final class IconModel: Identifiable {
     // Color
     var backgroundColorComputed: ColorComponents
     var borderColorComputed: ColorComponents
-    var borderWidth: Double
+    var borderWidth: CGFloat
     @Relationship(deleteRule: .cascade)
     var icons: [IconChild]
     @Attribute(originalName: "creation_date") var creationDate: Date
@@ -29,10 +29,10 @@ final class IconModel: Identifiable {
     init(
         id: UUID = UUID(),
         title: String = "",
-        styleShape: StyleShape = .square(radio: 10),
+        styleShape: StyleShape = .square(radio: 0.0),
         orientation: Double = 0.0,
         zoom: CGFloat = 0.8,
-        borderWidth: Double = 0.01,
+        borderWidth: CGFloat = 0.0,
         //backgroundColorComputed: Colores = .init(red: 0.4,blue: 0.4,green: 0.4),
         //borderColorComputed: Colores = .init(red: 0.4,blue: 0.4,green: 0.4),
         // ... other parameters
@@ -44,7 +44,7 @@ final class IconModel: Identifiable {
         is isFavorite: Bool = false,
         backgroundImage: BackgroundImageModel = BackgroundImageModel(),
         shadows: ShadowModel = ShadowModel(),
-        cornerRadio: CGFloat = 10.0
+        cornerRadio: CGFloat = 0.0
     ) {
             self.id = UUID()
             self.title = title

@@ -20,15 +20,15 @@ struct BorderSection: View {
             HStack {
                 Text("Label.Width")
                     .lineLimit(1)
-                Slider(value: $vmIcon.borderWidth, in:0.01...0.1)
-                    .customAccessibilityDouble(label: "Slider.BorderWidth.Accessibility", hint: "Slider.BorderWidth.Accessibility.Hint", value: $vmIcon.borderWidth)
+                Slider(value: $vmIcon.borderWidth, in:0.0...0.09)
+                    .customAccessibilityCGFloat(label: "Slider.BorderWidth.Accessibility", hint: "Slider.BorderWidth.Accessibility.Hint", value: $vmIcon.borderWidth)
                     .tint(MyColor.skyblue.value)
             }
             
             HStack {
                 Text("Label.CornerRadius")
                     .lineLimit(1)
-                Slider(value: $vmIcon.cornerRadio, in:0.0...20)
+                Slider(value: $vmIcon.cornerRadio, in:0.0...0.09)
                     .customAccessibilityCGFloat(label: "Slider.CornerRadius.Accessibility", hint: "Slider.CornerRadius.Accessibility.Hint", value: $vmIcon.cornerRadio)
                     .onChange(of: vmIcon.cornerRadio) {
                         vmIcon.styleShape = vmIcon.styleShape.withRadio(vmIcon.cornerRadio)
@@ -36,6 +36,7 @@ struct BorderSection: View {
                     .tint(MyColor.skyblue.value)
                     
             }
+            Text("Width is = \(vmIcon.borderWidth)")
         } label: {
             Text("Label.Border").font(.headline)
                 .customAccessibility(label: "Label.Border.Accessibility", hint: "Label.Border.Accessibility.Hint")

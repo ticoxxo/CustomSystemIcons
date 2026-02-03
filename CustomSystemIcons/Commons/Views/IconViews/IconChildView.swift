@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+//MARK: Add clip shape to this views
 struct IconChildView: View {
     var icono: IconChild
     var editable: Bool

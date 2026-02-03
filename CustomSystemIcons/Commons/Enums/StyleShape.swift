@@ -42,67 +42,77 @@ extension StyleShape {
     }
     
     
-    func createStar(corners: Int, smoothness: Double, center: CGPoint, rect: CGRect, cornerRadius: CGFloat) -> Path {
+    func createStar(corners: Int, smoothness: Double, rect: CGRect, cornerRadius: CGFloat) -> Path {
+        let center = CGPoint(x: rect.midX, y: rect.midY)
+        let radius = min(rect.width, rect.height) / 2
         
         var currentAngle = -CGFloat.pi / 2
         let angleAdjustment = .pi * 2 / Double(corners * 2)
-        let innerX = center.x * smoothness
-        let innerY = center.y * smoothness
+        let innerRadius = radius * smoothness
         var points: [CGPoint] = []
 
         for corner in 0..<corners * 2 {
             let sinAngle = sin(currentAngle)
             let cosAngle = cos(currentAngle)
             let point: CGPoint
-
+            
             if corner.isMultiple(of: 2) {
-                point = CGPoint(x: center.x * cosAngle, y: center.y * sinAngle)
+                point = CGPoint(
+                    x: center.x + radius * cosAngle,
+                    y: center.y + radius * sinAngle
+                )
             } else {
-                point = CGPoint(x: innerX * cosAngle, y: innerY * sinAngle)
+                point = CGPoint(
+                    x: center.x + innerRadius * cosAngle,
+                    y: center.y + innerRadius * sinAngle
+                )
             }
-
+            
             points.append(point)
             currentAngle += angleAdjustment
         }
-
-        let unusedSpace = (rect.height / 2 - points.map { $0.y }.max()!) / 2
-        let transform = CGAffineTransform(translationX: center.x, y: center.y + unusedSpace)
-
-        let path = addRoundedPolygon(points: points, cornerRadius: cornerRadius)
-        return path.applying(transform)
+        
+        return addRoundedPolygon(points: points, cornerRadius: cornerRadius)
     }
     
     func path(in rect: CGRect) -> Path {
+        let minDimension = min(rect.width, rect.height)
         
-        let center = CGPoint(x: rect.width / 2, y: rect.height / 2)
         switch self {
-        case .star(let radio):
-            return createStar(corners: 5, smoothness: 0.45,  center: center, rect: rect, cornerRadius: radio)
+        case .star(let radioPercentage):
+            let scaledRadius = minDimension * radioPercentage
+            return createStar(corners: 5, smoothness: 0.45, rect: rect, cornerRadius: scaledRadius)
+            
         case .circle:
             var path = Path()
-            path.addEllipse(in: CGRect(x: rect.minX, y: rect.minY, width: rect.width, height: rect.height))
+            path.addEllipse(in: rect)
             path.closeSubpath()
             return path
-        case .square(let radio):
-            var path = Path()
-            let roundedRect = CGRect(x: rect.minX, y: rect.minY, width: rect.width, height: rect.height)
-            path.addRoundedRect(in: roundedRect, cornerSize: CGSize(width: radio, height: radio))
-            path.closeSubpath()
-            return path
-        case .triangle(let radio):
             
+        case .square(let radioPercentage):
+            var path = Path()
+            let scaledRadius = minDimension * radioPercentage
+            path.addRoundedRect(in: rect, cornerSize: CGSize(width: scaledRadius, height: scaledRadius))
+            path.closeSubpath()
+            return path
+            
+        case .triangle(let radioPercentage):
+            let scaledRadius = minDimension * radioPercentage
             let points = [
-                            CGPoint(x: rect.midX, y: rect.minY),
-                            CGPoint(x: rect.minX, y: rect.maxY),
-                            CGPoint(x: rect.maxX, y: rect.maxY)
-                        ]
-            return addRoundedPolygon(points: points, cornerRadius: radio)
-        case .hexagon(let radio):
-            return createStar(corners: 6, smoothness: 0.6,  center: center, rect: rect, cornerRadius: radio)
-        case .gearshape(let radio):
-            return createStar(corners: 8, smoothness: 0.6,  center: center, rect: rect, cornerRadius: radio)
+                CGPoint(x: rect.midX, y: rect.minY),
+                CGPoint(x: rect.minX, y: rect.maxY),
+                CGPoint(x: rect.maxX, y: rect.maxY)
+            ]
+            return addRoundedPolygon(points: points, cornerRadius: scaledRadius)
+            
+        case .hexagon(let radioPercentage):
+            let scaledRadius = minDimension * radioPercentage
+            return createStar(corners: 6, smoothness: 0.6, rect: rect, cornerRadius: scaledRadius)
+            
+        case .gearshape(let radioPercentage):
+            let scaledRadius = minDimension * radioPercentage
+            return createStar(corners: 8, smoothness: 0.6, rect: rect, cornerRadius: scaledRadius)
         }
-        
     }
     
     func withRadio(_ newValue: CGFloat) -> StyleShape {
@@ -117,39 +127,55 @@ extension StyleShape {
     }
     
     func addRoundedPolygon(points: [CGPoint], cornerRadius: CGFloat) -> Path {
-        var path = Path()
+        guard points.count > 2 else {
+            return Path() // Need at least 3 points for a polygon
+        }
         
-        for i in 0..<points.count {
+        var path = Path()
+        let pointCount = points.count
+        
+        for i in 0..<pointCount {
             let current = points[i]
-            let previous = points[(i - 1 + points.count) % points.count]
-            let next = points[(i + 1) % points.count]
+            let previous = points[(i - 1 + pointCount) % pointCount]
+            let next = points[(i + 1) % pointCount]
             
-            let previousVector = CGVector(dx: current.x - previous.x, dy: current.y - previous.y)
-            let nextVector = CGVector(dx: next.x - current.x, dy: next.y - current.y)
+            // Calculate edge vectors
+            let toPrevious = CGVector(dx: previous.x - current.x, dy: previous.y - current.y)
+            let toNext = CGVector(dx: next.x - current.x, dy: next.y - current.y)
             
-            let previousLength = sqrt(previousVector.dx * previousVector.dx + previousVector.dy * previousVector.dy)
-            let nextLength = sqrt(nextVector.dx * nextVector.dx + nextVector.dy * nextVector.dy)
+            // Calculate edge lengths
+            let lengthToPrevious = sqrt(toPrevious.dx * toPrevious.dx + toPrevious.dy * toPrevious.dy)
+            let lengthToNext = sqrt(toNext.dx * toNext.dx + toNext.dy * toNext.dy)
             
-            let previousOffset = min(cornerRadius, previousLength / 2)
-            let nextOffset = min(cornerRadius, nextLength / 2)
+            // Avoid division by zero
+            guard lengthToPrevious > 0, lengthToNext > 0 else { continue }
             
-            let start = CGPoint(
-                x: current.x - previousVector.dx / previousLength * previousOffset,
-                y: current.y - previousVector.dy / previousLength * previousOffset
+            // Normalize vectors
+            let unitToPrevious = CGVector(dx: toPrevious.dx / lengthToPrevious, dy: toPrevious.dy / lengthToPrevious)
+            let unitToNext = CGVector(dx: toNext.dx / lengthToNext, dy: toNext.dy / lengthToNext)
+            
+            // Calculate safe offset (can't be more than half the edge length)
+            let maxOffset = min(cornerRadius, lengthToPrevious / 2, lengthToNext / 2)
+            
+            // Calculate start and end points of the curve
+            let startPoint = CGPoint(
+                x: current.x + unitToPrevious.dx * maxOffset,
+                y: current.y + unitToPrevious.dy * maxOffset
             )
             
-            let end = CGPoint(
-                x: current.x + nextVector.dx / nextLength * nextOffset,
-                y: current.y + nextVector.dy / nextLength * nextOffset
+            let endPoint = CGPoint(
+                x: current.x + unitToNext.dx * maxOffset,
+                y: current.y + unitToNext.dy * maxOffset
             )
             
+            // Build path
             if i == 0 {
-                path.move(to: start)
+                path.move(to: startPoint)
             } else {
-                path.addLine(to: start)
+                path.addLine(to: startPoint)
             }
             
-            path.addQuadCurve(to: end, control: current)
+            path.addQuadCurve(to: endPoint, control: current)
         }
         
         path.closeSubpath()
@@ -157,3 +183,22 @@ extension StyleShape {
     }
 }
 
+extension StyleShape: InsettableShape {
+    func inset(by amount: CGFloat) -> some InsettableShape {
+        _Inset(shape: self, amount: amount)
+    }
+    
+    private struct _Inset: InsettableShape {
+        var shape: StyleShape
+        var amount: CGFloat
+        
+        func path(in rect: CGRect) -> Path {
+            // Simply inset the rect - the shape already handles percentage-based radii
+            shape.path(in: rect.insetBy(dx: amount, dy: amount))
+        }
+        
+        func inset(by amount: CGFloat) -> some InsettableShape {
+            _Inset(shape: shape, amount: self.amount + amount)
+        }
+    }
+}
