@@ -66,3 +66,27 @@ struct IconView: View {
     .frame(width: 200, height: 200)
         
 }
+
+#Preview("Text") {
+    
+    @Previewable @State var vmIcon = IconModel(icons: [IconChild(
+        name: "Hola, mundo",
+        isIcon: false,
+        textProperties: TextModel.dataPreviewExample)] )
+    vmIcon.backgroundColor = Color.blue
+    vmIcon.borderWidth = 0.09
+    vmIcon.styleShape = .hexagon(radio: 0.0)
+    return ZStack {
+        
+        Rectangle()
+            .fill(.red)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+        IconView(vmIcon: vmIcon, bWidth: 200, bHeight: 200, editable: true)
+    }
+    .foregroundColor(Color.black)
+    .background(Color.primary
+                            .colorInvert()
+                            .opacity(0.75))
+    .frame(width: 200, height: 200)
+        
+}

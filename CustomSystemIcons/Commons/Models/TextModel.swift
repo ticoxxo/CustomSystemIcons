@@ -9,7 +9,7 @@ import SwiftData
 
 struct TextModel: Codable, Hashable, Equatable {
     // Fonts
-    var fontSize: CGFloat = 17.0
+    var fontSize: CGFloat = 0.2 // 20% of container size
     var fontWeight: FontWeight = .light
     var fontDesign: FontDesign = .default
     var fontStyle: FontStyle = .custom
@@ -18,17 +18,27 @@ struct TextModel: Codable, Hashable, Equatable {
     
     // Spacing & more
     var lineLimit: Int = 1
-    var letterSpacing: CGFloat = 0.0 // Letter spacing
+    var letterSpacing: CGFloat = 0.01  // 1% of container
     var lineSpacing: CGFloat = 0.0 // Line spacing
     var strikethrough: Bool = false // Strikethrough decoration
     var strikethroughColor: ColorComponents // Color for strikethrough
     var underline: Bool // Underline decoration
     var underlineColor: ColorComponents // Color for underline
-    var textCase: String // "none", "uppercase", "lowercase"
 }
 
 
 extension TextModel {
+    static var dataPreviewExample = TextModel(
+        fontSize: 18,
+        fontWeight: .heavy,
+        isItalic: true,
+        strikethrough: true,
+        strikethroughColor: ColorComponents(red: 1, green: 0.75, blue: 0.8, alpha: 1),
+        underline: true,
+        underlineColor: ColorComponents(red: 1, green: 0.75, blue: 0.8, alpha: 1)
+    )
+    
+    
     //MARK: Finish adding custom fonts from system or user
     /*
      var font: Font {

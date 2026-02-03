@@ -41,7 +41,7 @@ final class IconModel: Identifiable {
             // ... rest
         icons: [IconChild] = [IconChild()],
         creationDate: Date = Date(),
-        is isFavorite: Bool = false,
+        isFavorite: Bool = false,
         backgroundImage: BackgroundImageModel = BackgroundImageModel(),
         shadows: ShadowModel = ShadowModel(),
         cornerRadio: CGFloat = 0.0

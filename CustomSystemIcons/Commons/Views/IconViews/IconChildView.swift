@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+
 //MARK: Add clip shape to this views
 struct IconChildView: View {
     var icono: IconChild
@@ -14,9 +15,8 @@ struct IconChildView: View {
    
     var body: some View {
         GeometryReader { geometry in
-            Image(systemName: icono.name)
-                .resizable()
-                .customAccessibility(label: "Icon.Child", hint: "Drag to change of place", isButton: true)
+        
+            TextOrImage(geometry: geometry)
                 .scaleEffect(CGFloat(icono.zoom))
                 .scaledToFit()
                 .foregroundStyle(
@@ -30,7 +30,6 @@ struct IconChildView: View {
                 .rotationEffect(.degrees(icono.orientation))
                 
                 .frame(width: geometry.size.width, height: geometry.size.height)
-                .padding()
                 .position(
                                     x: max(0, min(geometry.size.width, icono.positionX == 0 ? geometry.size.width / 2 : geometry.size.width * icono.positionX)),
                                     y: max(0, min(geometry.size.height, icono.positionY == 0 ? geometry.size.height / 2 : geometry.size.height * icono.positionY))
@@ -84,12 +83,33 @@ struct IconChildView: View {
                 }
         }
     }
+    
+    @ViewBuilder
+    func TextOrImage(geometry: GeometryProxy) -> some View {
+        
+        if icono.isIcon {
+            Image(systemName: icono.name)
+                .resizable()
+                .customAccessibility(label: "Icon.Child", hint: "Drag to change of place", isButton: true)
+        } else {
+            TextIconChildView(iconModel: icono, containerSize: geometry.size)
+        }
+    }
 }
 
 
 
 #Preview {
-    let icono = IconChild()
+    let icono = IconChild(isIcon: true)
+    
     IconChildView(icono: icono, editable: true)
 }
 
+#Preview("Child view text") {
+    let icon = IconChild(
+        name: "Hola, mundo",
+        isIcon: false,
+        textProperties: TextModel.dataPreviewExample)
+    
+    IconChildView(icono: icon, editable: true)
+}

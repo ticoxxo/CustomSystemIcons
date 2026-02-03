@@ -30,7 +30,7 @@ final class IconChild: Identifiable {
     init(
         id: UUID = UUID(),
         name: String = "star.fill",
-        frontColorComputed: ColorComponents? = nil ,  // yellow
+        frontColorComputed: ColorComponents = ColorComponents(color: .black) ,  // yellow
         orientation: Double = 0.0,
         zoom: Float = 0.5,
         dragging: Bool = false,
@@ -41,12 +41,12 @@ final class IconChild: Identifiable {
         xDistortion: CGFloat = 0.0,
         yDistortion: CGFloat = 0.0,
         shadows: ShadowModel = ShadowModel(),
-        isIcon: Bool = false,
+        isIcon: Bool = true,
         textProperties: TextModel? = nil
     ) {
         self.id = id
         self.name = name
-        self.frontColorComputed = frontColorComputed ?? ColorComponents(red: 1, green: 1, blue: 0, alpha: 1)
+        self.frontColorComputed = frontColorComputed
         self.orientation = orientation
         self.zoom = zoom
         self.dragging =  dragging
