@@ -11,6 +11,7 @@ enum MyColor {
     case skyblue
     case lemonYellow
     case steelGray
+    case magenta
 }
 
 extension MyColor {
@@ -23,6 +24,8 @@ extension MyColor {
                 return Color(hue: 0.1639, saturation: 1, brightness: 1)
             case .steelGray:
                 return Color(white: 0.4745)
+            case .magenta:
+                return Color(red: 1, green: 0, blue: 1)
             }
         }
     }

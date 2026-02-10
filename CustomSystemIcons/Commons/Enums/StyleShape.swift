@@ -181,8 +181,11 @@ extension StyleShape {
         path.closeSubpath()
         return path
     }
+    
+   
 }
 
+/*
 extension StyleShape: InsettableShape {
     func inset(by amount: CGFloat) -> some InsettableShape {
         _Inset(shape: self, amount: amount)
@@ -193,8 +196,69 @@ extension StyleShape: InsettableShape {
         var amount: CGFloat
         
         func path(in rect: CGRect) -> Path {
-            // Simply inset the rect - the shape already handles percentage-based radii
-            shape.path(in: rect.insetBy(dx: amount, dy: amount))
+            // Calculate the outer rect (before inset) to get the original corner radius
+            let outerRect = rect.insetBy(dx: -amount, dy: -amount)
+            let outerMinDimension = min(outerRect.width, outerRect.height)
+            
+            // Get the radio percentage from the shape
+            let radioPercentage: CGFloat
+            switch shape {
+            case .star(let radio):
+                radioPercentage = radio
+            case .square(let radio):
+                radioPercentage = radio
+            case .triangle(let radio):
+                radioPercentage = radio
+            case .hexagon(let radio):
+                radioPercentage = radio
+            case .gearshape(let radio):
+                radioPercentage = radio
+            case .circle:
+                radioPercentage = 0
+            }
+            
+            // Calculate absolute corner radius from outer dimensions
+            let absoluteCornerRadius = outerMinDimension * radioPercentage
+            
+            // Inset the rect
+            let insetRect = rect.insetBy(dx: amount, dy: amount)
+            let insetMinDimension = min(insetRect.width, insetRect.height)
+            
+            // Prevent division by zero
+            guard insetMinDimension > 0 else {
+                return Path()
+            }
+            
+            // Convert absolute corner radius back to percentage for the inset rect
+            let adjustedRadioPercentage = absoluteCornerRadius / insetMinDimension
+            
+            // Create the path with adjusted percentage
+            switch shape {
+            case .star:
+                let adjustedShape = StyleShape.star(radio: adjustedRadioPercentage)
+                return adjustedShape.path(in: insetRect)
+                
+            case .circle:
+                var path = Path()
+                path.addEllipse(in: insetRect)
+                return path
+                
+            case .square:
+                let adjustedShape = StyleShape.square(radio: adjustedRadioPercentage)
+                return adjustedShape.path(in: insetRect)
+                
+            case .triangle:
+                let adjustedShape = StyleShape.triangle(radio: adjustedRadioPercentage)
+                return adjustedShape.path(in: insetRect)
+                
+            case .hexagon:
+                let adjustedShape = StyleShape.hexagon(radio: adjustedRadioPercentage)
+                return adjustedShape.path(in: insetRect)
+                
+            case .gearshape:
+                let adjustedShape = StyleShape.gearshape(radio: adjustedRadioPercentage)
+                return adjustedShape.path(in: insetRect)
+            }
         }
         
         func inset(by amount: CGFloat) -> some InsettableShape {
@@ -202,3 +266,21 @@ extension StyleShape: InsettableShape {
         }
     }
 }
+
+*/
+/*
+ 
+ private struct _Inset: InsettableShape {
+     var shape: StyleShape
+     var amount: CGFloat
+     
+     func path(in rect: CGRect) -> Path {
+         let insetRect = rect.insetBy(dx: amount, dy: amount)
+         return shape.path(in: insetRect)
+     }
+     
+     func inset(by amount: CGFloat) -> some InsettableShape {
+         _Inset(shape: shape, amount: self.amount + amount)
+     }
+ }
+ */

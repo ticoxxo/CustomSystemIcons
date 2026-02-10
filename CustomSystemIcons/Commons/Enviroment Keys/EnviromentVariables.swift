@@ -8,4 +8,5 @@ import SwiftUI
 
 extension EnvironmentValues {
     @Entry var coordinator = Coordinator()
+    @Entry var imageCache = ImageCache.shared
 }

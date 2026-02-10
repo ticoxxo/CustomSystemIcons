@@ -13,7 +13,7 @@ struct HomeIconView: View {
         Rectangle()
             .fill(Color.red)
             .overlay {
-                IconView(vmIcon: vmIcon, bWidth: 50, bHeight: 50, editable: false)
+                IconView(vmIcon: vmIcon, editable: false)
             }
     }
 }

@@ -28,7 +28,7 @@ class ImageConverter: NSObject {
     func convertViewAsImage(iconModel: IconModel, type: String) {
         //let size = min(UIScreen.main.bounds.size.width, UIScreen.main.bounds.size.height) / 2
         let size: CGFloat = 1024
-        let renderer = ImageRenderer(content: IconView(vmIcon: iconModel, bWidth: size ,bHeight: size, editable: false)
+        let renderer = ImageRenderer(content: IconView(vmIcon: iconModel, editable: false)
             .aspectRatio(1.0, contentMode: .fit)
         )
         
@@ -42,7 +42,7 @@ class ImageConverter: NSObject {
     func shareViewAsImage(iconModel: IconModel) -> UIImage? {
         //let size = min(UIScreen.main.bounds.size.width, UIScreen.main.bounds.size.height) / 2
         let size: CGFloat = 1024
-        let renderer = ImageRenderer(content: IconView(vmIcon: iconModel, bWidth: size ,bHeight: size, editable: false)
+        let renderer = ImageRenderer(content: IconView(vmIcon: iconModel, editable: false)
             .aspectRatio(1.0, contentMode: .fit)
         )
         
@@ -54,7 +54,7 @@ class ImageConverter: NSObject {
     func sharePng(iconModel: IconModel, type: ImageType) -> URL{
         //let size = min(UIScreen.main.bounds.size.width, UIScreen.main.bounds.size.height) / 2
         let size: CGFloat = 1024
-        let renderer = ImageRenderer(content: IconView(vmIcon: iconModel, bWidth: size ,bHeight: size, editable: false)
+        let renderer = ImageRenderer(content: IconView(vmIcon: iconModel, editable: false)
             .aspectRatio(1.0, contentMode: .fit)
         )
         var fileURL: URL = URL(fileURLWithPath: "")

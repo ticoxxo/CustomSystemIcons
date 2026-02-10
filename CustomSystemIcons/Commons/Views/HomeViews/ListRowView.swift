@@ -15,7 +15,7 @@ struct ListRowView: View {
     var body: some View {
         GeometryReader { geometry in
             VStack {
-                IconView(vmIcon: item, bWidth: min(geometry.size.width / 2, geometry.size.height / 2), bHeight: min(geometry.size.width / 2, geometry.size.height / 2),editable: false)
+                IconView(vmIcon: item, editable: false)
                 ZStack {
                     RoundedRectangle(cornerRadius: 10)
                         .fill(Color.white)

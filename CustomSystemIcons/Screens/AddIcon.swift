@@ -23,7 +23,7 @@ struct AddIcon: View {
     var body: some View {
         Form {
             GroupBox(label: Text("GroupBox.Title.Icon")) {
-                IconView(vmIcon: vmIcon, bWidth: min(horizontalPadding, verticalPadding) / 2 , bHeight: min(horizontalPadding, verticalPadding) / 2, editable: false)
+                IconView(vmIcon: vmIcon, editable: false)
                     .overlay( alignment: .bottomTrailing) {
                         Image(systemName: "pencil.circle")
                             .resizable()

@@ -22,8 +22,6 @@ struct EditIcon: View {
         VStack {
             GroupBox(label: Text("GroupBox.Title.Icon")) {
                 IconView(vmIcon: vmIcon,
-                         bWidth: min(widtho, heighto) / 2,
-                         bHeight: min(widtho, heighto) / 2,
                          editable: true)
             }
             Form {
@@ -73,7 +71,29 @@ struct EditIcon: View {
     
 }
 
-#Preview {
+#Preview("Ipad") {
+    @Previewable @State var coordinator = Coordinator()
+    @Previewable @State var vmIcon = IconModel()
+    vmIcon.addIcon()
+    vmIcon.addIcon()
+    return NavigationStack(path: $coordinator.path) {
+        EditIcon(vmIcon: vmIcon)
+    }
+    .environment(\.coordinator, coordinator)
+}
+
+#Preview("Ipad Horizontal", traits: .landscapeLeft) {
+    @Previewable @State var coordinator = Coordinator()
+    @Previewable @State var vmIcon = IconModel()
+    vmIcon.addIcon()
+    vmIcon.addIcon()
+    return NavigationStack(path: $coordinator.path) {
+        EditIcon(vmIcon: vmIcon)
+    }
+    .environment(\.coordinator, coordinator)
+}
+
+#Preview("Iphone") {
     @Previewable @State var coordinator = Coordinator()
     @Previewable @State var vmIcon = IconModel()
     vmIcon.addIcon()

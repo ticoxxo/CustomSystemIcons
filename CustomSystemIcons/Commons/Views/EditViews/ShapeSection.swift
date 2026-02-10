@@ -14,12 +14,7 @@ struct ShapeSection: View {
         DisclosureGroup(isExpanded: $expanded) {
             HStack {
                 //IconView(vmIcon: vmIcon, bWidth: 25, bHeight: 25, editable: false)
-                    
-                ForEach(StyleShape.allCases(with: vmIcon.cornerRadio), id: \.self) { shape in
-                    Spacer()
-                    ShapeView(shape: shape, vmIcon: vmIcon)
-                    Spacer()
-                }
+               
             }
             .customAccessibility(label: "Label.Shape.Accessibility", hint: "Label.Shape.Accessibility.Hint")
             .accessibilityAddTraits(.isButton)

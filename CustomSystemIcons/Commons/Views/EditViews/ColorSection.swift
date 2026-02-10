@@ -10,6 +10,7 @@ import PhotosUI
 
 struct ColorSection: View {
     @Environment(\.coordinator) var coordinator
+    @Environment(\.imageCache) var imageCache
     @Bindable var vmIcon: IconModel
     @State private var expanded: Bool = true
     @State private var selectedPhoto: PhotosPickerItem?
@@ -38,7 +39,7 @@ struct ColorSection: View {
                 .photosPickerStyle(.presentation)
                 
                 Spacer()
-                if let imageData =  vmIcon.backgroundImage.backgroundImage, let uiImage = UIImage(data: imageData) {
+                if let imageData =  vmIcon.backgroundImage.backgroundImage, let uiImage = imageCache.image(for: imageData) {
                     //Image(uiImage: UIImage(data: imageData)!)
                     HStack {
                             
