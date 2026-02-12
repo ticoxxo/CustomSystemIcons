@@ -12,12 +12,32 @@ struct ShapeSection: View {
     @State private var expanded: Bool = true
     var body: some View {
         DisclosureGroup(isExpanded: $expanded) {
-            HStack {
-                //IconView(vmIcon: vmIcon, bWidth: 25, bHeight: 25, editable: false)
-               
+            Grid(alignment: .leading) {
+                GridRow {
+                    Text("Select figure")
+                    Spacer()
+                    Picker("Select figure", selection: $vmIcon.shape.selectedPath) {
+                        Text("Circle").tag(FiguraSelected.circle)
+                        Text("Rectangle").tag(FiguraSelected.rectangle)
+                        Text("Star").tag(FiguraSelected.star)
+                        Text("Custom").tag(FiguraSelected.custom)
+                    }
+                    .labelsHidden()
+                }
+                
+                GridRow {
+                    Text("Add corners")
+                    Spacer()
+                    Picker("Select corners", selection: $vmIcon.shape.corners) {
+                        ForEach(3..<20) { number in
+                            Text("\(number) corners").tag(number)
+                        }
+                    }
+                    .labelsHidden()
+                }
+                
+                
             }
-            .customAccessibility(label: "Label.Shape.Accessibility", hint: "Label.Shape.Accessibility.Hint")
-            .accessibilityAddTraits(.isButton)
         } label: {
             Text("Label.Shape").font(.headline)
                 .accessibilityAddTraits(.isHeader)
@@ -52,7 +72,14 @@ struct ShapeView: View {
     @Previewable @State var vmIcon = IconModel()
     //vmIcon.icons.append(IconChild())
     //vmIcon.icons.append(IconChild())
+    vmIcon.borderWidth = 0.05
     vmIcon.addIcon()
     vmIcon.addIcon()
-    return ShapeSection(vmIcon: vmIcon)
+    return VStack {
+        Text("Corners = \(vmIcon.shape.corners)")
+        IconView(vmIcon: vmIcon,
+                 editable: true)
+        .frame(width: 200, height: 200)
+        ShapeSection(vmIcon: vmIcon)
+    }
 }

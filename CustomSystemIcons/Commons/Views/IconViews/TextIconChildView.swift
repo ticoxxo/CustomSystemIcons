@@ -21,11 +21,13 @@ struct TextIconChildView: View {
                 .strikethrough(textProps.strikethrough, color: textProps.strikethroughColor.color)
                 .underline(textProps.underline, color: textProps.underlineColor.color)
                 .font(.system(size: scaledValue(textProps.fontSize)))
-                .fontWeight(scaledFontWeight(textProps.fontWeight))
+                .fontWeight(fontWeight(textProps.fontWeight))
                 .lineLimit(textProps.lineLimit)
                 .lineSpacing(scaledValue(textProps.lineSpacing))
+                .fixedSize()
         } else {
             Text(iconModel.name)
+                .fixedSize()
         }
     }
     
@@ -35,26 +37,9 @@ struct TextIconChildView: View {
         return value * scaleFactor
     }
     
-    private func scaledFontWeight(_ weight: FontWeight) -> Font.Weight {
-        // Scale the raw value based on container size
-        let scaleFactor = min(containerSize.width, containerSize.height) / 100
-        let scaledRawValue = Int(CGFloat(weight.rawValue) * scaleFactor)
-        
-        // Clamp to valid range (100-900)
-        let clampedValue = min(max(scaledRawValue, 100), 900)
-        
-        // Map to closest Font.Weight
-        switch clampedValue {
-        case ...150: return .ultraLight
-        case 151...250: return .thin
-        case 251...350: return .light
-        case 351...450: return .regular
-        case 451...550: return .medium
-        case 551...650: return .semibold
-        case 651...750: return .bold
-        case 751...850: return .heavy
-        default: return .black
-        }
+    private func fontWeight(_ weight: FontWeight) -> Font.Weight {
+        // Return the Font.Weight directly from FontWeight
+        return weight.rawValue
     }
 }
 
@@ -68,6 +53,5 @@ struct TextIconChildView: View {
         textProperties: TextModel.dataPreviewExample)
     
     TextIconChildView(iconModel: icon, containerSize: CGSize(width: 200, height: 200))
-        .frame(width: 200, height: 200)
         .background(Color.blue)
 }

@@ -10,6 +10,12 @@ import SwiftUI
 struct BorderSection: View {
     @Bindable var vmIcon: IconModel
     @State private var expanded: Bool = false
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+    @Environment(\.isPhone) private var isPhone
+    
+    var hidePicker: Bool {
+        horizontalSizeClass == .compact
+    }
     
     var body: some View {
         DisclosureGroup(isExpanded: $expanded) {
@@ -17,10 +23,8 @@ struct BorderSection: View {
                 GridRow {
                     Text("ColorPicker.BorderColor")
                         .lineLimit(1)
-                    CompactSliderColorPicker(selectedColor: $vmIcon.borderColor)
-                    ColorPicker("ColorPicker.BorderColor", selection: $vmIcon.borderColor)
-                        .customAccessibility(label: "ColorPicker.BorderColor.Accessibility", hint: "ColorPicker.BorderColor.Accessibility.Hint")
-                        .labelsHidden()
+
+                    colorSection
                         
                 }
                 
@@ -33,16 +37,21 @@ struct BorderSection: View {
                 }
                 
                 GridRow {
-                    /*
+                    
                     Text("Label.CornerRadius")
                         .lineLimit(1)
-                    Slider(value: $vmIcon.cornerRadio, in:0.0...0.09)
-                        .customAccessibilityCGFloat(label: "Slider.CornerRadius.Accessibility", hint: "Slider.CornerRadius.Accessibility.Hint", value: $vmIcon.cornerRadio)
-                        .onChange(of: vmIcon.cornerRadio) {
-                            vmIcon.styleShape = vmIcon.styleShape.withRadio(vmIcon.cornerRadio)
-                        }
+                    Slider(value: $vmIcon.shape.cornerRadio, in:0.0...0.09)
                         .tint(MyColor.skyblue.value)
-                     */
+                     
+                }
+                
+                GridRow {
+                    
+                    Text("Label.InnerRadio")
+                        .lineLimit(1)
+                    Slider(value: $vmIcon.shape.innerRadiusRatio, in:0.2...0.9)
+                        .tint(MyColor.skyblue.value)
+                     
                 }
                 
             }
@@ -53,9 +62,27 @@ struct BorderSection: View {
                 .customAccessibility(label: "Label.Border.Accessibility", hint: "Label.Border.Accessibility.Hint")
         }
     }
+    
+    @ViewBuilder
+    var colorSection: some View {
+        if horizontalSizeClass == .regular {
+            CompactSliderColorPicker(selectedColor: $vmIcon.borderColor)
+            CustomColorPicker(color: $vmIcon.borderColor)
+        }
+        
+        if horizontalSizeClass == .compact {
+            HStack {
+                Spacer()
+                    .frame(maxWidth: .infinity)
+                CustomColorPicker(color: $vmIcon.borderColor)
+                Spacer()
+                    .frame(maxWidth: .infinity)
+            }
+        }
+    }
 }
 
-#Preview {
+#Preview("Landscape", traits: .landscapeLeft) {
     @Previewable @State var vmIcon = IconModel()
     //vmIcon.icons.append(IconChild())
     //vmIcon.icons.append(IconChild())
@@ -64,7 +91,7 @@ struct BorderSection: View {
     return BorderSection(vmIcon: vmIcon)
 }
 
-#Preview("Ipad") {
+#Preview("Portrait") {
     @Previewable @State var vmIcon = IconModel()
     //vmIcon.icons.append(IconChild())
     //vmIcon.icons.append(IconChild())

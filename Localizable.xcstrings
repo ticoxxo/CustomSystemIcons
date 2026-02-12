@@ -887,6 +887,24 @@
         }
       }
     },
+    "Label.InnerRadio" : {
+      "comment" : "A label displayed next to the inner radio slider in Border section",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inner Radio"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Radio Interno"
+          }
+        }
+      }
+    },
     "Label.ManualPosition" : {
       "extractionState" : "manual",
       "localizations" : {

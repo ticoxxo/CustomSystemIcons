@@ -23,6 +23,7 @@ struct IconView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .aspectRatio(1, contentMode: .fit)
+        .clipShape(vmIcon.shape)
         .background {
                     GeometryReader { geo in
                         if let data = vmIcon.backgroundImage.backgroundImage, let uiImage = imageCache.image(for: data) {
@@ -52,7 +53,8 @@ struct IconView: View {
     private func imageBackground(size: CGSize, uiImage: UIImage) ->  some View {
         
         Image(uiImage: uiImage)
-            .resizable()
+        .resizable()                                    
+            .scaledToFill()
             .scaleEffect(CGFloat(vmIcon.backgroundImage.zoom))
             .rotationEffect(.degrees(vmIcon.backgroundImage.orientation))
             .position(
@@ -110,6 +112,8 @@ struct IconView: View {
     //@Previewable @State var vmIcon = IconModel(styleShape: .triangle(radio: 30), borderWidth: 0.05)
     //@Previewable @State var vmIcon = IconModel(styleShape: .square(radio: 30), borderWidth: 0.05)
     @Previewable @State var vmIcon = IconModel( )
+    vmIcon.shape.corners = 12
+    vmIcon.shape.selectedPath = .custom
     vmIcon.backgroundColor = Color.blue
     vmIcon.borderWidth = 0.05
     vmIcon.shape.cornerRadio = 0.4

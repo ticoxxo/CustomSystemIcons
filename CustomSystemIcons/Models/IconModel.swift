@@ -164,6 +164,15 @@ extension IconModel {
         }
     }
 
+    var iconsSorted: [IconChild] {
+        get {
+            self.icons.sorted { $0.zIndex < $1.zIndex }
+        }
+        
+        set {
+            self.icons = newValue
+        }
+    }
 }
 
 

@@ -9,89 +9,76 @@ import SwiftUI
 
 struct ShadowSection: View {
     @Bindable var vmIcon: IconModel
-    @State private var expanded: Bool = false
+    @State private var expanded: Bool = true // change to false
+    @ScaledMetric private var iconSize: CGFloat = 25
     
     var body: some View {
         DisclosureGroup(isExpanded: $expanded) {
         
-            HStack {
-                Text("Lbl.Principal")
-                VStack {
-                    Slider(value: $vmIcon.shadows.radius, in: 0...10)
-                        .customAccessibilityCGFloat(label: "Slider.Shadows.Accessibility", hint: "Slider.Shadows.Accessibility.Hint", value: $vmIcon.shadows.radius)
-                        .tint(MyColor.skyblue.value)
-                    Text("Lbl.Shadows.Radius")
+            Grid(alignment: .leading) {
+                GridRow {
+                    vmIcon.shape
+                        .stroke(vmIcon.borderColor, lineWidth: vmIcon.borderWidth * iconSize)
+                        .fill(vmIcon.backgroundColor)
+                        .frame(width: iconSize, height: iconSize)
+                    ShadowControls(shadow: $vmIcon.shadows)
+                    CustomColorPicker(color: $vmIcon.shadows.shadowColor)
                 }
-                VStack {
-                    Slider(value: $vmIcon.shadows.shadowX, in: 0...10)
-                        .customAccessibilityCGFloat(label: "Slider.ShadowsX.Accessibility", hint: "Slider.ShadowsX.Accessibility.Hint", value: $vmIcon.shadows.shadowX)
-                        .tint(MyColor.skyblue.value)
-                    Text("Lbl.Shadows.AxisX")
-                }
-                VStack {
-                    Slider(value: $vmIcon.shadows.shadowY, in: 0...10)
-                        .customAccessibilityCGFloat(label: "Slider.ShadowsY.Accessibility", hint: "Slider.ShadowsY.Accessibility.Hint", value: $vmIcon.shadows.shadowY)
-                        .tint(MyColor.skyblue.value)
-                    Text("Lbl.Shadows.AxisY")
-                }
-                VStack {
-                    Slider(value: $vmIcon.shadows.opacity, in: 0...10)
-                        .customAccessibilityCGFloat(label: "Slider.Opacity.Accessibility", hint: "Slider.Opacity.Accessibility.Hint", value: $vmIcon.shadows.shadowY)
-                        .tint(MyColor.skyblue.value)
-                    Text("Lbl.Shadows.Opacity")
-                }
-                ColorPicker("", selection: $vmIcon.shadows.shadowColor)
-                    .customAccessibility(label: "ColorPicker.Shadows.Accessibility", hint: "ColorPicker.Shadows.Accessibility.Hint")
-            }
-            
-            ForEach($vmIcon.icons) { item in
-                HStack {
-                    Image(systemName: item.name.wrappedValue)
-                        .resizable()
-                        .foregroundStyle(item.frontColor.wrappedValue)
-                        .frame(width: 25, height: 25)
-                    VStack {
-                        Slider(value: item.shadows.radius, in: 0...10)
-                            .customAccessibilityCGFloat(label: "Slider.Shadows.Accessibility", hint: "Slider.Shadows.Accessibility.Hint", value: item.shadows.radius)
-                            .tint(MyColor.skyblue.value)
-                        Text("Lbl.Shadows.Radius")
-                            
+                
+                ForEach($vmIcon.icons) { item in
+                    GridRow {
+                        Image(systemName: item.name.wrappedValue)
+                            .resizable()
+                            .foregroundStyle(item.frontColor.wrappedValue)
+                            .frame(width: iconSize, height: iconSize)
+                        
+                        ShadowControls(shadow: item.shadows)
+                        
+                        CustomColorPicker(color: item.shadows.shadowColor)
                     }
-                    VStack {
-                        Slider(value: item.shadows.shadowX, in: 0...10)
-                            .customAccessibilityCGFloat(label: "Slider.ShadowsX.Accessibility", hint: "Slider.ShadowsX.Accessibility.Hint", value: item.shadows.shadowX)
-                            .tint(MyColor.skyblue.value)
-                        Text("Lbl.Shadows.AxisX")
-                    }
-                    VStack {
-                        Slider(value: item.shadows.shadowY, in: 0...10)
-                            .customAccessibilityCGFloat(label: "Slider.ShadowsY.Accessibility", hint: "Slider.ShadowsY.Accessibility.Hint", value: item.shadows.shadowY)
-                            .tint(MyColor.skyblue.value)
-                        Text("Lbl.Shadows.AxisY")
-                    }
-                    
-                    VStack {
-                        Slider(value: item.shadows.opacity, in: 0...10)
-                            .customAccessibilityCGFloat(label: "Slider.Opacity.Accessibility", hint: "Slider.Opacity.Accessibility.Hint", value: item.shadows.shadowY)
-                            .tint(MyColor.skyblue.value)
-                        Text("Lbl.Shadows.Opacity")
-                            
-                    }
-                    ColorPicker("", selection: item.shadows.shadowColor)
-                        .customAccessibility(label: "ColorPicker.Shadows.Accessibility", hint: "ColorPicker.Shadows.Accessibility.Hint")
-                        .tint(MyColor.skyblue.value)
                 }
             }
+           
             
         } label: {
             Text("Label.Shadows").font(.headline)
                 .customAccessibility(label: "Label.Shadows.Accessibility", hint: "")
         }
     }
+    
+}
+
+private struct ShadowControls: View {
+    @Binding var shadow: ShadowModel
+    var body: some View {
+        HStack {
+            VStack {
+                Slider(value: $shadow.radius, in: 0...10)
+                    .tint(MyColor.skyblue.value)
+                Text("Lbl.Shadows.Radius")
+            }
+            VStack {
+                Slider(value: $shadow.shadowX, in: 0...10)
+                    .tint(MyColor.skyblue.value)
+                Text("Lbl.Shadows.AxisX")
+            }
+            VStack {
+                Slider(value: $shadow.shadowY, in: 0...10)
+                    .tint(MyColor.skyblue.value)
+                Text("Lbl.Shadows.AxisY")
+            }
+            VStack {
+                Slider(value: $shadow.opacity, in: 0...10)
+                    .tint(MyColor.skyblue.value)
+                Text("Lbl.Shadows.Opacity")
+            }
+        }
+    }
 }
 
 #Preview {
     @Previewable @State var vmIcon = IconModel()
+    vmIcon.borderWidth = 0.8
     vmIcon.icons.append(IconChild())
     vmIcon.icons.append(IconChild())
     return ShadowSection(vmIcon: vmIcon)

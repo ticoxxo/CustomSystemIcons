@@ -30,7 +30,7 @@ final class IconChild: Identifiable {
     init(
         id: UUID = UUID(),
         name: String = "star.fill",
-        frontColorComputed: ColorComponents = ColorComponents(color: .black) ,  // yellow
+        frontColorComputed: ColorComponents = ColorComponents(color: .black) ,
         orientation: Double = 0.0,
         zoom: Float = 0.5,
         dragging: Bool = false,
@@ -47,6 +47,7 @@ final class IconChild: Identifiable {
         self.id = id
         self.name = name
         self.frontColorComputed = frontColorComputed
+       
         self.orientation = orientation
         self.zoom = zoom
         self.dragging =  dragging
@@ -67,6 +68,7 @@ final class IconChild: Identifiable {
 }
 
 extension IconChild {
+    
     var frontColor: Color {
         get { frontColorComputed.color }
         set { frontColorComputed.setColor(newValue) }

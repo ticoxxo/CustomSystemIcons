@@ -79,7 +79,7 @@ struct ColorSection: View {
             }
             
             List {
-                ForEach($vmIcon.icons.sorted { $0.zIndex.wrappedValue < $1.zIndex.wrappedValue }) { icon in
+                ForEach($vmIcon.iconsSorted) { icon in
                     HStack {
                         Text("\(Int(icon.zIndex.wrappedValue))")
                         Image(systemName: "\(icon.name.wrappedValue)")
@@ -108,7 +108,14 @@ struct ColorSection: View {
 }
 
 
+#Preview {
+    @Previewable @State var vmIcon = IconModel()
+    vmIcon.addIcon()
+    vmIcon.addIcon()
+    return ColorSection(vmIcon: vmIcon)
+}
 
+/*
 #Preview {
     @Previewable @State var vmIcon = IconModel()
     vmIcon.icons.append(IconChild())
@@ -117,5 +124,5 @@ struct ColorSection: View {
     vmIcon.icons[2].zIndex = 3.0
     return ColorSection(vmIcon: vmIcon)
 }
-
+*/
 

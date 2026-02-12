@@ -18,7 +18,6 @@ struct IconChildView: View {
         
             TextOrImage(geometry: geometry)
                 .scaleEffect(CGFloat(icono.zoom))
-                .scaledToFit()
                 .foregroundStyle(
                     icono.frontColor
                 )
@@ -90,9 +89,11 @@ struct IconChildView: View {
         if icono.isIcon {
             Image(systemName: icono.name)
                 .resizable()
-                .customAccessibility(label: "Icon.Child", hint: "Drag to change of place", isButton: true)
+                .scaledToFit()
+                
         } else {
             TextIconChildView(iconModel: icono, containerSize: geometry.size)
+                
         }
     }
 }
