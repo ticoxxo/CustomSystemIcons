@@ -74,8 +74,8 @@ struct EditIcon: View {
 #Preview("Ipad") {
     @Previewable @State var coordinator = Coordinator()
     @Previewable @State var vmIcon = IconModel()
-    vmIcon.addIcon()
-    vmIcon.addIcon()
+    //vmIcon.addIcon()
+    //vmIcon.addIcon()
     return NavigationStack(path: $coordinator.path) {
         EditIcon(vmIcon: vmIcon)
     }

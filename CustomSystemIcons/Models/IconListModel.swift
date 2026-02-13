@@ -9,43 +9,36 @@ import SwiftUI
 import SFSafeSymbols
 import SwiftData
 
-
-struct IconsListModel {
-    private var _iconList: [String] = []
-    var iconList: [String] {
-        get {
-            let a = SFSymbol.allSymbols
-            var array = [] as Array<String>
-            a.forEach {
-                array.append($0.rawValue)
-            }
-            return array
+@Observable
+class IconsListModel {
+    private let allSymbolsArray: [SFSymbol]
+    private let symbolStrings: [String]
+    
+    var symbolsList: [SFSymbol]
+    
+    init() {
+        self.allSymbolsArray = Array(SFSymbol.allSymbols)
+        self.symbolStrings = allSymbolsArray.map { $0.rawValue.lowercased() }
+        self.symbolsList = allSymbolsArray
+    }
+    
+    func search(_ query: String) {
+        guard !query.isEmpty else {
+            symbolsList = allSymbolsArray
+            return
         }
         
-        set {
-            _iconList = newValue
+        let queryLowercased = query.lowercased()
+        
+        let filtered = symbolStrings.enumerated().compactMap { index, string in
+            string.contains(queryLowercased) ? index : nil
         }
+        
+        symbolsList = filtered.map { allSymbolsArray[$0] }
     }
-    
-    init() {}
-  
+
     func returnRandomIcon() -> SFSymbol {
         return SFSymbol.allSymbols.randomElement() ?? SFSymbol.xCircle
-    }
-    
-    mutating func filterIcons(_ searchText: String) {
-        if searchText.isEmpty || searchText == "" {
-            let s =  SFSymbol.allSymbols
-            var arr: [String] = []
-            s.forEach {
-                arr.append($0.rawValue)
-            }
-            iconList = arr
-        } else {
-            iconList = iconList.filter { symbol in
-                symbol.lowercased().contains(searchText.lowercased())
-            }
-        }
     }
     
 }

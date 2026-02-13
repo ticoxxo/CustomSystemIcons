@@ -804,6 +804,24 @@
         }
       }
     },
+    "Label.ColorSection.ActionsList" : {
+      "comment" : "A label to tell the user some List actions in the icons",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hold icon to rearrenge or swipe left to remove"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Presiona mueve para ordenar o desliza a la izquierda para eliminar"
+          }
+        }
+      }
+    },
     "Label.CornerRadius" : {
       "extractionState" : "manual",
       "localizations" : {

@@ -10,21 +10,33 @@ import SwiftUI
 struct ManualPositionSection: View {
     @Bindable var vmIcon: IconModel
     @State private var expanded: Bool = true
+    @ScaledMetric private var iconSize: CGFloat = 25
+    @ScaledMetric private var textSize: CGFloat = 14
     
     var body: some View {
         DisclosureGroup(isExpanded: $expanded) {
-            ForEach($vmIcon.icons) { item in
-                HStack {
-                    Image(systemName: item.name.wrappedValue)
-                        .resizable()
-                        .foregroundStyle(item.frontColor.wrappedValue)
-                        .frame(width: 25, height: 25)
-                    Divider()
-                    Spacer()
-                    ManualPositionPad(vmIcon: item)
-                    Spacer()
+            
+            Grid(alignment: .leading) {
+                GridRow {
+                    Text("Icon")
+                        .font(.title)
+                     title("-X")
+                     title("+Y")
+                     title("+X")
+                     title("-Y")
+                }
+                ForEach($vmIcon.icons) { item in
+                    GridRow {
+                        Image(systemName: item.name.wrappedValue)
+                            .resizable()
+                            .foregroundStyle(item.frontColor.wrappedValue)
+                            .frame(width: iconSize, height: iconSize)
+                        PositionPad(vmIcon: item, iconSize: iconSize)
+                            .padding()
+                    }
                 }
             }
+            
             
         } label: {
             Text("Label.ManualPosition").font(.headline)
@@ -32,69 +44,72 @@ struct ManualPositionSection: View {
         }
         
     }
-}
-
-struct ManualPositionPad: View {
-    @Binding var vmIcon: IconChild
-
-    var body: some View {
-        Image(systemName: "arrowtriangle.left.circle.fill")
-            .resizable()
-            .customAccessibility(label: "Label.ManualPosition.Left.Accessibility", hint: "Label.ManualPosition.Left.Accessibility.Hint", isButton: true)
-            .accessibilityAction(named: Text("Drag.Left")) {
-                vmIcon.positionX += 0.01
-            }
-            .foregroundStyle(MyColor.skyblue.value)
-            .aspectRatio(contentMode: .fit)
-            .frame(width: min(horizontalPadding / 20, verticalPadding / 20),
-                   height: min(horizontalPadding / 20, verticalPadding / 20))
-            .onTapGesture {
-                vmIcon.positionX -= 0.01
-            }
-        Spacer()
-        Image(systemName: "arrowtriangle.up.circle.fill")
-            .resizable()
-            .customAccessibility(label: "Label.ManualPosition.Up.Accessibility", hint: "Label.ManualPosition.Up.Accessibility.Hint", isButton: true)
-            .accessibilityAction(named: Text("Drag.Up")) {
-                vmIcon.positionX -= 0.01
-            }
-            .foregroundStyle(MyColor.skyblue.value)
-            .aspectRatio(contentMode: .fit)
-            .frame(width: min(horizontalPadding / 20, verticalPadding / 20),
-                   height: min(horizontalPadding / 20, verticalPadding / 20))
-            .onTapGesture {
-                vmIcon.positionY -= 0.01
-            }
-        Spacer()
-        Image(systemName: "arrowtriangle.right.circle.fill")
-            .resizable()
-            .customAccessibility(label: "Label.ManualPosition.Right.Accessibility", hint: "Label.ManualPosition.Right.Accessibility.Hint", isButton: true)
-            .accessibilityAction(named: Text("Drag.Right")) {
-                vmIcon.positionX += 0.01
-            }
-            .foregroundStyle(MyColor.skyblue.value)
-            .aspectRatio(contentMode: .fit)
-            .frame(width: min(horizontalPadding / 20, verticalPadding / 20),
-                   height: min(horizontalPadding / 20, verticalPadding / 20))
-            .onTapGesture {
-                vmIcon.positionX += 0.01
-            }
-        Spacer()
-        Image(systemName: "arrowtriangle.down.circle.fill")
-            .resizable()
-            .customAccessibility(label: "Label.ManualPosition.Down.Accessibility", hint: "Label.ManualPosition.Down.Accessibility.Hint", isButton: true)
-            .accessibilityAction(named: Text("Drag.Down")) {
-                vmIcon.positionY += 0.01
-            }
-            .foregroundStyle(MyColor.skyblue.value)
-            .aspectRatio(contentMode: .fit)
-            .frame(width: min(horizontalPadding / 20, verticalPadding / 20),
-                   height: min(horizontalPadding / 20, verticalPadding / 20))
-            .onTapGesture {
-                vmIcon.positionY += 0.01
-            }
+    
+    @ViewBuilder
+    private func title(_ title: String) -> some View {
+        HStack {
+          Spacer()
+          Text(title)
+              .font(.title)
+          Spacer()
+      }
+    }
+    
+    
+    private struct PositionPad:  View {
+        @Binding var vmIcon: IconChild
+        var iconSize: CGFloat
+        var body: some View {
+            
+                Button {
+                    vmIcon.positionX -= 0.01
+                } label: {
+                    Image(systemName: "arrowtriangle.left.circle.fill")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        //.frame(width: iconSize, height: iconSize)
+                        .foregroundStyle(Color.pink)
+                }
+                
+                Button {
+                    vmIcon.positionY += 0.01
+                } label: {
+                    Image(systemName: "arrowtriangle.up.circle.fill")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        //.frame(width: iconSize, height: iconSize)
+                        .foregroundStyle(MyColor.skyblue.value)
+                }
+                
+                Button {
+                    vmIcon.positionX += 0.01
+                } label: {
+                    Image(systemName: "arrowtriangle.right.circle.fill")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        //.frame(width: iconSize, height: iconSize)
+                        .foregroundStyle(MyColor.skyblue.value)
+                }
+                
+                Button {
+                    vmIcon.positionY -= 0.01
+                } label: {
+                    Image(systemName: "arrowtriangle.down.circle.fill")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        //.frame(width: iconSize, height: iconSize)
+                        .foregroundStyle(Color.pink)
+                }
+                
+            
+            
+        }
+        
     }
 }
+
+
+
     
 
 #Preview {
@@ -112,4 +127,13 @@ struct ManualPositionPad: View {
     vmIcon.addIcon()
     vmIcon.addIcon()
     return ManualPositionSection(vmIcon: vmIcon)
+}
+
+#Preview("Inside form") {
+    @Previewable @State var vmIcon = IconModel()
+    vmIcon.addIcon()
+    vmIcon.addIcon()
+    return Form {
+        ManualPositionSection(vmIcon: vmIcon)
+    }
 }

@@ -10,49 +10,21 @@ import SFSafeSymbols
 
 struct GridIconsView: View {
     @Environment(\.coordinator) var coordinator
-    @State var iconsList: IconsListModel = IconsListModel()
-    let columns = [
-            GridItem(.flexible()),
-            GridItem(.flexible()),
-            GridItem(.flexible())
-        ]
+    @State private var iconsList: IconsListModel = IconsListModel()
+    @State private var searchText = String()
+    
     @Binding var vmIcon: IconChild
-    @State var searchText: String = ""
-    var filteredIcons: [String] {
-            if searchText.isEmpty {
-                return iconsList.iconList
-            } else {
-                return iconsList.iconList.filter { $0.localizedCaseInsensitiveContains(searchText) }
-            }
-        }
+    
+    
     var body: some View {
         VStack {
-            HStack {
-                Spacer()
-                TextField("Label.Search", text: $searchText)
-                    .customTextField(label: "Label.Search.Accessibility", hint: "Label.Search.Accessibility.Hint", text: $searchText)
-                    .frame(maxWidth: .infinity)
-                    
-                Spacer()
-            }
-            .padding()
-            ScrollView {
-                LazyVGrid(columns: columns, spacing: 20) {
-                    ForEach(filteredIcons, id: \.self) { icon in
-                        Image(systemName: "\(icon)")
-                            .resizable()
-                            .customAccessibility(label: "Icon \(icon)", hint: "Press to select icon", isButton: true)
-                            .scaledToFit()
-                            .onTapGesture {
-                                vmIcon.name = icon
-                                coordinator.pop()
-                            }
-                    }
-                    .onChange(of: searchText){
-                        iconsList.filterIcons(searchText)
-                    }
-                }
+            TextField("Label.Search", text: $searchText)
+                .customTextField(label: "Label.Search.Accessibility", hint: "Label.Search.Accessibility.Hint", text: $searchText)
+                .frame(maxWidth: .infinity)
                 .padding()
+            adaptiveGrid
+            .onChange(of: searchText) {
+                iconsList.search(searchText)
             }
         }
         .toolbar {
@@ -62,12 +34,76 @@ struct GridIconsView: View {
         }
         .navigationBarBackButtonHidden(true)
     }
+    
+    @ViewBuilder
+    var adaptiveGrid: some View {
+        let columns = [
+            GridItem(.adaptive(minimum: 60, maximum: 80))
+        ]
+        
+        ScrollView(.vertical) {
+            LazyVGrid(columns: columns, spacing: 16) {
+                symbolsCollection
+            }
+            .padding()
+        }
+        
+    }
+    
+    
+    @ViewBuilder
+    var symbolsCollection: some View {
+        ForEach(iconsList.symbolsList, id: \.self) { icon in
+            Image(systemName: icon.rawValue)
+                .resizable()
+                .scaledToFit()
+                .aspectRatio(contentMode: .fit)
+                .frame(minWidth: 40, maxWidth: 60, minHeight: 40, maxHeight: 60)
+                .padding(8)
+                .onTapGesture {
+                            vmIcon.name = icon.rawValue
+                            coordinator.pop()
+                        }
+                
+        }
+        .visualEffect { content, geometryProxy in
+            let frame = geometryProxy.frame(in: .scrollView)
+            let scrollViewHeight = geometryProxy.bounds(of: .scrollView)?.height ?? 0
+            let fadeDistance: CGFloat = 50
+            var opacityValue = 1.0
+            if frame.maxY > scrollViewHeight - fadeDistance {
+                let distanceFromBottom = scrollViewHeight - frame.minY
+                opacityValue = max(0, min(1, distanceFromBottom / fadeDistance))
+            }
+            
+            
+            return content
+                .opacity(opacityValue)
+        }
+        
+    }
+    
 }
 
+/*
+ ForEach(iconsList, id: \.self) { icon in
+     Image(systemName: "\(icon)")
+         .resizable()
+         .customAccessibility(label: "Icon \(icon)", hint: "Press to select icon", isButton: true)
+         .scaledToFit()
+         .onTapGesture {
+             vmIcon.name = icon
+             coordinator.pop()
+         }
+ }
+ .onChange(of: searchText){
+     iconsList.filterIcons(searchText)
+ }
+ */
 
-#Preview {
+#Preview("Vertical") {
     @Previewable @State var coordinator = Coordinator()
-    @Previewable let list = IconsListModel().iconList
+    @Previewable let list = IconsListModel()
     @Previewable @State var vmIcon = IconChild()
     NavigationStack(path: $coordinator.path) {
         GridIconsView(vmIcon: $vmIcon)
@@ -75,6 +111,15 @@ struct GridIconsView: View {
     .environment(\.coordinator, coordinator)
 }
 
+#Preview("Landscape", traits: .landscapeLeft) {
+    @Previewable @State var coordinator = Coordinator()
+    @Previewable let list = IconsListModel()
+    @Previewable @State var vmIcon = IconChild()
+    NavigationStack(path: $coordinator.path) {
+        GridIconsView(vmIcon: $vmIcon)
+    }
+    .environment(\.coordinator, coordinator)
+}
 /*
  @Previewable @State var coordinator = Coordinator()
  NavigationStack(path: $coordinator.path) {

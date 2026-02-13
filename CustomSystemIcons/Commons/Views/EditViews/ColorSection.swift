@@ -17,58 +17,83 @@ struct ColorSection: View {
     var body: some View {
         DisclosureGroup(isExpanded: $expanded) {
             
-            HStack {
-                ColorPicker("ColorPicker.Background", selection: $vmIcon.backgroundColor)
-                    .customAccessibility(label: "ColorPicker.Background.Accessibility", hint: "ColorPicker.Background.Accessibility.Hint")
+            Grid {
+                GridRow {
+                    ColorPicker("ColorPicker.Background", selection: $vmIcon.backgroundColor)
+                }
+                
+                GridRow {
+                    photoPickerView
+                }
+            }
+            
+            
+            Section(header: Text("Label.ColorSection.ActionsList")) {
+                List {
+                    ForEach($vmIcon.iconsSorted) { icon in
+                        HStack {
+                            Text("\(Int(icon.zIndex.wrappedValue))")
+                            Image(systemName: "\(icon.name.wrappedValue)")
+                                .resizable()
+                                .customAccessibility(label: "Button.Add.Accessibility", hint: "Button.Add.Hint", isButton: true)
+                                .foregroundStyle(icon.frontColor.wrappedValue)
+                                .frame(width: 25, height: 25)
+                            
+                            PickIcon(item: icon)
+                            ColorPicker("ColorPicker.Icon", selection: icon.frontColor)
+                                .customAccessibility(label: "ColorPicker.Icon.Accessibility", hint: "ColorPicker.Icon.Hint")
+                            
+                        }
+                        .deleteDisabled(vmIcon.icons.count < 2)
+                    }
+                    .onMove(perform: vmIcon.moveRow)
+                    .onDelete(perform: vmIcon.removeIcon)
+                }
+            }
+            
+            
+            
+            
+        } label: {
+            Text("lbl.layers")
+                .customAccessibility(label: "lbl.layers", hint: "lbl.layers.hint")
+                .font(.headline)
+        }
+    }
+    
+    @ViewBuilder
+    private var photoPickerView: some View {
+        HStack {
+            PhotosPicker(
+                selection: $selectedPhoto,
+                matching: .images,
+                photoLibrary: .shared()
+            ) {
+                Text("Label.PhotosPicker")
                     
             }
-            HStack {
-                PhotosPicker(
-                    selection: $selectedPhoto,
-                    matching: .images,
-                    photoLibrary: .shared()
-                ) {
-                    Text("Label.PhotosPicker")
-                        
+            .onChange(of: selectedPhoto) {
+                Task {
+                    await vmIcon.loadImageData(from: selectedPhoto)
                 }
-                .onChange(of: selectedPhoto) {
-                    Task {
-                        await vmIcon.loadImageData(from: selectedPhoto)
-                    }
-                }
-                .photosPickerStyle(.presentation)
+            }
+            .photosPickerStyle(.presentation)
+            
+            Spacer()
+            if let imageData =  vmIcon.backgroundImage.backgroundImage, let uiImage = imageCache.image(for: imageData) {
                 
-                Spacer()
-                if let imageData =  vmIcon.backgroundImage.backgroundImage, let uiImage = imageCache.image(for: imageData) {
-                    //Image(uiImage: UIImage(data: imageData)!)
-                    HStack {
-                            
-                        Image(systemName: "x.circle")
-                            .resizable()
-                            .foregroundStyle(Color.red)
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: min(horizontalPadding / 20, verticalPadding / 20),
-                                   height: min(horizontalPadding / 20, verticalPadding / 20))
-                            .onTapGesture {
-                                vmIcon.backgroundImage.backgroundImage = nil
-                            }
-                        Image(uiImage: uiImage)
-                            .resizable()
-                            .foregroundStyle(MyColor.skyblue.value)
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: min(horizontalPadding / 10, verticalPadding / 10),
-                                   height: min(horizontalPadding / 10, verticalPadding / 10))
-                            
-                    }
-                    .customAccessibility(label: "Label.BackgroundImage.Accessibility", hint: "Label.BackgroundImage.Accessibility.Hint")
-                    .accessibilityAddTraits(.isButton)
-                    .accessibilityAction {
-                        vmIcon.backgroundImage.backgroundImage = nil
-                    }
+                HStack {
                         
-                } else {
-
-                    Image(systemName: "photo.badge.plus.fill")
+                    Image(systemName: "x.circle")
+                        .resizable()
+                        .foregroundStyle(Color.red)
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: min(horizontalPadding / 20, verticalPadding / 20),
+                               height: min(horizontalPadding / 20, verticalPadding / 20))
+                        .onTapGesture {
+                            vmIcon.backgroundImage.backgroundImage = nil
+                        }
+                    Image(uiImage: uiImage)
                         .resizable()
                         .foregroundStyle(MyColor.skyblue.value)
                         .aspectRatio(contentMode: .fit)
@@ -76,34 +101,19 @@ struct ColorSection: View {
                                height: min(horizontalPadding / 10, verticalPadding / 10))
                         
                 }
+                    
+            } else {
+
+                Image(systemName: "photo.badge.plus.fill")
+                    .resizable()
+                    .foregroundStyle(MyColor.skyblue.value)
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: min(horizontalPadding / 10, verticalPadding / 10),
+                           height: min(horizontalPadding / 10, verticalPadding / 10))
+                    
             }
-            
-            List {
-                ForEach($vmIcon.iconsSorted) { icon in
-                    HStack {
-                        Text("\(Int(icon.zIndex.wrappedValue))")
-                        Image(systemName: "\(icon.name.wrappedValue)")
-                            .resizable()
-                            .customAccessibility(label: "Button.Add.Accessibility", hint: "Button.Add.Hint", isButton: true)
-                            .foregroundStyle(icon.frontColor.wrappedValue)
-                            .frame(width: 25, height: 25)
-                        
-                        PickIcon(item: icon)
-                        ColorPicker("ColorPicker.Icon", selection: icon.frontColor)
-                            .customAccessibility(label: "ColorPicker.Icon.Accessibility", hint: "ColorPicker.Icon.Hint")
-                        
-                    }
-                    .deleteDisabled(vmIcon.icons.count < 2)
-                }
-                .onMove(perform: vmIcon.moveRow)
-                .onDelete(perform: vmIcon.removeIcon)
-            }
-            
-        } label: {
-            Text("Background and layers")
-                .customAccessibility(label: "lbl.layers", hint: "lbl.layers.hint")
-                .font(.headline)
         }
+        
     }
 }
 
@@ -112,7 +122,10 @@ struct ColorSection: View {
     @Previewable @State var vmIcon = IconModel()
     vmIcon.addIcon()
     vmIcon.addIcon()
-    return ColorSection(vmIcon: vmIcon)
+    return Form {
+        ColorSection(vmIcon: vmIcon)
+    }
+    
 }
 
 /*
