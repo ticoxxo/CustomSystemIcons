@@ -27,7 +27,7 @@ struct ShadowSection: View {
                 
                 ForEach($vmIcon.icons) { item in
                     GridRow {
-                        Image(systemName: item.name.wrappedValue)
+                        Image(systemName: item.isIcon.wrappedValue ? item.name.wrappedValue : "textformat.alt")
                             .resizable()
                             .foregroundStyle(item.frontColor.wrappedValue)
                             .frame(width: iconSize, height: iconSize)

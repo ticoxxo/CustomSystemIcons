@@ -33,7 +33,7 @@ struct ColorSection: View {
                     ForEach($vmIcon.iconsSorted) { icon in
                         HStack {
                             Text("\(Int(icon.zIndex.wrappedValue))")
-                            Image(systemName: "\(icon.name.wrappedValue)")
+                            Image(systemName: icon.isIcon.wrappedValue ? icon.name.wrappedValue : "textformat.alt")
                                 .resizable()
                                 .customAccessibility(label: "Button.Add.Accessibility", hint: "Button.Add.Hint", isButton: true)
                                 .foregroundStyle(icon.frontColor.wrappedValue)
@@ -121,7 +121,7 @@ struct ColorSection: View {
 #Preview {
     @Previewable @State var vmIcon = IconModel()
     vmIcon.addIcon()
-    vmIcon.addIcon()
+    vmIcon.addText()
     return Form {
         ColorSection(vmIcon: vmIcon)
     }

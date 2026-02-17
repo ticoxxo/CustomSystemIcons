@@ -17,14 +17,14 @@ final class IconChild: Identifiable {
     @Transient var dragging: Bool = false
     var zIndex: Double
     var borderColorComputed: ColorComponents
-    var positionX: Double
-    var positionY: Double
+    var positionX: CGFloat
+    var positionY: CGFloat
     var xDistortion: CGFloat
     var yDistortion: CGFloat
     var shadows: ShadowModel
     var isIcon: Bool // if true use Image, false Label
     // Text properties if its a Label
-    var textProperties: TextModel?
+    var textProperties: TextModel
     
     
     init(
@@ -36,13 +36,13 @@ final class IconChild: Identifiable {
         dragging: Bool = false,
         zIndex: Double = 1,
         borderColorComputed: ColorComponents = ColorComponents(red: 1, green: 0.75, blue: 0.8, alpha: 1),  // pink
-        positionX: Double = 0.0,
-        positionY: Double = 0.0,
+        positionX: CGFloat = 0.5,
+        positionY: CGFloat = 0.5,
         xDistortion: CGFloat = 0.0,
         yDistortion: CGFloat = 0.0,
         shadows: ShadowModel = ShadowModel(),
         isIcon: Bool = true,
-        textProperties: TextModel? = nil
+        textProperties: TextModel = TextModel()
     ) {
         self.id = id
         self.name = name

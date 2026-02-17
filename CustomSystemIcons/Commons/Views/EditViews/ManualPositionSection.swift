@@ -27,7 +27,7 @@ struct ManualPositionSection: View {
                 }
                 ForEach($vmIcon.icons) { item in
                     GridRow {
-                        Image(systemName: item.name.wrappedValue)
+                        Image(systemName: item.isIcon.wrappedValue ? item.name.wrappedValue : "textformat.alt")
                             .resizable()
                             .foregroundStyle(item.frontColor.wrappedValue)
                             .frame(width: iconSize, height: iconSize)
@@ -62,7 +62,8 @@ struct ManualPositionSection: View {
         var body: some View {
             
                 Button {
-                    vmIcon.positionX -= 0.01
+                    let position = vmIcon.positionX
+                    vmIcon.positionX = position - 0.01
                 } label: {
                     Image(systemName: "arrowtriangle.left.circle.fill")
                         .resizable()
@@ -70,9 +71,10 @@ struct ManualPositionSection: View {
                         //.frame(width: iconSize, height: iconSize)
                         .foregroundStyle(Color.pink)
                 }
+                .buttonStyle(.borderless)
                 
                 Button {
-                    vmIcon.positionY += 0.01
+                    vmIcon.positionY -= 0.01
                 } label: {
                     Image(systemName: "arrowtriangle.up.circle.fill")
                         .resizable()
@@ -80,6 +82,7 @@ struct ManualPositionSection: View {
                         //.frame(width: iconSize, height: iconSize)
                         .foregroundStyle(MyColor.skyblue.value)
                 }
+                .buttonStyle(.borderless)
                 
                 Button {
                     vmIcon.positionX += 0.01
@@ -90,9 +93,10 @@ struct ManualPositionSection: View {
                         //.frame(width: iconSize, height: iconSize)
                         .foregroundStyle(MyColor.skyblue.value)
                 }
+                .buttonStyle(.borderless)
                 
                 Button {
-                    vmIcon.positionY -= 0.01
+                    vmIcon.positionY += 0.01
                 } label: {
                     Image(systemName: "arrowtriangle.down.circle.fill")
                         .resizable()
@@ -100,7 +104,7 @@ struct ManualPositionSection: View {
                         //.frame(width: iconSize, height: iconSize)
                         .foregroundStyle(Color.pink)
                 }
-                
+                .buttonStyle(.borderless)
             
             
         }

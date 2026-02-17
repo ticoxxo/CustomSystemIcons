@@ -26,6 +26,7 @@ struct EditIcon: View {
             }
             Form {
                 ColorSection(vmIcon: vmIcon)
+                textSection
                 ShapeSection(vmIcon: vmIcon)
                 OrientationSection(vmIcon: vmIcon)
                 PositionSection(vmIcon: vmIcon)
@@ -44,11 +45,18 @@ struct EditIcon: View {
             }
         }
         .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
+            ToolbarItemGroup(placement: .topBarTrailing) {
                 Button {
                     vmIcon.addIcon()
                 } label: {
-                    Label("Label.AddIcon",systemImage: "plus.square.fill" )
+                    Label("Label.AddIcon",systemImage: "circle.badge.plus" )
+                }
+                .customAccessibility(label: "Label.AddIcon.Accessibility", hint: "Click to add a new icon")
+                .disabled(vmIcon.icons.count > 15)
+                Button {
+                    vmIcon.addText()
+                } label: {
+                    Label("Label.AddIcon",systemImage: "text.pad.header.badge.plus")
                 }
                 .customAccessibility(label: "Label.AddIcon.Accessibility", hint: "Click to add a new icon")
                 .disabled(vmIcon.icons.count > 15)
@@ -67,6 +75,15 @@ struct EditIcon: View {
         }
         .navigationBarBackButtonHidden(true)
         //PositionSection(vmIcon: vmIcon)
+    }
+    
+    @ViewBuilder
+    private var textSection:  some View {
+        ForEach($vmIcon.icons) { $icon in
+            if !icon.isIcon {
+                TextPropertiesSection(model: $icon.textProperties)
+            }
+        }
     }
     
 }

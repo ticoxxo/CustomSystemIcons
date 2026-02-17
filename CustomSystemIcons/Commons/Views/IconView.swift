@@ -100,7 +100,15 @@ struct IconView: View {
     vmIcon.shape.cornerRadio = 0.4
     vmIcon.backgroundImage.backgroundImage = ImageDataLoader.loadPreviewImage()
     
-    return IconView(vmIcon: vmIcon, editable: true)
+    return VStack {
+        IconView(vmIcon: vmIcon, editable: true)
+        Spacer()
+        Button {
+            vmIcon.addText()
+        } label: {
+            Text("Add text")
+        }
+    }
     .frame(width: 500, height: 500)
 }
 
@@ -125,13 +133,8 @@ struct IconView: View {
 
 #Preview("Text") {
     
-    @Previewable @State var vmIcon = IconModel(icons: [IconChild(
-        name: "Hola, mundo",
-        isIcon: false,
-        textProperties: TextModel.dataPreviewExample)] )
-    vmIcon.backgroundColor = Color.blue
-    vmIcon.borderWidth = 0.03
-    vmIcon.shape.cornerRadio = 0.0
+    @Previewable @State var vmIcon = IconModel()
+    vmIcon.addText()
     return IconView(vmIcon: vmIcon, editable: true)
         .frame(width: 200, height: 200)
         

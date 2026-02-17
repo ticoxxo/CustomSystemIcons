@@ -131,8 +131,18 @@ extension IconModel {
     
     func addIcon() {
         let icon = IconChild()
-        icon.zIndex = Double(self.icons.count) + 1.0
+        icon.zIndex = nextIndex()
         self.icons.append(icon)
+    }
+    
+    func addText() {
+        let zIndex = nextIndex()
+        let iconChild = IconChild(zIndex: zIndex,isIcon: false,textProperties: TextModel())
+        self.icons.append(iconChild)
+    }
+    
+    private func nextIndex() -> Double {
+        Double(self.icons.count) + 1.0
     }
     
     func moveRow(source: IndexSet, destination: Int) {

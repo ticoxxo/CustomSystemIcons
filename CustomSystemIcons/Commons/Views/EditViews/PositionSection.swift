@@ -15,7 +15,7 @@ struct PositionSection: View {
         DisclosureGroup(isExpanded: $expanded) {
             ForEach($vmIcon.icons) { item in
                 HStack {
-                    Image(systemName: item.name.wrappedValue)
+                    Image(systemName: item.isIcon.wrappedValue ? item.name.wrappedValue : "textformat.alt")
                         .resizable()
                         .foregroundStyle(item.frontColor.wrappedValue)
                         .frame(width: 25, height: 25)
@@ -66,6 +66,6 @@ struct PositionSection: View {
     //vmIcon.icons.append(IconChild())
     //vmIcon.icons.append(IconChild())
     vmIcon.addIcon()
-    vmIcon.addIcon()
+    vmIcon.addText()
     return PositionSection(vmIcon: vmIcon)
 }

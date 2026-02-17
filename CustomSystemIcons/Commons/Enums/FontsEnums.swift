@@ -6,7 +6,7 @@
 //
 import SwiftUI
 
-enum FontWeight: Int,Codable, Hashable {
+enum FontWeight: Int,Codable, Hashable, CaseIterable, CustomStringConvertible {
     case ultraLight = 100
         case thin = 200
         case light = 300
@@ -30,9 +30,23 @@ enum FontWeight: Int,Codable, Hashable {
             case .black: return .black
             }
         }
+    
+    var description: String {
+        switch self {
+        case .ultraLight: return "UltraLight"
+        case .thin: return "Thin"
+        case .light: return "Light"
+        case .regular: return "Regular"
+        case .medium: return "Medium"
+        case .semibold: return "Semibold"
+        case .bold: return "Bold"
+        case .heavy: return "Heavy"
+        case .black: return "Black"
+        }
+    }
 }
 
-enum FontDesign: String, Codable, Hashable {
+enum FontDesign: String, Codable, Hashable, CaseIterable, CustomStringConvertible {
     case `default` = "default"
     case serif = "serif"
     case rounded = "rounded"
@@ -46,19 +60,15 @@ enum FontDesign: String, Codable, Hashable {
         case .monospaced: return .monospaced
         }
     }
+    
+    var description: String {
+        switch self {
+        case .default: return "Default"
+        case .serif: return "Serif"
+        case .rounded: return "Rounded"
+        case .monospaced: return "Monospaced"
+        }
+    }
 }
 
-enum FontStyle: String, Codable, Hashable {
-    case largeTitle = "largeTitle"
-    case title = "title"
-    case title2 = "title2"
-    case title3 = "title3"
-    case headline = "headline"
-    case body = "body"
-    case callout = "callout"
-    case subheadline = "subheadline"
-    case footnote = "footnote"
-    case caption = "caption"
-    case caption2 = "caption2"
-    case custom = "custom"  // Use fontSize instead
-}
+
