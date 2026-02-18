@@ -46,16 +46,17 @@ class Coordinator {
         case .AddIcon(let vmIcon, let addMode): AddIcon(vmIcon: vmIcon, addMode: addMode)
         case .EditIcon(let vmIcon): EditIcon(vmIcon: vmIcon)
         case .GridIconsView(let vmIcon): GridIconsView(vmIcon: vmIcon)
+        case .ShareView(let vmIcon): ShareView(vmIcon: vmIcon)
         }
     }
     
-    /*
+    
      @ViewBuilder
      func buildSheet(sheet: Sheet) -> some View {
          switch sheet {
-         case .showIconsList: IconsSheetList()
+         case .shareSheet: ShareSheet()
          }
      }
-     */
+     
     
 }

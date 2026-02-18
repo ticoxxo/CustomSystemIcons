@@ -16,6 +16,9 @@ struct CoordinatorView: View {
                 .navigationDestination(for: AppPage.self) { page in
                     coordinator.build(page: page)
                 }
+                .sheet(item: $coordinator.sheet) { sheet in
+                    coordinator.buildSheet(sheet: sheet)
+                }
         }
         .environment(\.coordinator, coordinator)
         .modelContainer(for: IconModel.self)

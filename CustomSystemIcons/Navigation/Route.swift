@@ -19,6 +19,8 @@ enum AppPage: Hashable, Equatable {
             return lhVmIcon.id == rhVmIcon.id
         case (.GridIconsView(let lhVmIcon), .GridIconsView(let rhVmIcon)):
             return lhVmIcon.id == rhVmIcon.id
+        case (.ShareView(let lhVmIcon), .ShareView(let rhVmIcon)):
+            return lhVmIcon.id == rhVmIcon.id
         default:
             return false
         }
@@ -35,6 +37,8 @@ enum AppPage: Hashable, Equatable {
             hasher.combine(vmIcon.id)
         case .GridIconsView(let vmIcon):
             hasher.combine(vmIcon.id)
+        case .ShareView(let vmIcon):
+            hasher.combine(vmIcon.id)
         }
     }
     
@@ -43,5 +47,6 @@ enum AppPage: Hashable, Equatable {
     case AddIcon(vmIcon: IconModel, addMode: Bool)
     case EditIcon(vmIcon: IconModel)
     case GridIconsView(vmIcon: Binding<IconChild>)
+    case ShareView(vmIcon: IconModel)
 }
 

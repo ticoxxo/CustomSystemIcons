@@ -22,12 +22,11 @@ struct AddIcon: View {
     
     var body: some View {
         Form {
-            GroupBox(label: Text("GroupBox.Title.Icon")) {
+            Section(header: Text("GroupBox.Title.Icon")) {
                 IconView(vmIcon: vmIcon, editable: false)
                     .overlay( alignment: .bottomTrailing) {
                         Image(systemName: "pencil.circle")
                             .resizable()
-                            .customAccessibility(label: "Label.EditIcon.Accessibility", hint: "Label.EditIcon.Accessibility.Hint", isButton: true)
                             .foregroundColor(MyColor.skyblue.value)
                             .frame(maxWidth: min(horizontalPadding, verticalPadding) / 8, maxHeight: min(horizontalPadding, verticalPadding) / 8)
                     }
@@ -35,60 +34,16 @@ struct AddIcon: View {
                         coordinator.push(page: .EditIcon(vmIcon: vmIcon))
                     }
             }
-            .customAccessibility(label: "GroupBox.Title.Icon.Accesibility", hint: "GroupBox.Title.Icon.Accesibility.Hint")
             
-            GroupBox(label: Text("GroupBox.Title.Detail")) {
+            
+            Section(header: Text("GroupBox.Title.Detail")) {
                 TextField("TextField.Title", text: $vmIcon.title)
-                    .customAccessibility(label: "TextField.Title.Accesibility", hint: "TextField.Title.Accesibility.Hint")
                     .textFieldStyle(.roundedBorder)
                     
             }
-            .customAccessibility(label: "GroupBox.Title.Detail.Accesibility", hint: "GroupBox.Title.Detail.Accesibility.Hint")
-            
-            GroupBox(label: Text("GroupBox.Title.Share")) {
-                VStack {
-                    Picker("Picker.ImageType", selection: $imageTypes) {
-                        ForEach(ImageType.allCases) { types in
-                            Text(types.rawValue.capitalized).tag(types)
-                        }
-                    }
-                    .customAccessibility(label: "Picker.ImageType.Accesibility", hint: "Picker.ImageType.Accesibility.Hint")
-                    .pickerStyle(SegmentedPickerStyle())
-                }
-            }
-            .customAccessibility(label: "Group.Title.Share.Accesibility", hint: "Group.Title.Share.Accesibility.Hint")
-            
-            if !addMode {
-                HStack {
-                    Spacer()
-                    if imageTypes == .jpeg {
-                        let uiImagu = helperImage.shareViewAsImage(iconModel: vmIcon)
-                        let img = Image(uiImage: uiImagu ?? UIImage(systemName: "photo")!)
-                       
-                        ShareLink(
-                            item: img,
-                            preview: SharePreview(String(localized: "Enjoy!"), image: img)
-                        )
-                        .customAccessibility(label: "Label.Share.Accessibility", hint: "Label.Share.Accessibility.Hint")
-                        .buttonStyle(CustomButton(color: MyColor.skyblue.value, width: horizontalPadding ))
-                    } else {
-                        let uiImagu =  helperImage.sharePng(iconModel: vmIcon, type: imageTypes)
-                        let imageVIew = helperImage.shareViewAsImage(iconModel: vmIcon)
-                        let img = Image(uiImage: imageVIew ?? UIImage(systemName: "photo")!)
-                        ShareLink(
-                                item: uiImagu,
-                                preview: SharePreview(String(localized: "Enjoy!"), image: img)
-                        )
-                        .customAccessibility(label: "Label.Share.Accessibility", hint: "Label.Share.Accessibility.Hint")
-                        .buttonStyle(CustomButton(color: MyColor.skyblue.value, width: horizontalPadding))
-                    }
-                    Spacer()
-                }
-                
-            }
             
         }
-        .offset(x: animateIcon ? 0 : -UIScreen.main.bounds.width)
+        .offset(x: animateIcon ? 0 : -horizontalPadding)
         .transition(.scale)
         .onAppear {
             withAnimation(.easeInOut(duration: 1.0)) {
@@ -107,7 +62,14 @@ struct AddIcon: View {
         }
         .toolbar {
             
-            ToolbarItem(placement: .topBarTrailing) {
+            ToolbarItemGroup(placement: .topBarTrailing) {
+                
+                Button {
+                    coordinator.push(page: .ShareView(vmIcon: vmIcon))
+                } label: {
+                    Label("Label.Share", systemImage: "square.and.arrow.up.fill")
+                }
+                
                 if addMode {
                     Button {
                         modelContext.insert(vmIcon)
@@ -150,7 +112,7 @@ struct AddIcon: View {
 }
 
 
-#Preview {
+#Preview("Add mode false") {
     @Previewable @State var coordinator = Coordinator()
     @Previewable @State var vmIcon = IconModel()
     NavigationStack(path: $coordinator.path) {
@@ -158,8 +120,55 @@ struct AddIcon: View {
             .navigationDestination(for: AppPage.self) { page in
                 coordinator.build(page: page)
             }
+            .sheet(item: $coordinator.sheet) { sheet in
+                coordinator.buildSheet(sheet: sheet)
+            }
     }
     .environment(\.coordinator, coordinator)
 }
 
+#Preview("Add mode true") {
+    @Previewable @State var coordinator = Coordinator()
+    @Previewable @State var vmIcon = IconModel()
+    NavigationStack(path: $coordinator.path) {
+        coordinator.build(page: .AddIcon(vmIcon: vmIcon, addMode: true))
+            .navigationDestination(for: AppPage.self) { page in
+                coordinator.build(page: page)
+            }
+            .sheet(item: $coordinator.sheet) { sheet in
+                coordinator.buildSheet(sheet: sheet)
+            }
+    }
+    .environment(\.coordinator, coordinator)
+}
 
+/*
+ if !addMode {
+     HStack {
+         Spacer()
+         if imageTypes == .jpeg {
+             let uiImagu = helperImage.shareViewAsImage(iconModel: vmIcon)
+             let img = Image(uiImage: uiImagu ?? UIImage(systemName: "photo")!)
+            
+             ShareLink(
+                 item: img,
+                 preview: SharePreview(String(localized: "Enjoy!"), image: img)
+             )
+             .customAccessibility(label: "Label.Share.Accessibility", hint: "Label.Share.Accessibility.Hint")
+             .buttonStyle(CustomButton(color: MyColor.skyblue.value, width: horizontalPadding ))
+         } else {
+             let uiImagu =  helperImage.sharePng(iconModel: vmIcon, type: imageTypes)
+             let imageVIew = helperImage.shareViewAsImage(iconModel: vmIcon)
+             let img = Image(uiImage: imageVIew ?? UIImage(systemName: "photo")!)
+             ShareLink(
+                     item: uiImagu,
+                     preview: SharePreview(String(localized: "Enjoy!"), image: img)
+             )
+             .customAccessibility(label: "Label.Share.Accessibility", hint: "Label.Share.Accessibility.Hint")
+             .buttonStyle(CustomButton(color: MyColor.skyblue.value, width: horizontalPadding))
+         }
+         Spacer()
+     }
+     
+ }
+ */

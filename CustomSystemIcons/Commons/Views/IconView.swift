@@ -36,7 +36,7 @@ struct IconView: View {
                         ZStack {
                             vmIcon
                                 .shape
-                                .stroke(vmIcon.borderColor, lineWidth: geo.size.width * vmIcon.borderWidth)
+                                .strokeBorder(vmIcon.borderColor, lineWidth: geo.size.width * vmIcon.borderWidth)
                         }
                     }
                 }
@@ -109,27 +109,10 @@ struct IconView: View {
             Text("Add text")
         }
     }
-    .frame(width: 500, height: 500)
+    .frame(width: 400, height: 400)
 }
 
-#Preview {
-    //@Previewable @State var bgColor = Color(.sRGB, red: 0.98, green: 0.9, blue: 0.2)
-    //@Previewable @State var vmIcon = IconModel(styleShape: .square(radio: 5), borderWidth: 0.05)
-    //@Previewable @State var vmIcon = IconModel(styleShape: .circle, borderWidth: 0.01)
-    //@Previewable @State var vmIcon = IconModel(styleShape: .star(radio: 5), borderWidth: 0.05)
-    //@Previewable @State var vmIcon = IconModel(styleShape: .triangle(radio: 30), borderWidth: 0.05)
-    //@Previewable @State var vmIcon = IconModel(styleShape: .square(radio: 30), borderWidth: 0.05)
-    @Previewable @State var vmIcon = IconModel( )
-    vmIcon.shape.corners = 12
-    vmIcon.shape.selectedPath = .custom
-    vmIcon.backgroundColor = Color.blue
-    vmIcon.borderWidth = 0.05
-    vmIcon.shape.cornerRadio = 0.4
-    
-    return IconView(vmIcon: vmIcon, editable: true)
-    .frame(width: 500, height: 500)
-        
-}
+
 
 #Preview("Text") {
     
@@ -228,6 +211,44 @@ struct IconView: View {
                              .opacity(0.75))
      .frame(width: 200, height: 200)
          
+ }
+ 
+ 
+ 
+ // MARK: This one
+ 
+ #Preview {
+     //@Previewable @State var bgColor = Color(.sRGB, red: 0.98, green: 0.9, blue: 0.2)
+     //@Previewable @State var vmIcon = IconModel(styleShape: .square(radio: 5), borderWidth: 0.05)
+     //@Previewable @State var vmIcon = IconModel(styleShape: .circle, borderWidth: 0.01)
+     //@Previewable @State var vmIcon = IconModel(styleShape: .star(radio: 5), borderWidth: 0.05)
+     //@Previewable @State var vmIcon = IconModel(styleShape: .triangle(radio: 30), borderWidth: 0.05)
+     //@Previewable @State var vmIcon = IconModel(styleShape: .square(radio: 30), borderWidth: 0.05)
+     @Previewable @State var vmIcon = IconModel( )
+     vmIcon.backgroundImage.backgroundImage = ImageDataLoader.loadPreviewImage()
+     vmIcon.shape.corners = 12
+     vmIcon.shape.selectedPath = .custom
+     vmIcon.backgroundColor = Color.blue
+     vmIcon.borderWidth = 0.05
+     vmIcon.shape.cornerRadio = 0.4
+     let iconView = IconView(vmIcon: vmIcon, editable: false)
+     let render = ImageRenderer(content: iconView)
+     
+     render.proposedSize = ProposedViewSize(
+         width: CGFloat(500),
+         height: CGFloat(500)
+     )
+     return Image(uiImage: render.uiImage!)
+ }
+ 
+ // MARK: IN CASE OF CHANGES
+ 
+ .background {
+     GeometryReader { geo in
+         vmIcon.shape
+             .fill(vmIcon.backgroundColor)
+             .strokeBorder(vmIcon.borderColor, lineWidth: geo.size.width * vmIcon.borderWidth)
+     }
  }
 
  */

@@ -10,5 +10,5 @@ import SwiftUI
 enum Sheet: String, Identifiable{
     var id: String { self.rawValue }
     
-    case showIconsList
+    case shareSheet
 }
