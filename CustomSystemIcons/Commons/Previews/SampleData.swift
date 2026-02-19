@@ -8,9 +8,9 @@ import SwiftUI
 import SwiftData
 
 let sampleTask = [
-    IconModel(title: "Numero 1"),
+    ModelsExample.singleIconModelExample(),
     IconModel(title: "Sample Task 2"),
-    IconModel(title: "Task 3" ),
+    ModelsExample.singleIconModelExample(),
     IconModel(title: "Numero 1"),
     IconModel(title: "Sample Task 2"),
     IconModel(title: "Task 3" ),
@@ -39,3 +39,4 @@ extension PreviewTrait where T == Preview.ViewTraits {
     static var sampleData: Self = .modifier(SampleData())
         
 }
+

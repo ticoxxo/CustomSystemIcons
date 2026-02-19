@@ -22,7 +22,9 @@ struct GridIconsView: View {
                 .customTextField(label: "Label.Search.Accessibility", hint: "Label.Search.Accessibility.Hint", text: $searchText)
                 .frame(maxWidth: .infinity)
                 .padding()
-            adaptiveGrid
+            CustomAdaptiveGrid(columns: nil) {
+                symbolsCollection
+            }
             .onChange(of: searchText) {
                 iconsList.search(searchText)
             }
@@ -33,21 +35,6 @@ struct GridIconsView: View {
             }
         }
         .navigationBarBackButtonHidden(true)
-    }
-    
-    @ViewBuilder
-    var adaptiveGrid: some View {
-        let columns = [
-            GridItem(.adaptive(minimum: 60, maximum: 80))
-        ]
-        
-        ScrollView(.vertical) {
-            LazyVGrid(columns: columns, spacing: 16) {
-                symbolsCollection
-            }
-            .padding()
-        }
-        
     }
     
     

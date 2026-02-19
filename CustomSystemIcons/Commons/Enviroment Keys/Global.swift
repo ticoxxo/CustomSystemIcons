@@ -6,5 +6,5 @@
 //
 import SwiftUI
 
-let horizontalPadding: CGFloat = UIScreen.main.bounds.width
-let verticalPadding: CGFloat = UIScreen.main.bounds.height
+let horizontalPadding: CGFloat = 200
+let verticalPadding: CGFloat = 200

@@ -13,57 +13,122 @@ struct ListRowView: View {
     @State private var messageAlert = ""
     @State private var showAlert = false
     var body: some View {
-        GeometryReader { geometry in
-            VStack {
-                IconView(vmIcon: item, editable: false)
-                ZStack {
-                    RoundedRectangle(cornerRadius: 10)
-                        .fill(Color.white)
-                        .strokeBorder(
-                            LinearGradient(gradient: Gradient(colors: [.black, item.backgroundColor]), startPoint: .topLeading, endPoint: .bottomTrailing),
-                            lineWidth: 2
-                        )
-                        .padding()
-                        .frame(maxWidth: .infinity, maxHeight: min(geometry.size.width / 2, geometry.size.height / 2))
-                        
-                    Text("\(item.title)")
-                        .font(.caption)
-                        .fontWeight(.bold)
-                        .lineLimit(1) // Restrict to one line
-                        .truncationMode(.tail)
-                    // Constrain text within the rectangle
-                        .clipped() // Prevent overflow
-                        .padding()
-                }
-                
-            }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-        }
-        .overlay(alignment: .topTrailing) {
-            StarView(item: item)
-                .onTapGesture {
-                    item.isFavorite.toggle()
-                    do {
-                        try modelContext.save()
-                    } catch {
-                        messageAlert = "Label.Error.Save"
-                        showAlert = true
+        VStack {
+            ZStack {
+                LinearGradient(gradient: Gradient(colors: [item.backgroundColor,.white]), startPoint: UnitPoint(x: 0.1, y: 0.2), endPoint: UnitPoint(x: 0.2, y: 0.1))
+                    .opacity(0.7)
+                VStack {
+                    IconCardLayout {
+                        IconView(vmIcon: item, editable: false)
+                        RoundedRectangle(cornerRadius: 15)
+                            .strokeBorder(.red, lineWidth: 3)
+                            .overlay(
+                                Text(item.title)
+                                    .foregroundStyle(.white)
+                                    .font(.title2)
+                                    .minimumScaleFactor(0.3)
+                                    .lineLimit(1)
+                                    .padding(.horizontal, 4)
+                            )
+                        starButton
                     }
+                    
                 }
+                .padding()
+            }
         }
-        .background(
-            //LinearGradient(gradient: Gradient(colors: [item.backgroundColor,.white]), startPoint: UnitPoint(x: 0.2, y: 0.2), endPoint: UnitPoint(x: 0.2, y: 0.2))
-            LinearGradient(gradient: Gradient(colors: [item.backgroundColor,.white]), startPoint: UnitPoint(x: 0.1, y: 0.2), endPoint: UnitPoint(x: 0.2, y: 0.1))
-        )
-        .glow(color: .gray, radius: 15)
-        .cornerRadius(10)
-        .frame(width:min(horizontalPadding / 3, verticalPadding / 3),
-               height: min(horizontalPadding / 2, verticalPadding / 2))
+        .clipShape(RoundedRectangle(cornerRadius: 15.0))
+    }
+    
+    @ViewBuilder
+    var starButton: some View {
+        Button {
+            item.isFavorite.toggle()
+            do {
+                try modelContext.save()
+            } catch {
+                messageAlert = "Label.Error.Save"
+                showAlert = true
+            }
+        } label: {
+            Image(systemName: item.isFavorite ? "star.fill" : "star")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .foregroundColor(item.isFavorite ? .yellow : .blue)
+        }
     }
 }
 
-#Preview {
-    @Previewable @State var item = IconModel(title: "Titulo asdads asdsad")
+struct IconCardLayout: Layout {
+    func sizeThatFits(
+            proposal: ProposedViewSize,
+            subviews: Subviews,
+            cache: inout Void
+        ) -> CGSize {
+            guard !subviews.isEmpty else { return .zero }
+            
+            // Accept the full proposed size from parent
+            return CGSize(
+                width: proposal.width ?? 0,
+                height: proposal.height ?? 0
+            )
+        }
     
-    ListRowView(item: item)
+    func placeSubviews(
+        in bounds: CGRect,
+        proposal: ProposedViewSize,
+        subviews: Subviews,
+        cache: inout Void
+    ) {
+        guard !subviews.isEmpty else { return }
+        
+        let width = bounds.width
+        let height = bounds.height
+        
+        // Place first child with 3/4 proportions
+        subviews[0].place(
+            at: CGPoint(x: bounds.midX, y: bounds.minY + (height * 3/4) / 2),
+            anchor: .center,
+            proposal: ProposedViewSize(width: width, height: height * 3/4)
+        )
+        
+        // Place second child with 1/4 proportions
+        if subviews.count > 1 {
+            subviews[1].place(
+                at: CGPoint(x: bounds.midX, y: bounds.minY + (height * 3/4) + (height * 1/4) / 2),
+                anchor: .center,
+                proposal: ProposedViewSize(width: width, height: height * 1/4)
+            )
+        }
+        
+        if subviews.count > 2 {
+            subviews[2].place(
+                at: CGPoint(x: bounds.midX + (width * 1/2), y: bounds.minY + (height * 1/8) / 4),
+                anchor: .topTrailing,
+                proposal: ProposedViewSize(width: width * 1/8 , height: height * 1/8)
+            )
+        }
+    }
+    
+    
+}
+
+/*
+ .background(
+     //LinearGradient(gradient: Gradient(colors: [item.backgroundColor,.white]), startPoint: UnitPoint(x: 0.2, y: 0.2), endPoint: UnitPoint(x: 0.2, y: 0.2))
+     LinearGradient(gradient: Gradient(colors: [item.backgroundColor,.white]), startPoint: UnitPoint(x: 0.1, y: 0.2), endPoint: UnitPoint(x: 0.2, y: 0.1))
+ )
+ .glow(color: .gray, radius: 15)
+ .cornerRadius(10)
+ */
+
+#Preview {
+    
+    @Previewable @State var item = ModelsExample.singleIconModelExample()
+    VStack {
+        ListRowView(item: item)
+            .frame(width: 150, height: 200)
+            
+    }
+   
 }

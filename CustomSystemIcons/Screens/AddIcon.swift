@@ -38,6 +38,9 @@ struct AddIcon: View {
             
             Section(header: Text("GroupBox.Title.Detail")) {
                 TextField("TextField.Title", text: $vmIcon.title)
+                    .onChange(of: vmIcon.title) { _, newValue in
+                        vmIcon.title = String(newValue.prefix(12))
+                        }
                     .textFieldStyle(.roundedBorder)
                     
             }

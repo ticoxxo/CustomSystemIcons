@@ -11,9 +11,10 @@ struct StarView: View {
     var item: IconModel
     var body: some View {
         Image(systemName: item.isFavorite ? "star.fill" : "star")
-            .customAccessibility(label: "Label.Favorite.Accessibility", hint: "Press to add to favorites", isButton: true)
+            .resizable()
+            .aspectRatio(contentMode: .fit)
             .foregroundColor(item.isFavorite ? .yellow : .blue)
-            .padding([.top, .trailing], 5)
+            
     }
 }
 

@@ -46,44 +46,4 @@ struct TextIconChildView: View {
 
 
 
-#Preview {
-    var icon = IconChild(
-        name: "Hola, mundo",
-        isIcon: false,
-        textProperties: TextModel.dataPreviewExample)
-    icon.textProperties.fontSize = 0.06
-    icon.textProperties.fontWeight = FontWeight.bold
-    icon.textProperties.fontDesign = FontDesign.default
-    return ZStack {
-        Rectangle()
-            .background(Color.yellow)
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-        TextIconChildView(iconModel: icon, containerSize: CGSize(width: 200, height: 200))
-            .background(Color.red)
-        //Text("Si")
-          //  .foregroundStyle(Color.blue)
-            
-    }
-    
-    .frame(width: 200, height: 200)
-}
 
-#Preview("normal") {
-    var icon = IconChild(
-        name: "Hola, mundo",
-        isIcon: false,
-        textProperties: TextModel.dataPreviewExample)
-    icon.textProperties.fontSize = 1.0
-    icon.textProperties.fontWeight = FontWeight.bold
-    return ZStack {
-        Rectangle()
-            .background(Color.yellow)
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-        
-        Text("Si")
-        .foregroundStyle(Color.blue)
-            
-    }
-    
-    .frame(width: 200, height: 200)
-}

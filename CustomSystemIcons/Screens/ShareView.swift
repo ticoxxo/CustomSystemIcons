@@ -20,12 +20,6 @@ struct ShareView: View {
     
     var body: some View {
         Form {
-            Section(header: Text("Detalles selected")) {
-                VStack {
-                    Text("selected type : \(model.imageType.displayName)")
-                    Text("selected size : \(model.imageSize.displayName)")
-                }
-            }
             
             Section(header: Text("Picker.ImageType")) {
                 
@@ -39,7 +33,7 @@ struct ShareView: View {
 
             }
             
-            Section(header: Text("Size")) {
+            Section(header: Text("Picker.ImageSize")) {
                 Picker("Select image size", selection: $model.imageSize) {
                     ForEach(imgSize) { size in
                         Text(size.displayName).tag(size)
@@ -48,19 +42,19 @@ struct ShareView: View {
                 .pickerStyle(.automatic)
             }
             
-            Section(header: Text("Quality")) {
+            Section(header: Text("Label.ShareView.Compression")) {
                 if model.imageType == .jpeg {
                         VStack(alignment: .leading) {
                             Text("Compression Quality: \(Int(model.compressionQuality * 100))%")
                             Slider(value: $model.compressionQuality, in: 0.1...1.0, step: 0.05)
                         }
                     } else {
-                        Text("Lossless compression")
+                        Text("Lossless")
                             .foregroundStyle(.secondary)
                     }
             }
             
-            Section(header: Text("Transparency")) {
+            Section(header: Text("Label.ShareView.Transparency")) {
                 if model.imageType == .jpeg {
                     Text("JPEG does not support transparency")
                         .foregroundStyle(.secondary)
