@@ -14,8 +14,8 @@ struct EditIcon: View {
     @Bindable var vmIcon: IconModel
     @State private var animateIcon = false
     //typealias ancho = UIScene.current?.scree
-    var widtho = UIScreen.current?.bounds.size.width ?? 0
-    var heighto = UIScreen.current?.bounds.size.height ?? 0
+    //var widtho = UIScreen.current?.bounds.size.width ?? 0
+    //var heighto = UIScreen.current?.bounds.size.height ?? 0
     var body: some View {
         
         
@@ -38,7 +38,6 @@ struct EditIcon: View {
             }
         }
         .offset(x: animateIcon ? 0 : -horizontalPadding)
-        .transition(.scale)
         .onAppear {
             withAnimation(.easeInOut(duration: 1.0)) {
                 animateIcon = true
@@ -46,16 +45,12 @@ struct EditIcon: View {
         }
         .toolbar {
             ToolbarItemGroup(placement: .topBarTrailing) {
-                Button {
-                    vmIcon.addIcon()
-                } label: {
+                Button(action: addIcon) {
                     Label("Label.AddIcon",systemImage: "circle.badge.plus" )
                 }
                 .customAccessibility(label: "Label.AddIcon.Accessibility", hint: "Click to add a new icon")
                 .disabled(vmIcon.icons.count > 15)
-                Button {
-                    vmIcon.addText()
-                } label: {
+                Button(action: addText) {
                     Label("Label.AddIcon",systemImage: "text.pad.header.badge.plus")
                 }
                 .customAccessibility(label: "Label.AddIcon.Accessibility", hint: "Click to add a new icon")
@@ -65,9 +60,7 @@ struct EditIcon: View {
             
             ToolbarItemGroup(placement: .topBarLeading) {
                 GoBackButton()
-                Button() {
-                    coordinator.toRoot()
-                } label: {
+                Button(action: goHome) {
                     Label("Button.Home",systemImage: "house.fill" )
                 }
                 .customAccessibility(label: "Button.Home.Accessibility", hint: "Go back to Home screen")
@@ -79,13 +72,39 @@ struct EditIcon: View {
     
     @ViewBuilder
     private var textSection:  some View {
-        ForEach($vmIcon.icons) { $icon in
-            if !icon.isIcon {
-                TextPropertiesSection(model: $icon.textProperties)
+        ForEach(textIconIDs, id: \.self) { iconID in
+            if let binding = textPropertiesBinding(for: iconID) {
+                TextPropertiesSection(model: binding)
             }
         }
     }
-    
+
+    private var textIconIDs: [UUID] {
+        vmIcon.icons.filter { !$0.isIcon }.map(\.id)
+    }
+
+    private var iconIndexByID: [UUID: Int] {
+        Dictionary(uniqueKeysWithValues: vmIcon.icons.enumerated().map { ($0.element.id, $0.offset) })
+    }
+
+    private func textPropertiesBinding(for iconID: UUID) -> Binding<TextModel>? {
+        guard let index = iconIndexByID[iconID] else {
+            return nil
+        }
+        return $vmIcon.icons[index].textProperties
+    }
+
+    private func addIcon() {
+        vmIcon.addIcon()
+    }
+
+    private func addText() {
+        vmIcon.addText()
+    }
+
+    private func goHome() {
+        coordinator.toRoot()
+    }
 }
 
 #Preview("Ipad") {

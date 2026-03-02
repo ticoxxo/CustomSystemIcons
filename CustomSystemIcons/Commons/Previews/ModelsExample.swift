@@ -8,7 +8,7 @@ import SwiftUI
 
 struct ModelsExample {
     static func singleIconModelExample() -> IconModel {
-        var vmIcon = IconModel()
+        let vmIcon = IconModel()
         vmIcon.backgroundColor = Color.blue
         vmIcon.borderWidth = 0.05
         vmIcon.shape.cornerRadio = 0.4

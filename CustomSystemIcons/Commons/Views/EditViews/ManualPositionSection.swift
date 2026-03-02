@@ -56,11 +56,28 @@ struct ManualPositionSection: View {
     }
     
     
+    private struct  CustomButtons<Content: View>: View {
+        let content: Content
+        
+        init(@ViewBuilder content: () -> Content) {
+                self.content = content()
+            }
+        
+        var body: some View {
+            HStack {
+                Spacer()
+                content
+                Spacer()
+            }
+        }
+    }
+    
     private struct PositionPad:  View {
         @Binding var vmIcon: IconChild
         var iconSize: CGFloat
         var body: some View {
             
+            CustomButtons {
                 Button {
                     let position = vmIcon.positionX
                     vmIcon.positionX = position - 0.01
@@ -68,45 +85,51 @@ struct ManualPositionSection: View {
                     Image(systemName: "arrowtriangle.left.circle.fill")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        //.frame(width: iconSize, height: iconSize)
+                        .frame(width: iconSize * 2, height: iconSize * 2)
                         .foregroundStyle(Color.pink)
                 }
                 .buttonStyle(.borderless)
+            }
                 
+            CustomButtons {
                 Button {
                     vmIcon.positionY -= 0.01
                 } label: {
                     Image(systemName: "arrowtriangle.up.circle.fill")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        //.frame(width: iconSize, height: iconSize)
+                        .frame(width: iconSize * 2, height: iconSize * 2)
                         .foregroundStyle(MyColor.skyblue.value)
                 }
                 .buttonStyle(.borderless)
+            }
                 
+            CustomButtons {
                 Button {
                     vmIcon.positionX += 0.01
                 } label: {
                     Image(systemName: "arrowtriangle.right.circle.fill")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        //.frame(width: iconSize, height: iconSize)
+                        .frame(width: iconSize * 2, height: iconSize * 2)
                         .foregroundStyle(MyColor.skyblue.value)
                 }
                 .buttonStyle(.borderless)
+            }
                 
+            CustomButtons {
                 Button {
                     vmIcon.positionY += 0.01
                 } label: {
                     Image(systemName: "arrowtriangle.down.circle.fill")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        //.frame(width: iconSize, height: iconSize)
+                        .frame(width: iconSize * 2, height: iconSize * 2)
                         .foregroundStyle(Color.pink)
                 }
                 .buttonStyle(.borderless)
-            
-            
+            }
+ 
         }
         
     }

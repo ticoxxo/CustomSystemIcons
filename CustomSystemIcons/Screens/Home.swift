@@ -10,46 +10,18 @@ import SwiftData
 
 struct Home: View {
     @Environment(\.coordinator) var coordinator
-    @Environment(\.modelContext) var modelContext
-    var list = IconsListModel()
     @State private var searchText = String()
-    @State private var messageAlert = ""
-    @State private var showAlert = false
+    @State private var debouncedSearchText = String()
     @State private var favoriteFilter = false
     
-    // Use computed predicate for dynamic filtering
-    private var iconPredicate: Predicate<IconModel> {
-        let trimmedSearch = searchText.trimmingCharacters(in: .whitespaces).lowercased()
-        
-        if favoriteFilter && !trimmedSearch.isEmpty {
-            return #Predicate<IconModel> { icon in
-                icon.isFavorite && icon.title.localizedStandardContains(trimmedSearch)
-            }
-        } else if favoriteFilter {
-            return #Predicate<IconModel> { icon in
-                icon.isFavorite
-            }
-        } else if !trimmedSearch.isEmpty {
-            return #Predicate<IconModel> { icon in
-                icon.title.localizedStandardContains(trimmedSearch)
-            }
-        } else {
-            return #Predicate<IconModel> { _ in true }
-        }
-    }
-    
-    // Single query with dynamic predicate
     @Query(sort: \IconModel.creationDate) private var allIcons: [IconModel]
     
     private var filteredIcons: [IconModel] {
-        do {
-            let descriptor = FetchDescriptor<IconModel>(
-                predicate: iconPredicate,
-                sortBy: [SortDescriptor(\IconModel.creationDate)]
-            )
-            return try modelContext.fetch(descriptor)
-        } catch {
-            return []
+        let trimmedSearch = debouncedSearchText.trimmingCharacters(in: .whitespaces)
+        return allIcons.filter { icon in
+            let matchesSearch = trimmedSearch.isEmpty || icon.title.localizedStandardContains(trimmedSearch)
+            let matchesFavorite = !favoriteFilter || icon.isFavorite
+            return matchesSearch && matchesFavorite
         }
     }
 
@@ -62,75 +34,96 @@ struct Home: View {
             
             CustomAdaptiveGrid(columns: 2) {
                 ForEach(filteredIcons) { item in
-                    ListRowView(item: item)
-                        .containerRelativeFrame(.vertical) { length, axis in
-                            0.45 * length
-                        }
-                        .containerRelativeFrame(.horizontal) { length, axis in
-                            0.40 * length
-                        }
-                        .onTapGesture {
-                            coordinator.push(page: .AddIcon(vmIcon: item, addMode: false))
-                        }
+                    Button(action: { selectIcon(item) }) {
+                        ListRowView(item: item)
+                            .containerRelativeFrame(.vertical) { length, axis in
+                                0.45 * length
+                            }
+                            .containerRelativeFrame(.horizontal) { length, axis in
+                                0.40 * length
+                            }
+                    }
+                    .buttonStyle(.plain)
                 }
             }
             .padding()
+            .overlay {
+                if filteredIcons.isEmpty {
+                    if !debouncedSearchText.isEmpty {
+                        ContentUnavailableView.search(text: debouncedSearchText)
+                    } else if favoriteFilter {
+                        ContentUnavailableView(
+                            "No Favorites",
+                            systemImage: "star",
+                            description: Text("Try removing the filter or add favorites.")
+                        )
+                    } else {
+                        ContentUnavailableView(
+                            "No Icons",
+                            systemImage: "square.grid.2x2",
+                            description: Text("Create your first icon to get started.")
+                        )
+                    }
+                }
+            }
             
-            Button {
-                @State var icon = IconModel()
-                coordinator.push(page: .AddIcon(vmIcon: icon, addMode: true))
-            } label: {
+            Button(action: addNewIcon) {
                 Label("Label.AddIcon", systemImage: "plus.app")
             }
         }
         .navigationTitle("Icons")
         .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button {
-                    favoriteFilter.toggle()
-                } label: {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button(action: toggleFavoriteFilter) {
                     Image(systemName: favoriteFilter ? "star.fill" : "star")
                 }
                 .customAccessibility(label: "Label.AddIcon.Accessibility", hint: "Label.AddIcon.Accessibility")
             }
         }
-        .alert(messageAlert, isPresented: $showAlert) {
-            Button {
-                
-            } label: {
-                Text("Label.OK")
+        .task(id: searchText) {
+            let currentValue = searchText
+            try? await Task.sleep(nanoseconds: 250_000_000)
+            if !Task.isCancelled {
+                debouncedSearchText = currentValue
             }
-            .customAccessibility(label: "Label.OK.Accessibility", hint: "Label.OK.Accessibility.Hint")
         }
     }
-}
 
-extension Home {
-    func deleteDestinations(_ indexSet: IndexSet) {
-        for index in indexSet {
-            let destination = allIcons[index]
-            modelContext.delete(destination)
-        }
+    private func selectIcon(_ item: IconModel) {
+        coordinator.push(page: .AddIcon(vmIcon: item, addMode: false))
+    }
+
+    private func addNewIcon() {
+        let icon = IconModel()
+        coordinator.push(page: .AddIcon(vmIcon: icon, addMode: true))
+    }
+
+    private func toggleFavoriteFilter() {
+        favoriteFilter.toggle()
     }
 }
 
 struct CustomAdaptiveGrid<Content: View>: View {
     let columns: Int?
-    @ViewBuilder var content: () -> Content
-    
-    
+    @ViewBuilder let content: Content
+
+    init(columns: Int? = nil, @ViewBuilder content: () -> Content) {
+        self.columns = columns
+        self.content = content()
+    }
+
     var numberOfColumns: [GridItem] {
         guard let col = columns else {
             return [GridItem(.adaptive(minimum: 60, maximum: 80))]
         }
-        
+
         return Array(repeating: GridItem(.flexible()), count: col)
     }
-    
+
     var body: some View {
         ScrollView(.vertical) {
             LazyVGrid(columns: numberOfColumns, spacing: 16) {
-                content()
+                content
             }
         }
     }
