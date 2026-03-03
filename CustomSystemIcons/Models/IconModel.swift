@@ -36,19 +36,9 @@ final class IconModel: Identifiable {
         //backgroundColorComputed: Colores = .init(red: 0.4,blue: 0.4,green: 0.4),
         //borderColorComputed: Colores = .init(red: 0.4,blue: 0.4,green: 0.4),
         // ... other parameters
-        backgroundColorComputed: ColorComponents = ColorComponents(
-            red: 1,
-            green: 1,
-            blue: 1,
-            alpha: 1
-        ),
+        backgroundColorComputed: ColorComponents = ColorComponents(color: .white),
         // white
-        borderColorComputed: ColorComponents = ColorComponents(
-            red: 0,
-            green: 0,
-            blue: 0,
-            alpha: 1
-        ),
+        borderColorComputed: ColorComponents = ColorComponents(color: .white),
         // black
         // ... rest
         icons: [IconChild] = [IconChild()],

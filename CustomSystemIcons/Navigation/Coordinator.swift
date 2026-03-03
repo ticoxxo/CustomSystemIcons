@@ -38,6 +38,12 @@ class Coordinator {
     func dismissSheet() {
         self.sheet = nil
     }
+    
+    // Helper functions
+    
+    func currentPath() -> NavigationPath {
+        path
+    }
         
     @ViewBuilder
     func build(page: AppPage) -> some View {

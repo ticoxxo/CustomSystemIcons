@@ -23,6 +23,7 @@ struct EditIcon: View {
             GroupBox(label: Text("GroupBox.Title.Icon")) {
                 IconView(vmIcon: vmIcon,
                          editable: true)
+                .padding()
             }
             Form {
                 ColorSection(vmIcon: vmIcon)
@@ -46,12 +47,12 @@ struct EditIcon: View {
         .toolbar {
             ToolbarItemGroup(placement: .topBarTrailing) {
                 Button(action: addIcon) {
-                    Label("Label.AddIcon",systemImage: "circle.badge.plus" )
+                    Label("Label.AddIcon",systemImage: "xmark.triangle.circle.square.fill" )
                 }
                 .customAccessibility(label: "Label.AddIcon.Accessibility", hint: "Click to add a new icon")
                 .disabled(vmIcon.icons.count > 15)
                 Button(action: addText) {
-                    Label("Label.AddIcon",systemImage: "text.pad.header.badge.plus")
+                    Label("Label.AddIcon",systemImage: "character.square.fill")
                 }
                 .customAccessibility(label: "Label.AddIcon.Accessibility", hint: "Click to add a new icon")
                 .disabled(vmIcon.icons.count > 15)
@@ -64,6 +65,7 @@ struct EditIcon: View {
                     Label("Button.Home",systemImage: "house.fill" )
                 }
                 .customAccessibility(label: "Button.Home.Accessibility", hint: "Go back to Home screen")
+                
             }
         }
         .navigationBarBackButtonHidden(true)

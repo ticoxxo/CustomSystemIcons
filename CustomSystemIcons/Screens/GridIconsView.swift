@@ -41,16 +41,17 @@ struct GridIconsView: View {
     @ViewBuilder
     var symbolsCollection: some View {
         ForEach(iconsList.symbolsList, id: \.self) { icon in
-            Image(systemName: icon.rawValue)
-                .resizable()
-                .scaledToFit()
-                .aspectRatio(contentMode: .fit)
-                .frame(minWidth: 40, maxWidth: 60, minHeight: 40, maxHeight: 60)
-                .padding(8)
-                .onTapGesture {
-                            vmIcon.name = icon.rawValue
-                            coordinator.pop()
-                        }
+            Button {
+                vmIcon.name = icon.rawValue
+                coordinator.pop()
+            } label: {
+                Image(systemName: icon.rawValue)
+                    .resizable()
+                    .scaledToFit()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(minWidth: 40, maxWidth: 60, minHeight: 40, maxHeight: 60)
+            }
+            .buttonStyle(.glass)
                 
         }
         .visualEffect { content, geometryProxy in

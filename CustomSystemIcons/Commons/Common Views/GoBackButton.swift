@@ -18,7 +18,7 @@ struct GoBackButton: View {
                 
         }
         .customAccessibility(label: "Button.Back.Accessibility", hint: "Button.Back.Accessibility.Hint")
-        .foregroundColor(Color.blue)
+        .foregroundColor(MyColor.skyblue.value)
     }
 }
 

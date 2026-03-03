@@ -40,10 +40,10 @@ struct Home: View {
                     Button(action: { selectIcon(item) }) {
                         ListRowView(item: item)
                             .containerRelativeFrame(.vertical) { length, axis in
-                                0.45 * length
+                                0.40 * length
                             }
                             .containerRelativeFrame(.horizontal) { length, axis in
-                                0.40 * length
+                                0.30 * length
                             }
                     }
                     .buttonStyle(.plain)
@@ -73,6 +73,7 @@ struct Home: View {
             Button(action: addNewIcon) {
                 Label("Label.AddIcon", systemImage: "plus.app")
             }
+            .buttonStyle(.glass)
         }
         .navigationTitle("Icons")
         .toolbar {
@@ -91,7 +92,10 @@ struct Home: View {
             }
         }
         .onChange(of: incomingDescription) { _, newQuestion in
-            // TODO: A check if app is already open and we were creating an icon already
+            // We reset path
+            if coordinator.path.count > 0 {
+                coordinator.toRoot()
+            }
             let tuple = unravelColorIntent(incomingDescription)
             let shape = unravelShapeIntent(tuple.1)
             let icono = unravelIconIntent(shape.1)

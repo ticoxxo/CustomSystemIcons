@@ -9,10 +9,10 @@ import SwiftUI
 struct ModelsExample {
     static func singleIconModelExample() -> IconModel {
         let vmIcon = IconModel()
-        vmIcon.backgroundColor = Color.blue
+        vmIcon.backgroundColor = Color.white
         vmIcon.borderWidth = 0.05
-        vmIcon.shape.cornerRadio = 0.4
-        vmIcon.title = "El texto de prueba"
+        //vmIcon.shape.cornerRadio = 0.4
+        vmIcon.title = ""
         //vmIcon.backgroundImage.backgroundImage = ImageDataLoader.loadPreviewImage()
         return vmIcon
     }

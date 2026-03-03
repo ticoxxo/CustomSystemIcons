@@ -14,6 +14,7 @@ struct ColorSection: View {
     @Bindable var vmIcon: IconModel
     @State private var expanded: Bool = true
     @State private var selectedPhoto: PhotosPickerItem?
+    @ScaledMetric private var iconSize = 25.0
     var body: some View {
         DisclosureGroup(isExpanded: $expanded) {
             
@@ -27,38 +28,43 @@ struct ColorSection: View {
                 }
             }
             
-            
             Section(header: Text("Label.ColorSection.ActionsList")) {
                 List {
                     ForEach($vmIcon.iconsSorted) { icon in
-                        HStack {
-                            Text("\(Int(icon.zIndex.wrappedValue))")
-                            Image(systemName: icon.isIcon.wrappedValue ? icon.name.wrappedValue : "textformat.alt")
-                                .resizable()
-                                .customAccessibility(label: "Button.Add.Accessibility", hint: "Button.Add.Hint", isButton: true)
-                                .foregroundStyle(icon.frontColor.wrappedValue)
-                                .frame(width: 25, height: 25)
-                            
-                            PickIcon(item: icon)
-                            ColorPicker("ColorPicker.Icon", selection: icon.frontColor)
-                                .customAccessibility(label: "ColorPicker.Icon.Accessibility", hint: "ColorPicker.Icon.Hint")
-                            
-                        }
-                        .deleteDisabled(vmIcon.icons.count < 2)
+                        iconRow(icon)
+                            .deleteDisabled(vmIcon.icons.count < 2)
+                            .moveDisabled(vmIcon.icons.count < 2)
                     }
                     .onMove(perform: vmIcon.moveRow)
                     .onDelete(perform: vmIcon.removeIcon)
                 }
             }
             
-            
-            
-            
         } label: {
             Text("lbl.layers")
                 .customAccessibility(label: "lbl.layers", hint: "lbl.layers.hint")
                 .font(.headline)
         }
+    }
+    
+    @ViewBuilder
+    private func iconRow(_ icon: Binding<IconChild>) -> some View {
+        let row = HStack {
+            Text("\(Int(icon.zIndex.wrappedValue))")
+            Image(systemName: icon.isIcon.wrappedValue ? icon.name.wrappedValue : "textformat.alt")
+                .resizable()
+                .scaledToFit()
+                .foregroundStyle(icon.frontColor.wrappedValue)
+                .frame(width: iconSize, height: iconSize)
+            
+            PickIcon(item: icon)
+            HStack {
+                Spacer()
+                CustomColorPicker(color: icon.frontColor)
+            }
+        }
+        
+        row
     }
     
     @ViewBuilder

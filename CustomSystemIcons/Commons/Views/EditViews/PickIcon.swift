@@ -11,22 +11,19 @@ struct PickIcon: View {
     @Environment(\.coordinator) var coordinator
     @Binding var item: IconChild
     @State private var expanded: Bool = true
+    @ScaledMetric private var iconSize = 25.0
     var body: some View {
         
-        Image(systemName: "photo")
-            .resizable()
-            .customAccessibility(label: "Label.ButtonPick.Accessibility", hint:"Label.ButtonPick.Accessibility.Hint", isButton: true)
-            .foregroundStyle(item.frontColor)
-            .frame(width: 25, height: 25)
-            .overlay(alignment: .bottomTrailing) {
-                Image(systemName: "plus.circle.fill")
-                    .font(.system(size: 10))
-                    .fontWeight(.bold)
-                    .foregroundColor(.blue)
-            }
-            .onTapGesture {
-                coordinator.push(page: .GridIconsView(vmIcon: $item))
-            }
+        Button {
+            coordinator.push(page: .GridIconsView(vmIcon: $item))
+        } label: {
+            Image(systemName: "photo.badge.plus.fill")
+                .resizable()
+                .scaledToFill()
+                .foregroundStyle(item.frontColor)
+                .frame(width: iconSize, height: iconSize)
+        }
+        .buttonStyle(.automatic)
     }
 }
 

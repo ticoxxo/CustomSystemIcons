@@ -211,4 +211,13 @@ enum FiguraSelected: Codable {
     case rectangle
     case star
     case custom
+    
+    var value: String {
+        switch self {
+        case .circle : return "Circle"
+        case .rectangle: return "Rectangle"
+        case .star: return "Star"
+        case .custom: return "Custom"
+        }
+    }
 }
