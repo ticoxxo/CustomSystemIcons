@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Foundation
 
 enum MyColor {
     case skyblue
@@ -30,3 +31,5 @@ extension MyColor {
         }
     }
 }
+
+

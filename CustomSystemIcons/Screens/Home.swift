@@ -7,12 +7,15 @@
 
 import SwiftUI
 import SwiftData
+import SFSafeSymbols
 
 struct Home: View {
     @Environment(\.coordinator) var coordinator
     @State private var searchText = String()
     @State private var debouncedSearchText = String()
     @State private var favoriteFilter = false
+    
+    @AppStorage("incomingDescription") private var incomingDescription = String()
     
     @Query(sort: \IconModel.creationDate) private var allIcons: [IconModel]
     
@@ -87,6 +90,20 @@ struct Home: View {
                 debouncedSearchText = currentValue
             }
         }
+        .onChange(of: incomingDescription) { _, newQuestion in
+            // TODO: A check if app is already open and we were creating an icon already
+            let tuple = unravelColorIntent(incomingDescription)
+            let shape = unravelShapeIntent(tuple.1)
+            let icono = unravelIconIntent(shape.1)
+            let icon = IconModel()
+            icon.borderWidth = 0.05
+            icon.borderColorComputed = ColorComponents(color: tuple.0)
+            icon.shape = shape.0
+            icon.shape.innerRadiusRatio = 0.5
+            icon.icons[0].name = icono
+            icon.icons[0].frontColorComputed = ColorComponents(color: tuple.0)
+            coordinator.push(page: .AddIcon(vmIcon: icon, addMode: true))
+        }
     }
 
     private func selectIcon(_ item: IconModel) {
@@ -100,6 +117,117 @@ struct Home: View {
 
     private func toggleFavoriteFilter() {
         favoriteFilter.toggle()
+    }
+    
+    private func unravelIconIntent (_ description: String?) -> String {
+        guard let text = description else {
+            return "star.fill"
+        }
+        
+        let symbolsStrings = SFSymbol.allSymbols.map { $0.rawValue.lowercased() }
+        let query = text.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        
+        let filtro = query.components(separatedBy: .whitespaces)
+            .map { $0.trimmingCharacters(in: .punctuationCharacters) }
+            .filter { $0.count >= 4 }
+
+        for token in filtro {
+            if let match = symbolsStrings.first(where: { $0.contains(token) }) {
+                return match
+            }
+        }
+
+        return "star.fill"
+    }
+    
+    private func unravelShapeIntent(_ description: String?) -> (Figura, String?) {
+        guard let description else {
+            return (Figura(), nil)
+        }
+
+        let trimmedDescription = description.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmedDescription.isEmpty else {
+            return (Figura(), "")
+        }
+
+        var newString = trimmedDescription
+
+        if let match = ShapedName.firstMatch(in: newString) {
+            var removalRange = match.range
+            let punctuation = CharacterSet.punctuationCharacters.union(.whitespacesAndNewlines)
+
+            while removalRange.lowerBound > newString.startIndex {
+                let beforeIndex = newString.index(before: removalRange.lowerBound)
+                let scalar = newString[beforeIndex].unicodeScalars
+                if scalar.allSatisfy({ punctuation.contains($0) }) {
+                    removalRange = beforeIndex..<removalRange.upperBound
+                } else {
+                    break
+                }
+            }
+
+            while removalRange.upperBound < newString.endIndex {
+                let afterIndex = removalRange.upperBound
+                let scalar = newString[afterIndex].unicodeScalars
+                if scalar.allSatisfy({ punctuation.contains($0) }) {
+                    removalRange = removalRange.lowerBound..<newString.index(after: afterIndex)
+                } else {
+                    break
+                }
+            }
+
+            newString.removeSubrange(removalRange)
+            while newString.contains("  ") {
+                newString = newString.replacingOccurrences(of: "  ", with: " ")
+            }
+            newString = newString.trimmingCharacters(in: .whitespacesAndNewlines)
+            return (match.shape.figura, newString)
+        }
+
+        return (Figura(), newString)
+    }
+    
+    private func unravelColorIntent(_ description: String) -> (Color, String?) {
+        let trimmedDescription = description.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmedDescription.isEmpty else {
+            return (.black, nil)
+        }
+
+        var newString = trimmedDescription // "I want an icon shaped like a red star that looks blue"
+
+        if let match = ColorName.firstMatch(in: newString) {
+            var removalRange = match.range
+            let punctuation = CharacterSet.punctuationCharacters.union(.whitespacesAndNewlines)
+
+            while removalRange.lowerBound > newString.startIndex {
+                let beforeIndex = newString.index(before: removalRange.lowerBound)
+                let scalar = newString[beforeIndex].unicodeScalars
+                if scalar.allSatisfy({ punctuation.contains($0) }) {
+                    removalRange = beforeIndex..<removalRange.upperBound
+                } else {
+                    break
+                }
+            }
+
+            while removalRange.upperBound < newString.endIndex {
+                let afterIndex = removalRange.upperBound
+                let scalar = newString[afterIndex].unicodeScalars
+                if scalar.allSatisfy({ punctuation.contains($0) }) {
+                    removalRange = removalRange.lowerBound..<newString.index(after: afterIndex)
+                } else {
+                    break
+                }
+            }
+
+            newString.removeSubrange(removalRange)
+            while newString.contains("  ") {
+                newString = newString.replacingOccurrences(of: "  ", with: " ")
+            }
+            newString = newString.trimmingCharacters(in: .whitespacesAndNewlines)
+            return (match.color.value, newString)
+        }
+
+        return (.black, newString)
     }
 }
 

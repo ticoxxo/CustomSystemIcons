@@ -129,10 +129,16 @@ extension IconModel {
         self[keyPath: keyPath] = value
     }
     
-    func addIcon() {
-        let icon = IconChild()
-        icon.zIndex = nextIndex()
-        self.icons.append(icon)
+    func addIcon(_ child: IconChild? = nil) {
+        if let child = child {
+            child.zIndex = nextIndex()
+            self.icons.append(child)
+        } else {
+            let icon = IconChild()
+            icon.zIndex = nextIndex()
+            self.icons.append(icon)
+        }
+        
     }
     
     func addText() {
