@@ -6,6 +6,7 @@
 //
 import SFSafeSymbols
 import SwiftUI
+import SwiftData
 
 enum AppPage: Hashable, Equatable {
     

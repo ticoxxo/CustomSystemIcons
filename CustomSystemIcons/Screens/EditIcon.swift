@@ -27,7 +27,7 @@ struct EditIcon: View {
             }
             Form {
                 ColorSection(vmIcon: vmIcon)
-                textSection
+                TextPropertiesSection(vmIcon: vmIcon)
                 ShapeSection(vmIcon: vmIcon)
                 OrientationSection(vmIcon: vmIcon)
                 PositionSection(vmIcon: vmIcon)
@@ -72,29 +72,7 @@ struct EditIcon: View {
         //PositionSection(vmIcon: vmIcon)
     }
     
-    @ViewBuilder
-    private var textSection:  some View {
-        ForEach(textIconIDs, id: \.self) { iconID in
-            if let binding = textPropertiesBinding(for: iconID) {
-                TextPropertiesSection(model: binding)
-            }
-        }
-    }
-
-    private var textIconIDs: [UUID] {
-        vmIcon.icons.filter { !$0.isIcon }.map(\.id)
-    }
-
-    private var iconIndexByID: [UUID: Int] {
-        Dictionary(uniqueKeysWithValues: vmIcon.icons.enumerated().map { ($0.element.id, $0.offset) })
-    }
-
-    private func textPropertiesBinding(for iconID: UUID) -> Binding<TextModel>? {
-        guard let index = iconIndexByID[iconID] else {
-            return nil
-        }
-        return $vmIcon.icons[index].textProperties
-    }
+    
 
     private func addIcon() {
         vmIcon.addIcon()

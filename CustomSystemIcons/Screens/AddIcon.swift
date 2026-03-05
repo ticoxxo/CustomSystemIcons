@@ -9,9 +9,10 @@ import SwiftUI
 import SFSafeSymbols
 import SwiftData
 
+
 struct AddIcon: View {
     @Environment(\.coordinator) var coordinator
-    @Environment(\.modelContext) var modelContext
+    @Environment(\.modelContext) private var modelContext
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     @Bindable var vmIcon: IconModel
@@ -20,8 +21,10 @@ struct AddIcon: View {
     var addMode: Bool
     @State var showAlert: Bool = false
     @State var messageAlert: String = ""
+    @State private var isEditable: Bool = false
     @State private var animateIcon = false
     @State private var showUnsavedChangesDialog = false
+    @State private var isSaving = false
     @ScaledMetric private var iconSize: CGFloat = 50
     @ScaledMetric private var screenSize: CGFloat = 500
     
@@ -41,82 +44,113 @@ struct AddIcon: View {
     private var hasUnsavedChanges: Bool {
         !addMode && modelContext.hasChanges
     }
+
+    @ViewBuilder
+    private var unsavedChangesStatus: some View {
+        if addMode {
+            EmptyView()
+        } else {
+            HStack(spacing: 8) {
+                Image(systemName: hasUnsavedChanges ? "exclamationmark.triangle.fill" : "checkmark.circle.fill")
+                Text(hasUnsavedChanges ? "Unsaved changes" : "All changes saved")
+            }
+            .font(.footnote)
+            .foregroundStyle(hasUnsavedChanges ? .orange : .green)
+            .accessibilityLabel(hasUnsavedChanges ? "Unsaved changes" : "All changes saved")
+        }
+    }
     
     var body: some View {
-        Form {
-            Section(header: Text("GroupBox.Title.Icon")) {
-                IconView(vmIcon: vmIcon, editable: false)
-                    .overlay( alignment: .bottomTrailing) {
-                        Button {
-                            coordinator.push(page: .EditIcon(vmIcon: vmIcon))
-                        } label: {
-                            Image(systemName: "applepencil.and.scribble")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .foregroundColor(MyColor.skyblue.value)
-                                .frame(width: iconContainerSize, height: iconContainerSize)
-                        }
-                        .buttonStyle(.glass)
-                    }
-                    .padding()
+        
+        VStack {
+            VStack {
+                IconView(vmIcon: vmIcon,
+                         editable: isEditable)
+                .padding()
             }
-            
-            
-            Section(header: Text("GroupBox.Title.Detail")) {
-                TextField("TextField.Title", text: $vmIcon.title)
-                    .onChange(of: vmIcon.title) { _, newValue in
-                        vmIcon.title = String(newValue.prefix(12))
-                        }
-                    .textFieldStyle(.roundedBorder)
+            Form {
+                
+                Section(header: Text("GroupBox.Title.Detail")) {
+                    TextField("TextField.Title", text: $vmIcon.title)
+                        .onChange(of: vmIcon.title) { _, newValue in
+                            vmIcon.title = String(newValue.prefix(12))
+                            }
+                        .textFieldStyle(.automatic)
+                    Grid(alignment: .leading) {
+                                            GridRow {
+                                                Text("Label.IsMovable")
+                                                HStack {
+                                                    Spacer()
+                                                    Toggle("Editable", isOn: $isEditable)
+                                                        .labelsHidden()
+                                                }
+                                            }
+                                            GridRow {
+                                                Text("Choose an Icon")
+                                                HStack(spacing: 15) {
+                                                    Spacer()
+                                                    Button(action: addIcon) {
+                                                        Image(systemName: "xmark.triangle.circle.square.fill")
+                                                    }
+                                                    .customAccessibility(label: "Label.AddIcon.Accessibility", hint: "Click to add a new icon")
+                                                    .buttonStyle(.borderless)
+                                                    .disabled(vmIcon.icons.count > 15)
+                                                    
+                                                    Button(action: addText) {
+                                                        Image(systemName: "character.square.fill")
+                                                    }
+                                                    .customAccessibility(label: "Label.AddIcon.Accessibility", hint: "Click to add a new icon")
+                                                    .buttonStyle(.borderless)
+                                                    .disabled(vmIcon.icons.count > 15)
+                                                    
+                                                }
+                                            }
+                                        }
+
+                }
+                Section {
+                    unsavedChangesStatus
+                }
+                ColorSection(vmIcon: vmIcon)
+                TextPropertiesSection(vmIcon: vmIcon)
+                ShapeSection(vmIcon: vmIcon)
+                OrientationSection(vmIcon: vmIcon)
+                PositionSection(vmIcon: vmIcon)
+                DistortionSection(vmIcon: vmIcon)
+                BorderSection(vmIcon: vmIcon)
+                ShadowSection(vmIcon: vmIcon)
+                ManualPositionSection(vmIcon: vmIcon)
+                
             }
-            
-            
         }
         .offset(x: animateIcon ? 0 : -horizontalPadding)
         .onAppear {
+            modelContext.autosaveEnabled = false
             withAnimation(.easeInOut(duration: 1.0)) {
                 animateIcon = true
             }
         }
-        .navigationTitle(addMode ? "Add Icon" : "Edit Icon")
-        .alert(messageAlert ,isPresented: $showAlert) {
-            
-            Button {
-                coordinator.toRoot()
-            } label: {
-                Label("Button.OK.Accessibility", systemImage: "trash")
-            }
-            .customAccessibility(label: "Button.OK.Accessibility", hint: "Button.OK.Accessibility.Hint")
+        .onDisappear {
+            modelContext.autosaveEnabled = true
         }
         .confirmationDialog("Unsaved changes", isPresented: $showUnsavedChangesDialog) {
-            Button("Save") {
-                if saveIcon(showFeedback: false) {
-                    coordinator.pop()
-                }
-            }
-            Button("Cancel edit", role: .destructive) {
-                discardChangesAndGoBack()
-            }
-            Button("Keep editing", role: .cancel) { }
+            saveButton
+            Button("OK") {}
+            Button("Delete", role: .destructive, action: discardChangesAndGoBack)
         } message: {
-            Text("You have unsaved changes. Save before leaving?")
+            Text("Save changes or press X button")
         }
         .toolbar {
             
             ToolbarItemGroup(placement: .topBarTrailing) {
                 
-                GlassEffectContainer(spacing: 20.0) {
-                    HStack(spacing: 20.0) {
-                        Button {
-                            coordinator.push(page: .ShareView(vmIcon: vmIcon))
-                        } label: {
-                            Label("Label.Share", systemImage: "square.and.arrow.up.fill")
-                        }
-                        .buttonStyle(.glass)
-                        
-                        buttonMode
-                    }
+                Button {
+                    coordinator.push(page: .ShareView(vmIcon: vmIcon))
+                } label: {
+                    Label("Label.Share", systemImage: "square.and.arrow.up.fill")
                 }
+                
+                buttonMode
                 
             }
             
@@ -127,8 +161,8 @@ struct AddIcon: View {
                 } label: {
                     Label("Label.GoBack", systemImage: "arrow.left")
                 }
-                .customAccessibility(label: "Button.Back.Accessibility", hint: "Button.Back.Accessibility.Hint")
                 .foregroundColor(MyColor.skyblue.value)
+                
             }
         }
         .navigationBarBackButtonHidden(true)
@@ -146,27 +180,30 @@ struct AddIcon: View {
     @ViewBuilder
     var addButton: some View {
         Button {
-            if vmIcon.title.isEmpty {
-                vmIcon.title = "Icon \(vmIcon.shape.selectedPath.value)"
-            }
-            modelContext.insert(vmIcon)
-            messageAlert = NSLocalizedString("Alert.Added", comment: "")
-            showAlert = true
+            addIconAndGoBack()
         } label: {
             Label("Button.Add",systemImage: "externaldrive.fill.badge.plus" )
         }
         .customAccessibility(label: "Button.Add.Accessibility", hint: "Button.Add.Accessibility.Hint")
-        
+        .buttonStyle(.glass)
     }
+    
     @ViewBuilder
     var saveButton: some View {
         Button {
-            _ = saveIcon(showFeedback: true)
+            do {
+                try modelContext.save()
+                modelContext.processPendingChanges()
+                coordinator.pop()
+            } catch {
+                messageAlert = "Error saving model: \(error.localizedDescription)"
+                showAlert = true
+            }
         } label: {
             Label("Button.Save",systemImage: "pencil.and.list.clipboard")
         }
         .customAccessibility(label: "Button.Save.Accessibility", hint: "Button.Save.Accessibility.Hint")
-       
+        .buttonStyle(.glass)
     }
 
     private func handleGoBack() {
@@ -178,8 +215,29 @@ struct AddIcon: View {
     }
 
     private func discardChangesAndGoBack() {
+        modelContext.autosaveEnabled = false
         modelContext.rollback()
+        modelContext.processPendingChanges()
         coordinator.pop()
+    }
+
+    private func addIconAndGoBack() {
+        if vmIcon.title.isEmpty {
+            vmIcon.title = "Icon \(vmIcon.shape.selectedPath.value)"
+        }
+        modelContext.insert(vmIcon)
+        isSaving = true
+        defer {
+            isSaving = false
+        }
+        do {
+            try modelContext.save()
+            modelContext.processPendingChanges()
+            coordinator.pop()
+        } catch {
+            messageAlert = "Error saving model: \(error.localizedDescription)"
+            showAlert = true
+        }
     }
 
     /// Saves the current icon model to the SwiftData context.
@@ -195,6 +253,10 @@ struct AddIcon: View {
     /// ```
     @discardableResult
     private func saveIcon(showFeedback: Bool) -> Bool {
+        isSaving = true
+        defer {
+            isSaving = false
+        }
         do {
             /*
             if vmIcon.title.isEmpty {
@@ -202,21 +264,26 @@ struct AddIcon: View {
             }
              */
             try modelContext.save()
-            if showFeedback {
-                messageAlert = "Saved"
-                showAlert = true
-            }
+            modelContext.processPendingChanges()
             return true
         } catch {
-            messageAlert = "Error updating model"
+            messageAlert = "Error updating model: \(error.localizedDescription)"
             showAlert = true
             return false
         }
     }
+    
+    private func addText() {
+        vmIcon.addText()
+    }
+
+    private func addIcon() {
+        vmIcon.addIcon()
+    }
 }
 
 
-#Preview("Add mode false") {
+#Preview("Add mode true") {
     @Previewable @State var coordinator = Coordinator()
     @Previewable @State var vmIcon = IconModel()
     NavigationStack(path: $coordinator.path) {
@@ -228,25 +295,14 @@ struct AddIcon: View {
                 coordinator.buildSheet(sheet: sheet)
             }
     }
-    .environment(\.coordinator, coordinator)
 }
-
-#Preview("Add mode true") {
-    @Previewable @State var coordinator = Coordinator()
-    @Previewable @State var vmIcon = IconModel()
-    NavigationStack(path: $coordinator.path) {
-        coordinator.build(page: .AddIcon(vmIcon: vmIcon, addMode: true))
-            .navigationDestination(for: AppPage.self) { page in
-                coordinator.build(page: page)
-            }
-            .sheet(item: $coordinator.sheet) { sheet in
-                coordinator.buildSheet(sheet: sheet)
-            }
-    }
-    .environment(\.coordinator, coordinator)
-}
-
 /*
+ 
+ 
+ 
+ 
+ 
+ 
  if !addMode {
      HStack {
          Spacer()

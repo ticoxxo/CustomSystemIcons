@@ -14,6 +14,7 @@ struct Home: View {
     @State private var searchText = String()
     @State private var debouncedSearchText = String()
     @State private var favoriteFilter = false
+    @Environment(\.modelContext) var modelContext
     
     @AppStorage("incomingDescription") private var incomingDescription = String()
     
@@ -38,7 +39,7 @@ struct Home: View {
             CustomAdaptiveGrid(columns: 2) {
                 ForEach(filteredIcons) { item in
                     Button(action: { selectIcon(item) }) {
-                        ListRowView(item: item)
+                        ListRowView(item: item, modelContext: modelContext)
                             .containerRelativeFrame(.vertical) { length, axis in
                                 0.40 * length
                             }

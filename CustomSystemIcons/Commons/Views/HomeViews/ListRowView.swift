@@ -6,15 +6,18 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct ListRowView: View {
     var item: IconModel
-    @Environment(\.modelContext) var modelContext
     @Environment(\.colorScheme) var colorScheme
     @State private var messageAlert = ""
     @State private var showAlert = false
     @ScaledMetric private var spacing = 10.0
     @ScaledMetric private var iconSize = 15.0
+    
+    var modelContext: ModelContext
+    
     var body: some View {
         VStack {
             ZStack {
@@ -22,6 +25,7 @@ struct ListRowView: View {
                     .opacity(0.7)
                 IconCardLayout {
                     HStack {
+                        trashButton
                         Spacer()
                         starButton
                     }
@@ -44,6 +48,25 @@ struct ListRowView: View {
     }
     
     @ViewBuilder
+    var trashButton: some View {
+        Button {
+            modelContext.delete(item)
+            do {
+                try modelContext.save()
+            } catch {
+                messageAlert = "Label.Error.Save"
+                showAlert = true
+            }
+        } label: {
+            Image(systemName: "trash.fill")
+                .resizable()
+                .scaledToFit()
+                .foregroundColor(.gray)
+        }
+        .buttonStyle(.glass)
+    }
+    
+    @ViewBuilder
     var starButton: some View {
         Button {
             item.isFavorite.toggle()
@@ -59,6 +82,7 @@ struct ListRowView: View {
                 .scaledToFit()
                 .foregroundColor(item.isFavorite ? .yellow : .blue)
         }
+        .buttonStyle(.glass)
     }
     
     private var colorSpri: Color {
@@ -134,13 +158,4 @@ struct IconCardLayout: Layout {
  .cornerRadius(10)
  */
 
-#Preview {
-    
-    @Previewable @State var item = ModelsExample.singleIconModelExample()
-    VStack {
-        ListRowView(item: item)
-            .frame(width: 350, height: 400)
-            
-    }
-   
-}
+
