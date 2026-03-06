@@ -6,7 +6,7 @@
 //
 import SwiftUI
 
-@Observable
+
 final class ImageCache {
     static let shared = ImageCache()
     private var cache = NSCache<NSData, UIImage>()

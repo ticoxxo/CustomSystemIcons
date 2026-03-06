@@ -11,7 +11,7 @@ import SFSafeSymbols
 //MARK: Maybe change view to use composition?
 
 struct IconView: View {
-    @Environment(\.imageCache) var imageCache
+    @State private var cachedImage: UIImage?
     var vmIcon: IconModel
     var editable: Bool
     
@@ -26,8 +26,8 @@ struct IconView: View {
         .clipShape(vmIcon.shape)
         .background {
                     GeometryReader { geo in
-                        if let data = vmIcon.backgroundImage.backgroundImage, let uiImage = imageCache.image(for: data) {
-                            imageBackground(size: geo.size, uiImage: uiImage)
+                        if let img = cachedImage {
+                            imageBackground(size: geo.size, uiImage: img)
                                 .clipShape(vmIcon.shape)
                         } else {
                             vmIcon.shape
@@ -40,6 +40,10 @@ struct IconView: View {
                         }
                     }
                 }
+        .onChange(of: vmIcon.backgroundImage.backgroundImage, initial: true) { _, data in
+            let image = data.flatMap { ImageCache.shared.image(for: $0) }
+            cachedImage = image
+        }
         .shadow(
             color: vmIcon.shadows.shadowColor.opacity(vmIcon.shadows.opacity),
             radius: vmIcon.shadows.radius,

@@ -10,7 +10,7 @@ import PhotosUI
 
 struct ColorSection: View {
     @Environment(\.coordinator) var coordinator
-    @Environment(\.imageCache) var imageCache
+    @State private var cachedImage: UIImage?
     @Bindable var vmIcon: IconModel
     @State private var expanded: Bool = true
     @State private var selectedPhoto: PhotosPickerItem?
@@ -44,6 +44,10 @@ struct ColorSection: View {
             Text("lbl.layers")
                 .customAccessibility(label: "lbl.layers", hint: "lbl.layers.hint")
                 .font(.headline)
+        }
+        .onChange(of: vmIcon.backgroundImage.backgroundImage, initial: true) { _, data in
+            let image = data.flatMap { ImageCache.shared.image(for: $0) }
+            vmIcon.backgroundImage.cachedUIImage = image
         }
     }
     
@@ -86,7 +90,7 @@ struct ColorSection: View {
             .photosPickerStyle(.presentation)
             
             Spacer()
-            if let imageData =  vmIcon.backgroundImage.backgroundImage, let uiImage = imageCache.image(for: imageData) {
+            if let image =  vmIcon.backgroundImage.cachedUIImage {
                 
                 HStack {
                         
@@ -99,7 +103,7 @@ struct ColorSection: View {
                         .onTapGesture {
                             vmIcon.backgroundImage.backgroundImage = nil
                         }
-                    Image(uiImage: uiImage)
+                    Image(uiImage: image)
                         .resizable()
                         .foregroundStyle(MyColor.skyblue.value)
                         .aspectRatio(contentMode: .fit)

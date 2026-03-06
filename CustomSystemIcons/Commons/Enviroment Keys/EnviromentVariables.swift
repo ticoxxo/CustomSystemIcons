@@ -8,6 +8,6 @@ import SwiftUI
 
 extension EnvironmentValues {
     @Entry var coordinator = Coordinator()
-    @Entry var imageCache = ImageCache.shared
+    //@Entry var imageCache = ImageCache.shared
     @Entry var isPhone: Bool = UIDevice.current.userInterfaceIdiom == .phone
 }

@@ -134,8 +134,8 @@ struct AddIcon: View {
             modelContext.autosaveEnabled = true
         }
         .confirmationDialog("Unsaved changes", isPresented: $showUnsavedChangesDialog) {
-            saveButton
-            Button("OK") {}
+            saveButton()
+            Button("OK", role: .cancel) {}
             Button("Delete", role: .destructive, action: discardChangesAndGoBack)
         } message: {
             Text("Save changes or press X button")
@@ -173,7 +173,7 @@ struct AddIcon: View {
         if addMode {
             addButton
         } else {
-            saveButton
+            saveButton()
         }
     }
     
@@ -188,8 +188,7 @@ struct AddIcon: View {
         .buttonStyle(.glass)
     }
     
-    @ViewBuilder
-    var saveButton: some View {
+    private func saveButton() -> some View {
         Button {
             do {
                 try modelContext.save()
@@ -202,8 +201,6 @@ struct AddIcon: View {
         } label: {
             Label("Button.Save",systemImage: "pencil.and.list.clipboard")
         }
-        .customAccessibility(label: "Button.Save.Accessibility", hint: "Button.Save.Accessibility.Hint")
-        .buttonStyle(.glass)
     }
 
     private func handleGoBack() {
@@ -215,7 +212,6 @@ struct AddIcon: View {
     }
 
     private func discardChangesAndGoBack() {
-        modelContext.autosaveEnabled = false
         modelContext.rollback()
         modelContext.processPendingChanges()
         coordinator.pop()
@@ -282,12 +278,26 @@ struct AddIcon: View {
     }
 }
 
-
-#Preview("Add mode true") {
+#Preview("Edit mode") {
     @Previewable @State var coordinator = Coordinator()
     @Previewable @State var vmIcon = IconModel()
     NavigationStack(path: $coordinator.path) {
         coordinator.build(page: .AddIcon(vmIcon: vmIcon, addMode: false))
+            .navigationDestination(for: AppPage.self) { page in
+                coordinator.build(page: page)
+            }
+            .sheet(item: $coordinator.sheet) { sheet in
+                coordinator.buildSheet(sheet: sheet)
+            }
+    }
+}
+
+
+#Preview("Add mode") {
+    @Previewable @State var coordinator = Coordinator()
+    @Previewable @State var vmIcon = IconModel()
+    NavigationStack(path: $coordinator.path) {
+        coordinator.build(page: .AddIcon(vmIcon: vmIcon, addMode: true))
             .navigationDestination(for: AppPage.self) { page in
                 coordinator.build(page: page)
             }

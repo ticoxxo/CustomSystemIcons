@@ -7,14 +7,16 @@
 import SwiftUI
 import SwiftData
 
+
 @Model
 final class BackgroundImageModel {
-    @Attribute(.externalStorage) var backgroundImage: Data?
+    @Attribute(.externalStorage) var backgroundImage: Data? 
     var zoom: Float
     var orientation: Double
     @Transient var dragging: Bool = false
     var positionX: Double
     var positionY: Double
+    @Transient var cachedUIImage: UIImage? = nil
     
     init(
         backgroundImage: Data? = nil,
