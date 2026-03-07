@@ -14,7 +14,16 @@ struct IconView: View {
     @State private var cachedImage: UIImage?
     var vmIcon: IconModel
     var editable: Bool
-    
+    @State private var containerSize: CGSize = .zero
+
+    private var borderLineWidth: CGFloat {
+        max(0, containerSize.width * vmIcon.borderWidth)
+    }
+
+    private var borderInset: CGFloat {
+        borderLineWidth
+    }
+
     var body: some View {
         ZStack {
             ForEach(vmIcon.icons) { icono in
@@ -23,23 +32,33 @@ struct IconView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .aspectRatio(1, contentMode: .fit)
-        .clipShape(vmIcon.shape)
         .background {
                     GeometryReader { geo in
-                        if let img = cachedImage {
-                            imageBackground(size: geo.size, uiImage: img)
-                                .clipShape(vmIcon.shape)
-                        } else {
-                            vmIcon.shape
-                                .fill(vmIcon.backgroundColor)
-                        }
+                        let size = geo.size
                         ZStack {
-                            vmIcon
-                                .shape
-                                .strokeBorder(vmIcon.borderColor, lineWidth: geo.size.width * vmIcon.borderWidth)
+                            
+                            if let img = cachedImage {
+                                imageBackground(size: size, uiImage: img)
+                            } else {
+                                vmIcon.shape
+                                    .fill(vmIcon.backgroundColor)
+                            }
+                        }
+                        .onChange(of: size, initial: true) { _, newSize in
+                            if containerSize != newSize {
+                                containerSize = newSize
+                            }
                         }
                     }
+                    
                 }
+        .mask(vmIcon.shape.inset(by: borderInset))
+        .overlay {
+            if borderLineWidth > 0 {
+                vmIcon.shape
+                    .strokeBorder(vmIcon.borderColor, lineWidth: borderLineWidth)
+            }
+        }
         .onChange(of: vmIcon.backgroundImage.backgroundImage, initial: true) { _, data in
             let image = data.flatMap { ImageCache.shared.image(for: $0) }
             cachedImage = image
@@ -52,6 +71,7 @@ struct IconView: View {
         )
         
     }
+    
     
     @ViewBuilder
     private func imageBackground(size: CGSize, uiImage: UIImage) ->  some View {
