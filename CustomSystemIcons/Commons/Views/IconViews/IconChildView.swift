@@ -21,8 +21,6 @@ struct IconChildView: View {
                 .foregroundStyle(
                     icono.frontColor
                 )
-                //.contentShape(StyleShape.star)
-                //.clipShape(StyleShape.square)
                 .modifier(
                     DistortionEffect(xDistortion: icono.xDistortion, yDistortion: icono.yDistortion)
                 )

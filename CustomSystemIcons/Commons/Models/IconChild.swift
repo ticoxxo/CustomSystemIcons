@@ -63,7 +63,7 @@ final class IconChild: Identifiable {
     }
     
     enum CodingKeys: String, CodingKey {
-        case id, name, frontColorComputed, orientation, zoom, dragging, zIndex, borderColorComputed, positionX, positionY, styleShape,xDistortion,yDistortion, shadows, weight, textSize, isIcon
+        case id, name, frontColorComputed, orientation, zoom, dragging, zIndex, borderColorComputed, positionX, positionY,xDistortion,yDistortion, shadows, weight, textSize, isIcon
     }
 }
 

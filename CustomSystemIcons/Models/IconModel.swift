@@ -9,7 +9,6 @@ final class IconModel: Identifiable {
     var id: UUID
     // Details
     var title: String
-    var styleShape: StyleShape
     var shape: Figura
     // Color
     var backgroundColorComputed: ColorComponents
@@ -28,7 +27,6 @@ final class IconModel: Identifiable {
     init(
         id: UUID = UUID(),
         title: String = "",
-        styleShape: StyleShape = .square(radio: 0.0),
         shape: Figura = Figura(),
         orientation: Double = 0.0,
         zoom: CGFloat = 0.8,
@@ -49,7 +47,6 @@ final class IconModel: Identifiable {
     ) {
         self.id = UUID()
         self.title = title
-        self.styleShape = styleShape
         self.shape = shape
         self.borderWidth = borderWidth
         self.backgroundColorComputed = backgroundColorComputed
@@ -65,7 +62,6 @@ final class IconModel: Identifiable {
         case id
         case title
         case tareaName
-        //case styleShape
         case backgroundColorComputed
         case borderColorComputed
         case borderWidth

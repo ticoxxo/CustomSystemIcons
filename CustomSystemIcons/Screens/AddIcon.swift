@@ -292,7 +292,6 @@ struct AddIcon: View {
         let icons = icon.icons.map { cloneIconChild($0) }
         let draft = IconModel(
             title: icon.title,
-            styleShape: icon.styleShape,
             shape: icon.shape,
             borderWidth: icon.borderWidth,
             backgroundColorComputed: icon.backgroundColorComputed,
@@ -309,7 +308,6 @@ struct AddIcon: View {
 
     private static func applyDraft(from draft: IconModel, to model: IconModel) {
         model.title = draft.title
-        model.styleShape = draft.styleShape
         model.shape = draft.shape
         model.borderWidth = draft.borderWidth
         model.backgroundColorComputed = draft.backgroundColorComputed
@@ -352,7 +350,6 @@ struct AddIcon: View {
 
     private struct IconSnapshot: Equatable {
         var title: String
-        var styleShape: StyleShape
         var shape: FiguraSnapshot
         var backgroundColor: ColorComponents
         var borderColor: ColorComponents
@@ -365,7 +362,6 @@ struct AddIcon: View {
 
         init(icon: IconModel) {
             self.title = icon.title
-            self.styleShape = icon.styleShape
             self.shape = FiguraSnapshot(icon.shape)
             self.backgroundColor = icon.backgroundColorComputed
             self.borderColor = icon.borderColorComputed

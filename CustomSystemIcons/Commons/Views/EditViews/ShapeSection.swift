@@ -45,29 +45,6 @@ struct ShapeSection: View {
     }
 }
 
-struct ShapeView: View {
-    var shape: StyleShape
-    @Bindable var vmIcon: IconModel
-    @State var animate: Bool = false
-    var body: some View {
-        shape
-            .fill(MyColor.skyblue.value)
-            .foregroundStyle(Color.red)
-            .scaleEffect(animate ? 1 : 1.5)
-            .transition(.scale)
-            .frame(width: 20, height: 20)
-            .onTapGesture {
-                withAnimation(.easeInOut(duration: 0.5)) {
-                    animate.toggle()
-                } completion: {
-                    animate.toggle()
-                }
-                vmIcon.styleShape = shape
-            }
-
-    }
-}
-
 #Preview {
     @Previewable @State var vmIcon = IconModel()
     //vmIcon.icons.append(IconChild())
