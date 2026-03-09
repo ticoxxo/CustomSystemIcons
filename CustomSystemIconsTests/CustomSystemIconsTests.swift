@@ -92,5 +92,18 @@ struct CustomSystemIconsTests {
         // Assert that the icon exists in the context
         assert(fetchedIcons.isEmpty, "The context should be empty.")
     }
+    
+   @MainActor
+    @Test("Add a text icon")
+    mutating func saveImageInCache() async throws {
+        try setUp()
+        defer { tearDown() }
+        
+        let icon = IconModel()
+        
+        icon.addText()
+        
+        assert(!icon.icons[1].isIcon, "The icon is not a text, but a symbol")
+    }
 
 }

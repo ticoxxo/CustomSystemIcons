@@ -74,6 +74,7 @@ struct AddIcon: View {
         
         VStack {
             VStack {
+                unsavedChangesStatus
                 IconView(vmIcon: draftIcon,
                          editable: isEditable)
                 .padding()
@@ -111,9 +112,7 @@ struct AddIcon: View {
                                         }
 
                 }
-                Section {
-                    unsavedChangesStatus
-                }
+                
                 ColorSection(vmIcon: draftIcon)
                 TextPropertiesSection(vmIcon: draftIcon)
                 ShapeSection(vmIcon: draftIcon)

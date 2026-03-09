@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-// TODO: Add background controls for orientation
+
 struct OrientationSection: View {
     @Bindable var vmIcon: IconModel
     @State private var expanded: Bool = false
@@ -27,7 +27,7 @@ struct OrientationSection: View {
                 }
             }
             
-            if let imageData =  vmIcon.backgroundImage.backgroundImage, let uiImage = UIImage(data: imageData) {
+            if let uiImage =  vmIcon.backgroundImage.cachedUIImage {
                 //Image(uiImage: UIImage(data: imageData)!)
                 HStack {
                         

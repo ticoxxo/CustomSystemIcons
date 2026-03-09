@@ -158,6 +158,7 @@ extension IconModel {
     
     func removeIcon(at offsets: IndexSet) {
         self.icons.remove(atOffsets: offsets)
+        updateZIndex()
     }
     
     func removeSingleIcon(_ icon: IconChild) {
